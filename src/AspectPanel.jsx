@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 type Props = {
     items: Array<Item>,
     rowHeightList: Array<number>, // 各行の高さ
-    rowHeightListMobile: Array<number>, // 各行の高さ
     view: Function,
     margin: number,
     className: string,
@@ -45,11 +44,7 @@ export default class AspectPanel extends Component<Props, State> {
         let itemIndex = 0;
         while (this.state.items.length-1 > itemIndex) {
             let rowHeight;
-            if (this.state.width && this.state.width < 600) {
-                rowHeight = this.props.rowHeightListMobile[rowCount-1];
-            } else {
-                rowHeight = this.props.rowHeightList[rowCount-1];
-            }
+            rowHeight = this.props.rowHeightList[rowCount-1];
             let rowItems = [];
             let x = 0;
             // 行数指定

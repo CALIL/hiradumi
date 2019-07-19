@@ -18,8 +18,6 @@ export default class Book extends Component {
         return (
             <React.Fragment>
                 <div className={'book' + (book.fullWidth ? ' stripe' : '')} ref="book" key={book.isbn} id={book.id} onClick={this.onClick.bind(this)}>
-                    {/* {book.row} */}
-                    {/* {book.title} */}    
                     {this.props.item.cover ? (
                         <img src={book.cover} alt={book.title} ref="cover" />
                     ) : (
@@ -33,21 +31,6 @@ export default class Book extends Component {
                             </div>
                         </React.Fragment>
                     )}
-                    {(() => {
-                        if (book.isbn) {
-                            return (
-                                <div id={book.isbn} className={`${book.isbn} libinfo`}>
-                                    <span className={'status' + ' ' + book.statusId}>
-                                        {book.statusText}
-                                    </span>
-                                </div>
-                            )
-                        } else {
-                            return (
-                                <div class="libinfo">検索できません</div>
-                            )
-                        }
-                    })()}
                 </div>
             </React.Fragment>
         );
