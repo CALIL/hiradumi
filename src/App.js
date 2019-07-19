@@ -64,7 +64,7 @@ class App extends Component {
         <div style={{width: this.state.width + '%', margin: '0 auto'}}>
           <AspectPanel
                 items={this.state.books}
-                rowHeightList={this.state.rowHeightList}
+                rowHeightList={document.body.clientWidth>600 || this.state.width>40 ? this.state.rowHeightList : [150,100,80,60,60,60,60]}
                 view={Book}
                 className={'books'}
                 margin={this.state.margin}

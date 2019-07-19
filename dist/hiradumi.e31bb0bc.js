@@ -25811,6 +25811,39 @@ function (_Component) {
           width: _this2.refs.items.clientWidth
         });
       });
+
+      if (window.ResizeObserver) {
+        var resizeObserver = new ResizeObserver(function (entries) {
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = entries[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var entry = _step.value;
+              var rect = entry.contentRect;
+
+              _this2.setState({
+                width: parseInt(rect.width)
+              });
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return != null) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+        });
+        resizeObserver.observe(this.refs.items);
+      }
     }
   }, {
     key: "render",
@@ -26080,7 +26113,7 @@ function (_Component) {
 
       return _react.default.createElement("div", {
         style: {
-          width: '1400px',
+          maxWidth: '1400px',
           margin: '0 auto',
           padding: '10px'
         }
@@ -26267,7 +26300,7 @@ function (_Component) {
         }
       }, _react.default.createElement(_AspectPanel.default, {
         items: this.state.books,
-        rowHeightList: this.state.rowHeightList,
+        rowHeightList: document.body.clientWidth > 600 || this.state.width > 40 ? this.state.rowHeightList : [150, 100, 80, 60, 60, 60, 60],
         view: _Book.default,
         className: 'books',
         margin: this.state.margin,

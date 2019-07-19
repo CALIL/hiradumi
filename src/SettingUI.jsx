@@ -45,7 +45,7 @@ export default class SettingUI extends Component {
     }    
     render() {
         return (
-            <div style={{width: '1400px', margin: '0 auto', padding: '10px'}}>
+            <div style={{maxWidth: '1400px', margin: '0 auto', padding: '10px'}}>
               <div>
                 <label htmlFor="width">Width:</label>
                 <input type="range" id="width" name="width" min="1" max="10" onChange={(e) => this.props.onChange({width: e.target.value * 10})} />
