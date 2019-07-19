@@ -29061,7 +29061,7 @@ function (_Component) {
       systemid: params.systemid,
       rowHeightList: [250, 180, 150, 100, 100, 100, 100],
       width: 60,
-      margin: 10,
+      margin: 16,
       maxRow: 30
     };
     fetch('https://storage.googleapis.com/pickup-books/' + _this.state.systemid + '.json').then(function (r) {
@@ -29164,7 +29164,7 @@ function (_Component) {
         type: "range",
         id: "margin",
         name: "width",
-        min: "1",
+        min: "0",
         max: "30",
         onChange: function onChange(e) {
           return _this2.setState({
@@ -29263,7 +29263,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60945" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53207" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
