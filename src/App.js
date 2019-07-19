@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AspectPanel from './AspectPanel';
+import Hiradumi from './Hiradumi';
 import Book from './Book';
 import SettingUI from './SettingUI';
 
@@ -62,7 +62,7 @@ class App extends Component {
       <div>
         <SettingUI onChange={this.setState.bind(this)} {...this.state} />
         <div style={{width: this.state.width + '%', margin: '0 auto'}}>
-          <AspectPanel
+          <Hiradumi
                 items={this.state.books}
                 rowHeightList={document.body.clientWidth>600 || this.state.width>40 ? this.state.rowHeightList : [150,100,80,60,60,60,60]}
                 view={Book}

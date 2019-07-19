@@ -25748,7 +25748,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"src/AspectPanel.jsx":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"src/Hiradumi.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -26189,7 +26189,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _AspectPanel = _interopRequireDefault(require("./AspectPanel"));
+var _Hiradumi = _interopRequireDefault(require("./Hiradumi"));
 
 var _Book = _interopRequireDefault(require("./Book"));
 
@@ -26298,7 +26298,7 @@ function (_Component) {
           width: this.state.width + '%',
           margin: '0 auto'
         }
-      }, _react.default.createElement(_AspectPanel.default, {
+      }, _react.default.createElement(_Hiradumi.default, {
         items: this.state.books,
         rowHeightList: document.body.clientWidth > 600 || this.state.width > 40 ? this.state.rowHeightList : [150, 100, 80, 60, 60, 60, 60],
         view: _Book.default,
@@ -26314,7 +26314,7 @@ function (_Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","./AspectPanel":"src/AspectPanel.jsx","./Book":"src/Book.jsx","./SettingUI":"src/SettingUI.jsx"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./Hiradumi":"src/Hiradumi.jsx","./Book":"src/Book.jsx","./SettingUI":"src/SettingUI.jsx"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
