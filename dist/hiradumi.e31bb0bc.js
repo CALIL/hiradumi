@@ -25843,7 +25843,7 @@ function (_Component) {
 
           if (x > _this3.state.width) {
             // 全体の余白のあまり分、大きくする
-            x = x - item.width - _this3.props.margin;
+            x = x - (item.width - _this3.props.margin);
             var scale = _this3.state.width / x;
             rowItems.map(function (item) {
               if (rowItems.length === 1) {
@@ -29060,8 +29060,8 @@ function (_Component) {
       books: null,
       systemid: params.systemid,
       rowHeightList: [250, 180, 150, 100, 100, 100, 100],
-      width: 60,
-      margin: 16,
+      width: 50,
+      margin: 22,
       maxRow: 30
     };
     fetch('https://storage.googleapis.com/pickup-books/' + _this.state.systemid + '.json').then(function (r) {

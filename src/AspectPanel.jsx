@@ -62,7 +62,7 @@ export default class AspectPanel extends Component<Props, State> {
                 // 横幅を超えたら行の終わり
                 if (x > this.state.width) {
                     // 全体の余白のあまり分、大きくする
-                    x = x - item.width - this.props.margin;
+                    x = x - (item.width - this.props.margin);
                     let scale = this.state.width / x;
                     rowItems.map((item) => {
                         if (rowItems.length === 1) {
