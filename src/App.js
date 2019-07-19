@@ -65,7 +65,6 @@ class App extends Component {
           <AspectPanel
                 items={this.state.books}
                 rowHeightList={this.state.rowHeightList}
-                rowHeightListMobile={this.state.rowHeightList}
                 view={Book}
                 className={'books'}
                 margin={this.state.margin}

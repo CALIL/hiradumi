@@ -26019,25 +26019,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function execCopy(string) {
-  // 空div 生成
-  var tmp = document.createElement("div"); // 選択用のタグ生成
-
-  var pre = document.createElement('pre'); // 親要素のCSSで user-select: none だとコピーできないので書き換える
-
+  var tmp = document.createElement('div');
+  var pre = document.createElement('pre');
   pre.style.webkitUserSelect = 'auto';
   pre.style.userSelect = 'auto';
-  tmp.appendChild(pre).textContent = string; // 要素を画面外へ
-
+  tmp.appendChild(pre).textContent = string;
   var s = tmp.style;
   s.position = 'fixed';
-  s.right = '200%'; // body に追加
-
-  document.body.appendChild(tmp); // 要素を選択
-
-  document.getSelection().selectAllChildren(tmp); // クリップボードにコピー
-
-  var result = document.execCommand("copy"); // 要素削除
-
+  s.right = '200%';
+  document.body.appendChild(tmp);
+  document.getSelection().selectAllChildren(tmp);
+  var result = document.execCommand("copy");
   document.body.removeChild(tmp);
   return result;
 }
@@ -26276,7 +26268,6 @@ function (_Component) {
       }, _react.default.createElement(_AspectPanel.default, {
         items: this.state.books,
         rowHeightList: this.state.rowHeightList,
-        rowHeightListMobile: this.state.rowHeightList,
         view: _Book.default,
         className: 'books',
         margin: this.state.margin,
