@@ -1,0 +1,141 @@
+@charset "UTF-8";
+body {
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 600px) {
+  body {
+    width: 100%;
+    margin: 0;
+  }
+}
+@media (max-width: 600px) {
+  #root {
+    padding: 1rem;
+  }
+}
+.book {
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #C9C9C9;
+  overflow: hidden;
+  background-size: 4px 4px;
+  background-attachment: fixed;
+  animation: fadeIn 1s ease 0s 1 normal;
+}
+.book.stripe {
+  background-image: linear-gradient(-45deg, #ffffff 25%, #C9C9C9 25%, #C9C9C9 50%, #ffffff 50%, #ffffff 75%, #C9C9C9 75%, #C9C9C9);
+}
+.book img {
+  height: 100%;
+}
+.book .bg {
+  position: absolute;
+  background-color: #eeeeee;
+  width: 80%;
+  height: 100%;
+  left: 10%;
+  z-index: 0;
+}
+.book .textCover {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 30% 0 0;
+}
+.book .textCover .title {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 5px;
+  line-height: 120%;
+  z-index: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.book .textCover .author {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  font-size: 80%;
+  color: #EE0000;
+  font-weight: bold;
+  z-index: 1;
+}
+.book .libinfo {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  animation: fadeIn 1s ease 0s 1 normal;
+  z-index: 2;
+}
+
+/* status */
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80%;
+  color: white !important;
+  background-color: #B4B4B4;
+  text-decoration: none;
+  width: 100%;
+  height: 18px;
+}
+.status.nostatus {
+  display: none !important;
+}
+.status.available {
+  background-color: #1ab0f3;
+}
+.status.hold {
+  background-color: #1ab0f3;
+}
+.status.inlibrary {
+  background-color: #f67ba6;
+}
+.status.notexist {
+  background-color: #f7ae00;
+}
+.status.reserved {
+  background-color: #f7ae00;
+}
+.status.ordering {
+  background-color: #f7ae00;
+}
+.status.closed {
+  background-color: #f7ae00;
+}
+.status.error {
+  color: red !important;
+  background-color: #B4B4B4;
+}
+.status.running {
+  color: black !important;
+  background-image: url(https://calil.jp/public/img/parts/fish.gif);
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  background-color: #ADECFF;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*# sourceMappingURL=/book.9a8472eb.css.map */

@@ -54,9 +54,8 @@ export default class AspectPanel extends Component<Props, State> {
             let x = 0;
             // 行数指定
             if (this.props.maxRows && rowCount > this.props.maxRows) break;
-            console.log(this.state.width)
             this.state.items.slice(itemIndex).some((item) => {
-                item.width = parseInt(rowHeight * item.aspect);
+                item.width = rowHeight * item.aspect;
                 item.height = rowHeight;
                 item.margin = this.props.margin;
                 x += item.width + this.props.margin;
@@ -65,7 +64,6 @@ export default class AspectPanel extends Component<Props, State> {
                     // 全体の余白のあまり分、大きくする
                     x = x - item.width - this.props.margin;
                     let scale = this.state.width / x;
-                    let width = 0;
                     rowItems.map((item) => {
                         if (rowItems.length === 1) {
                             item.width = this.state.width;
@@ -73,12 +71,10 @@ export default class AspectPanel extends Component<Props, State> {
                             item.fullWidth = true;
                         } else {
                             item.width = item.width * scale;
-                            width += item.width;
                             item.height = item.height * scale;
                             item.fullWidth = false;
                         }
                     });
-                    console.log(width+this.props.margin*rowItems.length)
                     rows.push(rowItems);
                     rowCount += 1;
                     return true;
@@ -93,9 +89,17 @@ export default class AspectPanel extends Component<Props, State> {
         });
         const View = this.props.view;
         return (
-            <div className={this.props.className} ref="items">
+            <div className={this.props.className} ref="items" style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+              }}>
                 {items.map((item) => {
-                    return <View item={item} key={item.id} />
+                    return (
+                        <div key={item.id} style={{width: item.width+'px', height: item.height+'px', margin: '0 ' + item.margin/2 + 'px ' + item.margin + 'px'}}>
+                            <View item={item} />
+                        </div>
+                    );
                 })}
             </div>
         );

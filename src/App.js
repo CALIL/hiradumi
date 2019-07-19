@@ -55,9 +55,9 @@ class App extends Component {
     this.state = {
       books: null,
       systemid: params.systemid,
-      width: 60,
       rowHeightList: [250,180,150,100,100,100,100],
-      margin: 8,
+      width: 60,
+      margin: 10,
       maxRow: 30,
     };
     fetch('https://storage.googleapis.com/pickup-books/'+this.state.systemid+'.json').then((r) => r.json()).then((data) => {

@@ -17,9 +17,7 @@ export default class Book extends Component {
         const fontSize = book.height / 14;
         return (
             <React.Fragment>
-                <div className={'book' + (book.fullWidth ? ' stripe' : '')} ref="book" key={book.isbn} id={book.id}
-                 style={{width: book.width ? book.width+'px' : '100%', height: book.height+'px', backgroundColor: book.added ? '#CCCCCC': '', margin: book.margin + 'px'}}
-                 onClick={this.onClick.bind(this)}>
+                <div className={'book' + (book.fullWidth ? ' stripe' : '')} ref="book" key={book.isbn} id={book.id} onClick={this.onClick.bind(this)}>
                     {/* {book.row} */}
                     {/* {book.title} */}    
                     {this.props.item.cover ? (
