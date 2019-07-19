@@ -29060,8 +29060,8 @@ function (_Component) {
       books: null,
       systemid: params.systemid,
       rowHeightList: [250, 180, 150, 100, 100, 100, 100],
-      width: 50,
-      margin: 22,
+      width: 100,
+      margin: 18,
       maxRow: 30
     };
     fetch('https://storage.googleapis.com/pickup-books/' + _this.state.systemid + '.json').then(function (r) {
@@ -29166,6 +29166,7 @@ function (_Component) {
         name: "width",
         min: "0",
         max: "30",
+        value: this.state.margin,
         onChange: function onChange(e) {
           return _this2.setState({
             margin: parseInt(e.target.value)

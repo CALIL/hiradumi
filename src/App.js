@@ -56,8 +56,8 @@ class App extends Component {
       books: null,
       systemid: params.systemid,
       rowHeightList: [250,180,150,100,100,100,100],
-      width: 50,
-      margin: 22,
+      width: 100,
+      margin: 18,
       maxRow: 30,
     };
     fetch('https://storage.googleapis.com/pickup-books/'+this.state.systemid+'.json').then((r) => r.json()).then((data) => {
@@ -124,7 +124,7 @@ class App extends Component {
           {this.state.width}%
           &nbsp;
           <label htmlFor="margin">マージン</label>
-          <input type="range" id="margin" name="width" min="0" max="30" onChange={(e) => this.setState({margin: parseInt(e.target.value)})} />
+          <input type="range" id="margin" name="width" min="0" max="30" value={this.state.margin} onChange={(e) => this.setState({margin: parseInt(e.target.value)})} />
           {this.state.margin}
           &nbsp;
           <label htmlFor="margin">最大行数</label>
