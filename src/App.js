@@ -119,25 +119,25 @@ class App extends Component {
       <div>
         <div style={{width: '1400px', margin: '0 auto', padding: '10px'}}>
         <div>
-          <label htmlFor="width">横幅</label>
+          <label htmlFor="width">Width:</label>
           <input type="range" id="width" name="width" min="1" max="10" onChange={(e) => this.setState({width: e.target.value * 10})} />
           {this.state.width}%
           &nbsp;
-          <label htmlFor="margin">マージン</label>
-          <input type="range" id="margin" name="width" min="0" max="30" value={this.state.margin} onChange={(e) => this.setState({margin: parseInt(e.target.value)})} />
+          <label htmlFor="margin">Margin:</label>
+          <input type="range" id="margin" name="width" min="1" max="30" value={this.state.margin} onChange={(e) => this.setState({margin: parseInt(e.target.value)})} />
           {this.state.margin}
           &nbsp;
-          <label htmlFor="margin">最大行数</label>
+          <label htmlFor="margin">MaxRows:</label>
           <input type="range" id="maxRow" name="width" min="1" max="30" onChange={(e) => this.setState({maxRow: parseInt(e.target.value)})} />
           {this.state.maxRow}
         </div>
         <br />
         <div>
-          <label>行の高さ</label>
+          <label>RowHeightList:</label>
           {this.state.rowHeightList.map((rowHeight, i) => {
-            return <input type="number" placeholder={rowHeight} className="rowHeight" key={i} index={i} onChange={this.setRowHeight.bind(this)} />
+            return <input type="number" placeholder={rowHeight} className="rowHeight" key={i} index={i} onChange={this.setRowHeight.bind(this)} style={{width: '3rem'}} />
           })}
-          <button onClick={this.copy.bind(this)}>コピー</button>
+          <button onClick={this.copy.bind(this)}>Copy</button>
         </div>
         </div>
         <div style={{width: this.state.width + '%', margin: '0 auto'}}>

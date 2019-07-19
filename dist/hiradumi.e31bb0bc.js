@@ -29147,7 +29147,7 @@ function (_Component) {
         }
       }, _react.default.createElement("div", null, _react.default.createElement("label", {
         htmlFor: "width"
-      }, "\u6A2A\u5E45"), _react.default.createElement("input", {
+      }, "Width:"), _react.default.createElement("input", {
         type: "range",
         id: "width",
         name: "width",
@@ -29160,11 +29160,11 @@ function (_Component) {
         }
       }), this.state.width, "% \xA0", _react.default.createElement("label", {
         htmlFor: "margin"
-      }, "\u30DE\u30FC\u30B8\u30F3"), _react.default.createElement("input", {
+      }, "Margin:"), _react.default.createElement("input", {
         type: "range",
         id: "margin",
         name: "width",
-        min: "0",
+        min: "1",
         max: "30",
         value: this.state.margin,
         onChange: function onChange(e) {
@@ -29174,7 +29174,7 @@ function (_Component) {
         }
       }), this.state.margin, "\xA0", _react.default.createElement("label", {
         htmlFor: "margin"
-      }, "\u6700\u5927\u884C\u6570"), _react.default.createElement("input", {
+      }, "MaxRows:"), _react.default.createElement("input", {
         type: "range",
         id: "maxRow",
         name: "width",
@@ -29185,18 +29185,21 @@ function (_Component) {
             maxRow: parseInt(e.target.value)
           });
         }
-      }), this.state.maxRow), _react.default.createElement("br", null), _react.default.createElement("div", null, _react.default.createElement("label", null, "\u884C\u306E\u9AD8\u3055"), this.state.rowHeightList.map(function (rowHeight, i) {
+      }), this.state.maxRow), _react.default.createElement("br", null), _react.default.createElement("div", null, _react.default.createElement("label", null, "RowHeightList:"), this.state.rowHeightList.map(function (rowHeight, i) {
         return _react.default.createElement("input", {
           type: "number",
           placeholder: rowHeight,
           className: "rowHeight",
           key: i,
           index: i,
-          onChange: _this2.setRowHeight.bind(_this2)
+          onChange: _this2.setRowHeight.bind(_this2),
+          style: {
+            width: '3rem'
+          }
         });
       }), _react.default.createElement("button", {
         onClick: this.copy.bind(this)
-      }, "\u30B3\u30D4\u30FC"))), _react.default.createElement("div", {
+      }, "Copy"))), _react.default.createElement("div", {
         style: {
           width: this.state.width + '%',
           margin: '0 auto'
