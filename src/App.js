@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Hiradumi from './Hiradumi';
-import Item from './Item';
+import Book from './Book';
 import SettingUI from './SettingUI';
 
 
@@ -67,7 +67,7 @@ class App extends Component {
           <Hiradumi
                 items={this.state.items}
                 rowHeightList={ isMobile ? [150,100,80,60,60,60,60] : this.state.rowHeightList}
-                view={Item}
+                view={Book}
                 className={'items'}
                 margin={this.state.margin}
                 maxRows={this.state.maxRow}

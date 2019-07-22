@@ -25934,7 +25934,7 @@ _defineProperty(AspectPanel, "defaultProps", {
   maxRows: null,
   className: 'items'
 });
-},{"react":"node_modules/react/index.js"}],"src/Item.jsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"src/Book.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -26184,7 +26184,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _Hiradumi = _interopRequireDefault(require("./Hiradumi"));
 
-var _Item = _interopRequireDefault(require("./Item"));
+var _Book = _interopRequireDefault(require("./Book"));
 
 var _SettingUI = _interopRequireDefault(require("./SettingUI"));
 
@@ -26296,7 +26296,7 @@ function (_Component) {
       }, _react.default.createElement(_Hiradumi.default, {
         items: this.state.items,
         rowHeightList: isMobile ? [150, 100, 80, 60, 60, 60, 60] : this.state.rowHeightList,
-        view: _Item.default,
+        view: _Book.default,
         className: 'items',
         margin: this.state.margin,
         maxRows: this.state.maxRow
@@ -26309,7 +26309,7 @@ function (_Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","./Hiradumi":"src/Hiradumi.jsx","./Item":"src/Item.jsx","./SettingUI":"src/SettingUI.jsx"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./Hiradumi":"src/Hiradumi.jsx","./Book":"src/Book.jsx","./SettingUI":"src/SettingUI.jsx"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -26349,7 +26349,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49990" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58867" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
