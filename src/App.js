@@ -20,7 +20,7 @@ class App extends Component {
       books: null,
       rowHeightList: [250,180,150,100,100,100,100],
       width: 100,
-      margin: 18,
+      margin: 10,
       maxRow: 30,
     };
     fetch('https://storage.googleapis.com/pickup-books/Kyoto_Pref.json').then((r) => r.json()).then((data) => {
