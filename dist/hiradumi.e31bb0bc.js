@@ -25978,7 +25978,7 @@ function (_Component) {
   _createClass(item, [{
     key: "onClick",
     value: function onClick() {
-      window.open('https://calil.jp/item/' + this.props.item.isbn, '_parent');
+      window.open('https://calil.jp/book/' + this.props.item.isbn, '_parent');
     }
   }, {
     key: "render",
