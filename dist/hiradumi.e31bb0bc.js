@@ -25863,6 +25863,7 @@ function (_Component) {
           item.width = rowHeight * item.aspect;
           item.height = rowHeight;
           item.margin = _this3.props.margin;
+          item.row = rowCount;
           x += item.width + _this3.props.margin; // 横幅を超えたら行の終わり
 
           if (x > _this3.state.width) {
@@ -25933,7 +25934,7 @@ _defineProperty(AspectPanel, "defaultProps", {
   maxRows: null,
   className: 'items'
 });
-},{"react":"node_modules/react/index.js"}],"src/Book.jsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"src/Item.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -25963,41 +25964,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Book =
+var item =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Book, _Component);
+  _inherits(item, _Component);
 
-  function Book(props) {
-    _classCallCheck(this, Book);
+  function item(props) {
+    _classCallCheck(this, item);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Book).call(this, props));
+    return _possibleConstructorReturn(this, _getPrototypeOf(item).call(this, props));
   }
 
-  _createClass(Book, [{
+  _createClass(item, [{
     key: "onClick",
     value: function onClick() {
-      // let url = 'https://calil.jp/book/' + this.props.item.isbn;
-      // if (this.props.statusText!=='蔵書なし' && this.props.item.apiResult && this.props.item.apiResult[this.props.systemids[0]]) {
-      //     url = this.props.item.apiResult[this.props.systemids[0]].reserveurl;
-      // }
-      // window.open(url, '_parent');
-      window.open('https://calil.jp/book/' + this.props.item.isbn, '_parent');
+      window.open('https://calil.jp/item/' + this.props.item.isbn, '_parent');
     }
   }, {
     key: "render",
     value: function render() {
-      var book = this.props.item;
-      var fontSize = book.height / 14;
+      var item = this.props.item;
+      var fontSize = item.height / 14;
       return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("div", {
-        className: 'book' + (book.fullWidth ? ' stripe' : ''),
-        ref: "book",
-        key: book.isbn,
-        id: book.id,
+        className: 'item' + (item.fullWidth ? ' stripe' : ''),
+        ref: "item",
+        key: item.isbn,
+        id: item.id,
         onClick: this.onClick.bind(this)
       }, this.props.item.cover ? _react.default.createElement("img", {
-        src: book.cover,
-        alt: book.title,
+        src: item.cover,
+        alt: item.title,
         ref: "cover"
       }) : _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("div", {
         className: "bg"
@@ -26008,16 +26004,16 @@ function (_Component) {
         style: {
           fontSize: fontSize + 'px'
         }
-      }, book.title), book.row <= 3 ? _react.default.createElement("div", {
+      }, item.title), item.row <= 3 ? _react.default.createElement("div", {
         className: "author"
-      }, book.author) : null))));
+      }, item.author) : null))));
     }
   }]);
 
-  return Book;
+  return item;
 }(_react.Component);
 
-exports.default = Book;
+exports.default = item;
 },{"react":"node_modules/react/index.js"}],"src/SettingUI.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -26188,7 +26184,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _Hiradumi = _interopRequireDefault(require("./Hiradumi"));
 
-var _Book = _interopRequireDefault(require("./Book"));
+var _Item = _interopRequireDefault(require("./Item"));
 
 var _SettingUI = _interopRequireDefault(require("./SettingUI"));
 
@@ -26236,43 +26232,44 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
-      books: null,
+      items: null,
       rowHeightList: [250, 180, 150, 100, 100, 100, 100],
       width: 100,
       margin: 10,
       maxRow: 30
-    };
+    }; // 元データから画像のアスペクト比を出してHiradumiに渡す
+
     fetch('https://storage.googleapis.com/pickup-books/Kyoto_Pref.json').then(function (r) {
       return r.json();
     }).then(function (data) {
-      var new_books = [];
+      var new_items = [];
       var count = 0;
-      data.map(function (book) {
-        book.id = book.asin;
-        book.isbn = book.asin; // 画像の先読み
+      data.map(function (item) {
+        item.id = item.asin;
+        item.isbn = item.asin; // 画像の先読み
 
         var img = document.createElement('img');
 
-        if (book.cover && book.cover !== '') {
-          img.src = book.cover;
+        if (item.cover && item.cover !== '') {
+          img.src = item.cover;
 
           img.onload = function () {
-            count += 1;
-            book.size = [img.width, img.height]; // アスペクト比の算出
+            count += 1; // アスペクト比の算出
 
             var g = gcd(img.width, img.height);
             var ratioWidth = img.width / g;
             var ratioHeight = img.height / g;
-            book.aspect = ratioWidth / ratioHeight;
-            new_books.push(book);
+            item.aspect = ratioWidth / ratioHeight;
 
-            if (book.size[0] === 1 && book.size[1] === 1) {
-              book.cover = null;
+            if (img.width === 1 && img.height === 1) {
+              item.cover = null;
             }
+
+            new_items.push(item);
 
             if (data.length === count) {
               _this.setState({
-                books: new_books
+                items: new_items
               });
             }
           };
@@ -26287,7 +26284,8 @@ function (_Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-      if (!this.state.books) return null;
+      if (!this.state.items) return null;
+      var isMobile = !(document.body.clientWidth > 600 || this.state.width > 40);
       return _react.default.createElement("div", null, _react.default.createElement(_SettingUI.default, _extends({
         onChange: this.setState.bind(this)
       }, this.state)), _react.default.createElement("div", {
@@ -26296,10 +26294,10 @@ function (_Component) {
           margin: '0 auto'
         }
       }, _react.default.createElement(_Hiradumi.default, {
-        items: this.state.books,
-        rowHeightList: document.body.clientWidth > 600 || this.state.width > 40 ? this.state.rowHeightList : [150, 100, 80, 60, 60, 60, 60],
-        view: _Book.default,
-        className: 'books',
+        items: this.state.items,
+        rowHeightList: isMobile ? [150, 100, 80, 60, 60, 60, 60] : this.state.rowHeightList,
+        view: _Item.default,
+        className: 'items',
         margin: this.state.margin,
         maxRows: this.state.maxRow
       })));
@@ -26311,7 +26309,7 @@ function (_Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","./Hiradumi":"src/Hiradumi.jsx","./Book":"src/Book.jsx","./SettingUI":"src/SettingUI.jsx"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./Hiradumi":"src/Hiradumi.jsx","./Item":"src/Item.jsx","./SettingUI":"src/SettingUI.jsx"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));

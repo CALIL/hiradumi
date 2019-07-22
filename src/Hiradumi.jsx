@@ -60,6 +60,7 @@ export default class AspectPanel extends Component<Props, State> {
                 item.width = rowHeight * item.aspect;
                 item.height = rowHeight;
                 item.margin = this.props.margin;
+                item.row = rowCount;
                 x += item.width + this.props.margin;
                 // 横幅を超えたら行の終わり
                 if (x > this.state.width) {
