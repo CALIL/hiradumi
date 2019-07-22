@@ -25811,39 +25811,36 @@ function (_Component) {
           width: _this2.refs.items.clientWidth
         });
       });
+      var resizeObserver = new ResizeObserver(function (entries) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-      if (window.ResizeObserver) {
-        var resizeObserver = new ResizeObserver(function (entries) {
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
+        try {
+          for (var _iterator = entries[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var entry = _step.value;
+            var rect = entry.contentRect;
 
+            _this2.setState({
+              width: parseInt(rect.width)
+            });
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
           try {
-            for (var _iterator = entries[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var entry = _step.value;
-              var rect = entry.contentRect;
-
-              _this2.setState({
-                width: parseInt(rect.width)
-              });
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
             }
-          } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
           } finally {
-            try {
-              if (!_iteratorNormalCompletion && _iterator.return != null) {
-                _iterator.return();
-              }
-            } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
-              }
+            if (_didIteratorError) {
+              throw _iteratorError;
             }
           }
-        });
-        resizeObserver.observe(this.refs.items);
-      }
+        }
+      });
+      resizeObserver.observe(this.refs.items);
     }
   }, {
     key: "render",
@@ -26354,7 +26351,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54446" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49990" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

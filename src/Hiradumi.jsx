@@ -37,15 +37,13 @@ export default class AspectPanel extends Component<Props, State> {
     componentDidMount() {
         this.setState({width: this.refs.items.clientWidth});
         window.addEventListener('resize', () => this.setState({width: this.refs.items.clientWidth}));
-        if (window.ResizeObserver) {
-            const resizeObserver = new ResizeObserver(entries => {
-                for (const entry of entries) {
-                  const rect = entry.contentRect;
-                  this.setState({width: parseInt(rect.width)})
-                }
-              });
-              resizeObserver.observe(this.refs.items);
-        }
+        const resizeObserver = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                const rect = entry.contentRect;
+                this.setState({width: parseInt(rect.width)})
+            }
+        });
+        resizeObserver.observe(this.refs.items);
     }
     render() {
         let rows = [];
