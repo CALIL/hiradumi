@@ -25916,7 +25916,8 @@ function (_Component) {
           style: {
             width: item.width + 'px',
             height: item.height + 'px',
-            margin: '0 ' + item.margin / 2 + 'px ' + item.margin + 'px'
+            margin: '0 ' + item.margin / 2 + 'px ' + item.margin + 'px',
+            transition: 'width 0.1s linear, height 0.1s linear'
           }
         }, _react.default.createElement(View, {
           item: item
@@ -26349,7 +26350,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58867" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59094" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

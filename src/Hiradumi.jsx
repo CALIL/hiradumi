@@ -99,7 +99,7 @@ export default class AspectPanel extends Component<Props, State> {
               }}>
                 {items.map((item) => {
                     return (
-                        <div key={item.id} style={{width: item.width+'px', height: item.height+'px', margin: '0 ' + item.margin/2 + 'px ' + item.margin + 'px'}}>
+                        <div key={item.id} style={{width: item.width+'px', height: item.height+'px', margin: '0 ' + item.margin/2 + 'px ' + item.margin + 'px', transition: 'width 0.1s linear, height 0.1s linear'}}>
                             <View item={item} />
                         </div>
                     );
