@@ -25821,9 +25821,14 @@ function (_Component) {
             var entry = _step.value;
             var rect = entry.contentRect;
 
-            _this2.setState({
-              width: parseInt(rect.width)
-            });
+            if (_this2.lastRedraw - new Date().getTime() <= 500) {
+              // 多重実行抑制
+              _this2.setState({
+                width: parseInt(rect.width)
+              });
+            }
+
+            _this2.lastRedraw = new Date().getTime();
           }
         } catch (err) {
           _didIteratorError = true;
