@@ -25997,7 +25997,8 @@ function (_Component) {
         ref: "item",
         key: item.isbn,
         id: item.id,
-        onClick: this.onClick.bind(this)
+        onClick: this.onClick.bind(this),
+        draggable: "true"
       }, this.props.item.cover ? _react.default.createElement("img", {
         src: item.cover,
         alt: item.title,
