@@ -25871,9 +25871,9 @@ function (_Component) {
           item.row = rowCount;
           x += item.width + _this3.props.margin; // 横幅を超えたら行の終わり
 
-          if (x > _this3.state.width) {
+          if (_this3.state.width && x > _this3.state.width) {
             // 全体の余白のあまり分、大きくする
-            x = x - (item.width - _this3.props.margin);
+            x = x - (item.width + _this3.props.margin);
             var scale = _this3.state.width / x;
             rowItems.map(function (item) {
               if (rowItems.length === 1) {
@@ -26135,7 +26135,7 @@ function (_Component) {
         type: "range",
         id: "margin",
         name: "width",
-        min: "1",
+        min: "0",
         max: "30",
         value: this.props.margin,
         onChange: function onChange(e) {
@@ -26290,8 +26290,8 @@ function (_Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-      if (!this.state.items) return null;
-      var isMobile = !(document.body.clientWidth > 600 || this.state.width > 40);
+      if (!this.state.items) return null; // const isMobile = !(document.body.clientWidth>600 || this.state.width>40);
+
       return _react.default.createElement("div", null, _react.default.createElement(_SettingUI.default, _extends({
         onChange: this.setState.bind(this)
       }, this.state)), _react.default.createElement("div", {
@@ -26301,7 +26301,7 @@ function (_Component) {
         }
       }, _react.default.createElement(_Hiradumi.default, {
         items: this.state.items,
-        rowHeightList: isMobile ? [150, 100, 80, 60, 60, 60, 60] : this.state.rowHeightList,
+        rowHeightList: this.state.rowHeightList,
         view: _Book.default,
         className: 'items',
         margin: this.state.margin,

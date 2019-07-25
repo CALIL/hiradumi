@@ -52,7 +52,7 @@ export default class SettingUI extends Component {
                 {this.props.width}%
                 &nbsp;
                 <label htmlFor="margin">Margin:</label>
-                <input type="range" id="margin" name="width" min="1" max="30" value={this.props.margin} onChange={(e) => this.props.onChange({margin: parseInt(e.target.value)})} />
+                <input type="range" id="margin" name="width" min="0" max="30" value={this.props.margin} onChange={(e) => this.props.onChange({margin: parseInt(e.target.value)})} />
                 {this.props.margin}
                 &nbsp;
                 <label htmlFor="margin">MaxRows:</label>

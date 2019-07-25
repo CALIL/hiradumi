@@ -59,14 +59,14 @@ class App extends Component {
   }
   render() {
     if (!this.state.items) return null;
-    const isMobile = !(document.body.clientWidth>600 || this.state.width>40);
+    // const isMobile = !(document.body.clientWidth>600 || this.state.width>40);
     return (
       <div>
         <SettingUI onChange={this.setState.bind(this)} {...this.state} />
         <div style={{width: this.state.width + '%', margin: '0 auto'}}>
           <Hiradumi
                 items={this.state.items}
-                rowHeightList={ isMobile ? [150,100,80,60,60,60,60] : this.state.rowHeightList}
+                rowHeightList={this.state.rowHeightList}
                 view={Book}
                 className={'items'}
                 margin={this.state.margin}
