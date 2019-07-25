@@ -25859,6 +25859,7 @@ function (_Component) {
       var _loop = function _loop() {
         var rowHeight = void 0;
         rowHeight = _this3.props.rowHeightList[rowCount - 1];
+        if (!rowHeight) rowHeight = _this3.props.rowHeightList[_this3.props.rowHeightList.length - 1];
         var rowItems = [];
         var x = 0; // 行数指定
 
@@ -25878,7 +25879,7 @@ function (_Component) {
             rowItems.map(function (item) {
               if (rowItems.length === 1) {
                 item.width = _this3.state.width;
-                item.height = rowHeight;
+                item.height = _this3.state.width / item.aspect;
                 item.fullWidth = true;
               } else {
                 item.width = item.width * scale;
@@ -26083,7 +26084,7 @@ function (_Component) {
       var rowHeightList = [];
       Array.prototype.slice.call(document.querySelectorAll('.rowHeight')).map(function (rowHeight) {
         if (rowHeight.value !== '') {
-          rowHeightList.push(rowHeight.value);
+          rowHeightList.push(parseInt(rowHeight.value));
         } else {
           rowHeightList.push(parseInt(rowHeight.placeholder));
         }
@@ -26355,7 +26356,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64060" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54350" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

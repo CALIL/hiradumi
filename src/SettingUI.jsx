@@ -25,7 +25,7 @@ export default class SettingUI extends Component {
         let rowHeightList = []
         Array.prototype.slice.call(document.querySelectorAll('.rowHeight')).map((rowHeight) => {
           if(rowHeight.value!=='') {
-            rowHeightList.push(rowHeight.value);
+            rowHeightList.push(parseInt(rowHeight.value));
           } else {
             rowHeightList.push(parseInt(rowHeight.placeholder));
           }

@@ -55,6 +55,7 @@ export default class AspectPanel extends Component<Props, State> {
         while (this.state.items.length-1 > itemIndex) {
             let rowHeight;
             rowHeight = this.props.rowHeightList[rowCount-1];
+            if (!rowHeight) rowHeight = this.props.rowHeightList[this.props.rowHeightList.length-1];
             let rowItems = [];
             let x = 0;
             // 行数指定
@@ -73,7 +74,7 @@ export default class AspectPanel extends Component<Props, State> {
                     rowItems.map((item) => {
                         if (rowItems.length === 1) {
                             item.width = this.state.width;
-                            item.height = rowHeight;
+                            item.height = this.state.width / item.aspect;
                             item.fullWidth = true;
                         } else {
                             item.width = item.width * scale;
