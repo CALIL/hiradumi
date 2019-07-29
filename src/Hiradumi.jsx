@@ -40,7 +40,7 @@ export default class AspectPanel extends Component<Props, State> {
         const resizeObserver = new ResizeObserver(entries => {
             for (const entry of entries) {
                 const rect = entry.contentRect;
-                if (this.lastRedraw - (new Date()).getTime() <= 500) { // 多重実行抑制
+                if (this.lastRedraw - (new Date()).getTime() <= 100) { // 多重実行抑制
                     this.setState({width: parseInt(rect.width)})
                 }
                 this.lastRedraw = (new Date()).getTime();
@@ -103,7 +103,7 @@ export default class AspectPanel extends Component<Props, State> {
               }}>
                 {items.map((item) => {
                     return (
-                        <div key={item.id} style={{width: item.width+'px', height: item.height+'px', margin: '0 ' + item.margin/2 + 'px ' + item.margin + 'px', transition: 'width 0.1s linear, height 0.1s linear'}}>
+                        <div key={item.id} style={{width: item.width+'px', height: item.height+'px', margin: '0 ' + item.margin/2 + 'px ' + item.margin + 'px', transition: 'width 0.075s linear, height 0.075s linear', willChange: 'width, height'}}>
                             <View item={item} />
                         </div>
                     );
