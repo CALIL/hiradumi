@@ -1,0 +1,84 @@
+body
+  width: 100%
+  margin: 0 auto
+  font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  overflow-y: scroll
+
+@media (max-width:600px)
+  body
+    width: 100%
+    margin: 0
+    padding: 1rem
+
+
+[draggable]
+  user-select: none
+  cursor: move
+  box-shadow: inset 0 0 3px #000
+  border: 2px solid #666666
+
+.column
+  height: 150px
+  width: 150px
+  float: left
+  background-color: #ccc
+  margin-right: 5px
+  border-radius: 10px
+  text-align: center
+
+
+.item
+  cursor: pointer
+  position: relative
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 100%
+  height: 100%
+  border: 1px solid #C9C9C9
+  animation: fadeIn 1s ease 0s 1 normal
+  img
+    height: 100%
+
+  // coverなしの表示
+  .bg
+    position: absolute
+    background-color: #eeeeee
+    width: 80%
+    height: 100%
+    left: 10%
+    z-index: 0
+  .textCover
+    position: relative
+    height: 100%
+    width: 100%
+    padding: 30% 0 0
+    .title
+      position: relative
+      width: 90%
+      margin: 0 auto
+      color: #333333
+      font-weight: bold
+      margin-bottom: 5px
+      line-height: 120%
+      z-index: 1
+      word-wrap: break-word
+      overflow-wrap: break-word
+    .author
+      position: relative
+      width: 90%
+      margin: 0 auto
+      font-size: 80%
+      color: #EE0000
+      font-weight: bold
+      z-index: 1
+
+@keyframes fadeIn
+  0%
+    opacity: 0
+
+  100%
+    opacity: 1
+

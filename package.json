@@ -23,6 +23,8 @@
   "scripts": {
     "start": "node_modules/.bin/parcel index.html",
     "build": "node_modules/.bin/parcel build index.html --out-dir build --public-url ./",
+    "start_demo": "node_modules/.bin/parcel ./demo/index.html",
+    "build_demo": "node_modules/.bin/parcel build ./demo/index.html --out-dir demo/build --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
