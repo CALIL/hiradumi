@@ -12,7 +12,7 @@ export default class item extends Component {
         const fontSize = item.height / 14;
         return (
             <React.Fragment>
-                <div className={'item'} ref="item" key={item.isbn} id={item.id} onClick={this.onClick.bind(this)} draggable="true">
+                <div className={'item'} ref="item" key={item.isbn} id={item.id} onClick={this.onClick.bind(this)}>
                     {this.props.item.cover ? (
                         <img src={item.cover} alt={item.title} ref="cover" />
                     ) : (
