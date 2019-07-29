@@ -21,7 +21,7 @@
     "superagent-legacyiesupport": "^1.0.1"
   },
   "scripts": {
-    "start": "parcel index.html",
+    "start": "node_modules/.bin/parcel index.html",
     "build": "node_modules/.bin/parcel build index.html --out-dir build --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
