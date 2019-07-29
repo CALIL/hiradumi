@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Hiradumi from './Hiradumi';
 import Book from './Book';
 import SettingUI from './SettingUI';
-import items from '../items.json';
+import items from '../../items.json';
 
 
 export default class App extends Component {
