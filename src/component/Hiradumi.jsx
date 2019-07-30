@@ -96,7 +96,6 @@ export default class AspectPanel extends Component<Props, State> {
                 display: 'flex',
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
-                overflow: 'hidden'
               }}>
                 {items.map((item) => {
                     return (
