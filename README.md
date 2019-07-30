@@ -3,10 +3,30 @@
 
 ![](./demo.gif "")
 
-## Demo
+## 主な特徴
+
+- 幅に合わせたレイアウト
+- アスペクト比を維持
+- 幅の変更に追従
+
+## デモ
 [https://hiradumi.netlify.com/](https://hiradumi.netlify.com/)
 
-## License
+
+## 開発手順
+
+```bash
+npm install
+npm start
+```
+
+## ビルド手順
+
+```bash
+npm run build
+```
+
+## ライセンスについて
 The MIT License (MIT)
 
 Copyright (c) 2019 CALIL Inc.
