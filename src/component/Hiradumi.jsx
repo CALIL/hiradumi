@@ -39,11 +39,7 @@ export default class AspectPanel extends Component<Props, State> {
         window.addEventListener('resize', () => this.setState({width: this.refs.items.clientWidth}));
         const resizeObserver = new ResizeObserver(entries => {
             for (const entry of entries) {
-                const rect = entry.contentRect;
-                if ((new Date()).getTime() - this.lastRedraw >= 500) { // 多重実行抑制
-                    this.setState({width: parseInt(rect.width)})
-                }
-                this.lastRedraw = (new Date()).getTime();
+                this.setState({width: parseInt(entry.contentRect.width)})
             }
         });
         resizeObserver.observe(this.refs.items);
