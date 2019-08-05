@@ -2,7 +2,7 @@
   "name": "books",
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "lib/component/Hiradumi.jsx",
+  "main": "lib/Hiradumi.jsx",
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/cli": "^7.5.5",
@@ -30,7 +30,7 @@
     "start_demo": "node_modules/.bin/parcel ./demo/index.html -p 1235 --out-dir demo/dist",
     "build_demo": "node_modules/.bin/parcel build ./demo/index.html --out-dir demo/build --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "babel src/component/Hiradumi.jsx -d lib/index.js",
+    "prebuild": "babel src/component/Hiradumi.jsx -d lib/",
     "prepublish": "yarn run build"
   },
   "author": "",
