@@ -36,7 +36,7 @@ type State = {
     width: ?number
 }
 
-export default class AspectPanel extends Component<Props, State> {
+export default class Hiradumi extends Component<Props, State> {
     constructor(props) {
       super(props);
       this.state = {
