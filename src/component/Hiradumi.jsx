@@ -33,10 +33,12 @@ type State = {
 */
 
 export default class AspectPanel extends Component/*::<Props, State> */ {
+    /*:: 
     static defaultProps = {
         maxRows: null,
         className: 'items',
     }
+    */
     constructor(props/*:: Props */) {
       super(props);
       this.state/*:: State */ = {
