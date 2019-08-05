@@ -5,6 +5,8 @@
   "main": "lib/component/Hiradumi.jsx",
   "devDependencies": {
     "@babel/core": "^7.1.2",
+    "@babel/cli": "^7.5.5",
+    "@babel/preset-flow": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-transform-flow-strip-types": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
@@ -28,7 +30,7 @@
     "start_demo": "node_modules/.bin/parcel ./demo/index.html -p 1235 --out-dir demo/dist",
     "build_demo": "node_modules/.bin/parcel build ./demo/index.html --out-dir demo/build --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "flow-remove-types src/ -d lib/",
+    "prebuild": "babel src/component/Hiradumi.jsx -d lib/index.js",
     "prepublish": "yarn run build"
   },
   "author": "",
