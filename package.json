@@ -11,6 +11,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
+    "flow-remove-types": "^2.104.0",
     "sass": "^1.15.2"
   },
   "dependencies": {
@@ -26,7 +27,9 @@
     "build": "node_modules/.bin/parcel build ./src/index.html --out-dir build --public-url ./",
     "start_demo": "node_modules/.bin/parcel ./demo/index.html -p 1235 --out-dir demo/dist",
     "build_demo": "node_modules/.bin/parcel build ./demo/index.html --out-dir demo/build --public-url ./",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "flow-remove-types src/ -d lib/",
+    "prepublish": "npm run prebuild"
   },
   "author": "",
   "license": "MIT"
