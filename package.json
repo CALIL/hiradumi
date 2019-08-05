@@ -27,7 +27,7 @@
     "build_demo": "node_modules/.bin/parcel build ./demo/index.html --out-dir demo/build --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuild": "babel src/component/Hiradumi.jsx -d lib/",
-    "prepublish": "yarn run build"
+    "prepublish": "npm run build"
   },
   "author": "",
   "license": "MIT"
