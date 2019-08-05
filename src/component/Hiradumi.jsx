@@ -104,11 +104,7 @@ export default class AspectPanel extends Component/*::<Props, State> */ {
         });
         const View = this.props.view;
         return (
-            <div className={this.props.className} ref="items" style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-              }}>
+            <div className={this.props.className} ref="items" style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
                 {items.map((item) => {
                     return (
                         <div key={item.id} style={{width: item.width+'px', height: item.height+'px', margin: '0 ' + item.margin/2 + 'px ' + item.margin + 'px', transition: 'width 0.075s linear, height 0.075s linear', willChange: 'width, height'}}>
