@@ -1,12 +1,11 @@
 // @flow
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import 'resize-observer-polyfill/dist/ResizeObserver.global';
 import 'whatwg-fetch';
 
 import React, { Component } from 'react';
 
-/*::
 type Props = {
     items: Array<Item>,
     rowHeightList: Array<number>, // 各行の高さ
@@ -30,21 +29,18 @@ type State = {
     items: Array<Item>,
     width: ?number
 }
-*/
 
-export default class AspectPanel extends Component/*::<Props, State> */ {
-    /*:: 
+export default class AspectPanel extends Component<Props, State> {
     static defaultProps = {
         maxRows: null,
         className: 'items',
     }
-    */
-    constructor(props/*:: Props */) {
-      super(props);
-      this.state/*:: State */ = {
-        items: props.items,
+    state: State = {
+        items: this.props.items,
         width: null,
-      };
+    };
+    constructor(props: Props) {
+      super(props);
     }
     componentDidMount() {
         this.setState({width: this.refs.items.clientWidth});
@@ -104,7 +100,11 @@ export default class AspectPanel extends Component/*::<Props, State> */ {
         });
         const View = this.props.view;
         return (
-            <div className={this.props.className} ref="items" style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
+            <div className={this.props.className} ref="items" style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+              }}>
                 {items.map((item) => {
                     return (
                         <div key={item.id} style={{width: item.width+'px', height: item.height+'px', margin: '0 ' + item.margin/2 + 'px ' + item.margin + 'px', transition: 'width 0.075s linear, height 0.075s linear', willChange: 'width, height'}}>
