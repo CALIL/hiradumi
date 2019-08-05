@@ -6,7 +6,13 @@ import 'whatwg-fetch';
 
 import React, { Component } from 'react';
 
+type DefaultProps = {|
+    maxRows: null,
+    className: 'items',
+|}
+
 type Props = {
+    ...DefaultProps,
     items: Array<Item>,
     rowHeightList: Array<number>,
     view: Function,
@@ -31,10 +37,6 @@ type State = {
 }
 
 export default class AspectPanel extends Component<Props, State> {
-    static defaultProps = {
-        maxRows: null,
-        className: 'items',
-    }
     state: State = {
         items: this.props.items,
         width: null,
