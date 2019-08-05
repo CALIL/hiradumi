@@ -1,3 +1,8 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import 'resize-observer-polyfill/dist/ResizeObserver.global';
+import 'whatwg-fetch';
+
 import React, { Component } from 'react';
 
 type Props = {

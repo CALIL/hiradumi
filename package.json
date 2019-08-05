@@ -14,9 +14,12 @@
     "sass": "^1.15.2"
   },
   "dependencies": {
+    "core-js": "^3.1.4",
     "parcel-bundler": "^1.10.3",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "resize-observer-polyfill": "^1.5.1",
+    "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
     "start": "node_modules/.bin/parcel ./src/index.html",
