@@ -37,11 +37,11 @@ type State = {
 }
 
 export default class AspectPanel extends Component<Props, State> {
-    state: State = {
+    state = {
         items: this.props.items,
         width: null,
     };
-    constructor(props: Props) {
+    constructor(props) {
       super(props);
     }
     componentDidMount() {

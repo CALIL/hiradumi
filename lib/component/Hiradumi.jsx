@@ -37,11 +37,11 @@ import React, { Component } from 'react';
  
 
 export default class AspectPanel extends Component               {
-    state        = {
+    state = {
         items: this.props.items,
         width: null,
     };
-    constructor(props       ) {
+    constructor(props) {
       super(props);
     }
     componentDidMount() {
