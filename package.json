@@ -2,7 +2,7 @@
   "name": "books",
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "lib/Hiradumi.jsx",
+  "main": "lib/Hiradumi.js",
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
