@@ -1,4 +1,4 @@
-// @flow
+//      
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import 'resize-observer-polyfill/dist/ResizeObserver.global';
@@ -6,40 +6,40 @@ import 'whatwg-fetch';
 
 import React, { Component } from 'react';
 
-type Props = {
-    items: Array<Item>,
-    rowHeightList: Array<number>,
-    view: Function,
-    margin: number,
-    className: string,
-    maxRows: ?number,
-}
+              
+                       
+                                 
+                   
+                   
+                      
+                     
+ 
 
-type Item = {
-    id: string,
-    aspect: number,
-    width: ?number,
-    height: number,
-    margin: number,
-    row: number,
-    fullWidth: boolean,
-}
+             
+               
+                   
+                   
+                   
+                   
+                
+                       
+ 
 
-type State = {
-    items: Array<Item>,
-    width: ?number
-}
+              
+                       
+                  
+ 
 
-export default class AspectPanel extends Component<Props, State> {
+export default class AspectPanel extends Component               {
     static defaultProps = {
         maxRows: null,
         className: 'items',
     }
-    state: State = {
+    state        = {
         items: this.props.items,
         width: null,
     };
-    constructor(props: Props) {
+    constructor(props       ) {
       super(props);
     }
     componentDidMount() {
