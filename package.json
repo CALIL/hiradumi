@@ -23,8 +23,8 @@
   "scripts": {
     "start": "node_modules/.bin/parcel ./src/index.html",
     "build": "node_modules/.bin/parcel build ./src/index.html --out-dir build --public-url ./",
-    "start_demo": "node_modules/.bin/parcel ./demo/index.html -p 1235 --out-dir demo/dist",
-    "build_demo": "node_modules/.bin/parcel build ./demo/index.html --out-dir demo/build --public-url ./",
+    "start_example": "node_modules/.bin/parcel ./example/index.html -p 1235 --out-dir example/dist",
+    "build_example": "node_modules/.bin/parcel build ./example/index.html --out-dir example/build --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuild": "babel src/component/Hiradumi.jsx -d lib/",
     "prepublish": "npm run build"
