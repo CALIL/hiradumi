@@ -1,10 +1,12 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+// @flow
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import 'resize-observer-polyfill/dist/ResizeObserver.global';
 import 'whatwg-fetch';
 
 import React, { Component } from 'react';
 
+/*::
 type Props = {
     items: Array<Item>,
     rowHeightList: Array<number>, // 各行の高さ
@@ -15,9 +17,11 @@ type Props = {
 }
 
 type Item = {
-    aspect: float, // アスペクト比 横/縦
-    width: number,
+    id: string,
+    aspect: number, // アスペクト比 横/縦
+    width: ?number,
     height: number,
+    margin: number,
     row: number,
     fullWidth: boolean,
 }
@@ -26,15 +30,16 @@ type State = {
     items: Array<Item>,
     width: ?number
 }
+*/
 
-export default class AspectPanel extends Component<Props, State> {
+export default class AspectPanel extends Component/*::<Props, State> */ {
     static defaultProps = {
         maxRows: null,
         className: 'items',
     }
-    constructor(props) {
+    constructor(props/*:: Props */) {
       super(props);
-      this.state = {
+      this.state/*:: State */ = {
         items: props.items,
         width: null,
       };
