@@ -22,10 +22,10 @@
   },
   "scripts": {
     "start": "node_modules/.bin/parcel ./example/index.html --out-dir example/dist",
-    "build": "node_modules/.bin/parcel build ./example/index.html --out-dir example/build --public-url ./",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "babel src/ -d lib/",
-    "prepublish": "npm run build"
+    "build_ex": "node_modules/.bin/parcel build ./example/index.html --out-dir example/build --public-url ./",
+    "build": "babel src/ -d lib/",
+    "prepublish": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT"

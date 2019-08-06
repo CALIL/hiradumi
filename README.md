@@ -23,6 +23,7 @@ npm start
 ## ビルド手順
 
 ```bash
+npm install @babel/cli @babel/core -g  
 npm run build
 ```
 
