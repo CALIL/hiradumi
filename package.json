@@ -1,5 +1,5 @@
 {
-  "name": "books",
+  "name": "hiradumi",
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "lib/Hiradumi.js",
@@ -10,23 +10,21 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "sass": "^1.15.2"
+    "sass": "^1.15.2",
+    "parcel-bundler": "^1.10.3"
   },
   "dependencies": {
     "core-js": "^3.1.4",
-    "parcel-bundler": "^1.10.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "resize-observer-polyfill": "^1.5.1",
     "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
-    "start": "node_modules/.bin/parcel ./src/index.html",
-    "build": "node_modules/.bin/parcel build ./src/index.html --out-dir build --public-url ./",
-    "start_example": "node_modules/.bin/parcel ./example/index.html -p 1235 --out-dir example/dist",
-    "build_example": "node_modules/.bin/parcel build ./example/index.html --out-dir example/build --public-url ./",
+    "start": "node_modules/.bin/parcel ./example/index.html --out-dir example/dist",
+    "build": "node_modules/.bin/parcel build ./example/index.html --out-dir example/build --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "babel src/component/Hiradumi.jsx -d lib/",
+    "prebuild": "babel src/ -d lib/",
     "prepublish": "npm run build"
   },
   "author": "",

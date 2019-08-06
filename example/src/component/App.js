@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Hiradumi from '../../../src/component/Hiradumi';
-import Book from '../../../src/component/Book';
+import Hiradumi from '../../../src/Hiradumi.jsx';
+import Book from './Book';
 import SettingUI from './SettingUI';
-import items from '../../../src/items.json';
+import items from '../../items.json';
 
 
 export default class App extends Component {
