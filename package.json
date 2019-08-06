@@ -1,7 +1,7 @@
 {
   "name": "hiradumi",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "description": "アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント",
   "main": "lib/Hiradumi.js",
   "devDependencies": {
     "@babel/cli": "^7.5.5",
