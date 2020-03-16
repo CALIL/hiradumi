@@ -4,19 +4,19 @@
   "description": "アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント",
   "main": "lib/Hiradumi.js",
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-flow": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
     "parcel-bundler": "^1.12.4",
-    "sass": "^1.15.2"
+    "sass": "^1.26.3"
   },
   "dependencies": {
-    "core-js": "^3.1.4",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "core-js": "^3.6.4",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "resize-observer-polyfill": "^1.5.1",
     "whatwg-fetch": "^3.0.0"
   },
