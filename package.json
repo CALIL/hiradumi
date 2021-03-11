@@ -11,7 +11,7 @@
     "@babel/preset-flow": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
     "minimist": "^1.2.5",
-    "parcel-bundler": "^1.12.4",
+    "parcel-bundler": "1.12.3",
     "sass": "^1.26.3"
   },
   "dependencies": {
@@ -22,8 +22,8 @@
     "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
-    "start": "node_modules/.bin/parcel ./example/index.html --out-dir example/dist",
-    "build_ex": "node_modules/.bin/parcel build ./example/index.html --out-dir example/build --public-url ./",
+    "start": "parcel ./example/index.html --out-dir example/dist",
+    "build_ex": "parcel build ./example/index.html --out-dir example/build --public-url ./",
     "build": "babel src/ -d lib/",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
