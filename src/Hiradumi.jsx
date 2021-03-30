@@ -51,7 +51,11 @@ export default class Hiradumi extends Component<Props, State> {
                 this.setState({width: this.refs.items.clientWidth});
             }, 300)
         }
-        window.addEventListener('resize', () => this.setState({width: this.refs.items.clientWidth}));
+        window.addEventListener('resize', () => {
+            if (this.refs.items.clientWidth) {
+                this.setState({width: this.refs.items.clientWidth})
+            }
+        });
         // const resizeObserver = new ResizeObserver(entries => {
         //     for (const entry of entries) {
         //         this.setState({width: parseInt(entry.contentRect.width)})
