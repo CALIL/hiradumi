@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント",
   "main": "lib/Hiradumi.js",
+  "scripts": {
+    "start": "parcel ./example/index.html --out-dir example/dist",
+    "build_ex": "parcel build ./example/index.html --out-dir example/build --public-url ./",
+    "build": "babel src/ -d lib/",
+    "prepare": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
@@ -20,13 +27,6 @@
     "react-dom": "^16.13.0",
     "resize-observer-polyfill": "^1.5.1",
     "whatwg-fetch": "^3.0.0"
-  },
-  "scripts": {
-    "start": "parcel ./example/index.html --out-dir example/dist",
-    "build_ex": "parcel build ./example/index.html --out-dir example/build --public-url ./",
-    "build": "babel src/ -d lib/",
-    "prepublishOnly": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT"

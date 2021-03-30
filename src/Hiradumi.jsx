@@ -1,6 +1,6 @@
 // @flow
 import "core-js/stable";
-import 'resize-observer-polyfill/dist/ResizeObserver.global';
+// import 'resize-observer-polyfill/dist/ResizeObserver.global';
 import 'whatwg-fetch';
 
 import React, { Component } from 'react';
@@ -44,14 +44,20 @@ export default class Hiradumi extends Component<Props, State> {
       };
     }
     componentDidMount() {
-        this.setState({width: this.refs.items.clientWidth});
+        if (this.refs.items.clientWidth) {
+            this.setState({width: this.refs.items.clientWidth});
+        } else {
+            setTimeout(() => {
+                this.setState({width: this.refs.items.clientWidth});
+            }, 300)
+        }
         window.addEventListener('resize', () => this.setState({width: this.refs.items.clientWidth}));
-        const resizeObserver = new ResizeObserver(entries => {
-            for (const entry of entries) {
-                this.setState({width: parseInt(entry.contentRect.width)})
-            }
-        });
-        resizeObserver.observe(this.refs.items);
+        // const resizeObserver = new ResizeObserver(entries => {
+        //     for (const entry of entries) {
+        //         this.setState({width: parseInt(entry.contentRect.width)})
+        //     }
+        // });
+        // resizeObserver.observe(this.refs.items);
     }
     render() {
         let rows = [];
