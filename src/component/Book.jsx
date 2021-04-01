@@ -12,8 +12,8 @@ export default class item extends Component {
         const fontSize = this.props.height / 14;
         return (
             <div className={'item'} ref="item" id={item.id} style={{
-                width: this.props.width+'px',
-                height: this.props.height+'px',
+                width: item.width+'px',
+                height: item.height+'px',
                 cursor: 'pointer',
                 position: 'relative',
                 display: 'inline-flex',

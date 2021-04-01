@@ -2,6 +2,7 @@ import 'whatwg-fetch';
 import React, { Component } from 'react';
 
 import HiradumiRow from './HiradumiRow'
+import { threadId } from 'node:worker_threads';
 
 interface Props {
     data: any[]
@@ -11,13 +12,13 @@ interface Props {
 }
 interface State {
     size: number
+    rowsData: any[]
     rowCount: number
 }
 
 interface Hiradumi {
     rowHeight: number
     rowCount: number
-    columnCount: number
     factors: number[]
     rowParams: any[]
     currentCount: number
@@ -29,7 +30,8 @@ class Hiradumi extends React.Component<Props, State> {
       super(props)
       this.state ={
           size: this.props.size ? this.props.size : 200,
-          rowCount: this.props.rowCount ? this.props.rowCount : 4
+          rowCount: this.props.rowCount ? this.props.rowCount : 4,
+          rowsData: []
       }
       this.rowCount = 0
       this.factors = []
@@ -75,21 +77,32 @@ class Hiradumi extends React.Component<Props, State> {
 
     setRowParams() {
         console.log('setRowParams')
-        this.columnCount = 0;
         this.rowParams = [];
-        Array.from({length: 4}).map((notValue, index) => {
-            // 書影の高さ・幅 一行に入る数の計算
-            let height = this.state.size * this.factors[index];
-            let width = height / 1.5;
-            let columnCount = Math.floor(window.innerWidth / width) - 1;
 
-            this.columnCount += columnCount;
-            console.log(columnCount)
-            this.rowParams.push({
-                columnCount: columnCount,
-                width: width,
-                height: height
-            });
+        // dataから書影のascpetRatioを使う
+        // heightが決まっているので、aspectでwidthを決める
+        // widthの合計が、枠の横幅以内であればデータを追加
+
+        // 計算している本のindex
+        let currentIndex = 0
+
+        Array.from({length: 4}).map((notValue, index) => {
+            // 行の高さ
+            let height = this.state.size * this.factors[index]
+
+            // 一行に入る数の計算
+            let columnCount = 0
+
+            const tempData = this.props.data.slice(currentIndex)
+            tempData.map((item, index) => {
+                let width = height / item.aspect
+                this.props.data[currentIndex+index].width = height
+                this.props.data[currentIndex+index].width = width
+                columnCount += 1
+            })
+            this.state.rowsData.push(this.props.data.slice(currentIndex, currentIndex+columnCount))
+
+            currentIndex += columnCount
         });
     }
 
@@ -100,18 +113,18 @@ class Hiradumi extends React.Component<Props, State> {
         return (<React.Fragment>
             {this.props.data.length>0 ? (
                 <HiradumiRow
-                    data={this.props.data}
+                    rowsData={this.state.rowsData}
                     size={this.state.size}
                     rowIndex={1}
                     isScrolling={false}
-                    columnCount={this.columnCount}
                     rowParams={this.rowParams}
                     itemComponent={this.props.itemComponent}
-                    onRender={(i) => {
-                        // 現在の冊数の更新
-                        this.currentCount = i - this.columnCount;
-                        if (this.currentCount > this.props.data.length - 100) this.currentCount = this.props.data.length;
-                }} />
+                    // onRender={(i) => {
+                    //     // 現在の冊数の更新
+                    //     this.currentCount = i - this.columnCount;
+                    //     if (this.currentCount > this.props.data.length - 100) this.currentCount = this.props.data.length;
+                    // }}
+                />
             ) : null}
         </React.Fragment>)
     }

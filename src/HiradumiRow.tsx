@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 
 interface Props {
-    data: any
+    rowsData: any
     size: number
     isScrolling: boolean
-    rowParams: any[]
     rowIndex: number
-    columnCount: number
-    onRender: (lastCount:number) => void
+    // columnCount: number
+    // onRender: (lastCount:number) => void
     itemComponent: any
 }
 interface State {
 }
 
 interface HiradumiRow {
-    totalCount: number
     lastCount: number
     size: number
 }
@@ -31,35 +29,29 @@ class HiradumiRow extends React.Component<Props, State> {
  
     rowRender(rowIndex) {
         // console.log('rowRender')
-        let {height, width, columnCount} = this.props.rowParams[rowIndex];
 
         // 書影APIのサイズ
         let size = this.size;
-        if (this.props.isScrolling || columnCount >= 20) size = 120
+        if (this.props.isScrolling) size = 120
 
         let items = [];
-        let i;
-        Array.from({length: columnCount}).map((notValue, columnIndex) => {
-            i =  (this.props.columnCount * this.props.rowIndex) + this.totalCount + columnIndex;
-            if (i < this.props.data.length) {
-                items.push(<this.props.itemComponent item={this.props.data[i]} height={height} width={width} />);
-            }
-        });
+        this.props.rowsData.map((data) => {
+            data.map((item) => {
+                items.push(<this.props.itemComponent item={item} />);
+            })
+        })
 
-        this.totalCount += columnCount;
-        this.lastCount = i;
-        return <div key={'hiradumiRow'+i} className="row" style={{display: 'flex'}}>{items}</div>;
+        return <div key={'hiradumiRow'+rowIndex} className="row" style={{display: 'flex'}}>{items}</div>;
 
     }
 
     render() {
-        this.totalCount = 0;
         let rows = [];
-        Array.from({length: this.props.rowParams.length}).map((notValue, index) => {
+        Array.from({length: this.props.rowsData.length}).map((notValue, index) => {
             let items = this.rowRender(index);
             rows.push(items);
         });
-        this.props.onRender(this.lastCount);
+        // this.props.onRender(this.lastCount);
         return rows;
     }
 }
