@@ -19,6 +19,7 @@
         "build:pug": "pug -O pug_env.js src/ --out ./docs/",
         "build:copy:assets": "cpx \"src/assets/**/*\" docs/assets/",
         "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "babel src/ -d lib/ --extensions '.ts,.tsx'",
         "preinstall": "npx npm-force-resolutions"
     },
     "repository": {
@@ -32,6 +33,11 @@
     },
     "homepage": "https://github.com/deguchi/template#readme",
     "devDependencies": {
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.8.7",
+        "@babel/preset-env": "^7.8.7",
+        "@babel/preset-react": "^7.8.3",
+        "@babel/preset-typescript": "^7.13.0",
         "@types/node": "^14.10.2",
         "@typescript-eslint/eslint-plugin": "^4.1.1",
         "@typescript-eslint/parser": "^4.1.1",
