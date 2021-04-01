@@ -5,34 +5,30 @@ import 'whatwg-fetch';
 
 import React, { Component } from 'react';
 
-type DefaultProps = {|
-    maxRows: null,
-    className: 'items',
-|}
-
 type Props = {
-    ...DefaultProps,
-    items: Array<Item>,
-    rowHeightList: Array<number>,
-    view: Function,
-    margin: number,
-    className: string,
-    maxRows: ?number,
+    maxRows: null
+    className: 'items'
+    items: Item[]
+    rowHeightList: number[]
+    view: Function
+    margin: number
+    className: string
+    maxRows: number | null
 }
 
 type Item = {
-    id: string,
-    aspect: number,
-    width: ?number,
-    height: number,
-    margin: number,
-    row: number,
-    fullWidth: boolean,
+    id: string
+    aspect: number
+    width: number | null
+    height: number
+    margin: number
+    row: number
+    fullWidth: boolean
 }
 
 type State = {
-    items: Array<Item>,
-    width: ?number
+    items: Item[]
+    width: number | null
 }
 
 export default class Hiradumi extends Component<Props, State> {

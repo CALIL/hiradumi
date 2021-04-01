@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Hiradumi from '../../../src/Hiradumi.jsx';
+import Hiradumi from '../Hiradumi.jsx';
 import Book from './Book';
 import SettingUI from './SettingUI';
 import items from '../../items.json';
