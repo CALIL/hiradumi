@@ -4,7 +4,6 @@ import SettingUI from './SettingUI';
 import Book from './Book';
 import items from '../Kochi_Motoyama_plus.json';
 
-
 export default class App extends Component {
   constructor(props) {
     super(props);

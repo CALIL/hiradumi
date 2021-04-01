@@ -41,7 +41,7 @@ class HiradumiRow extends React.Component<Props, State> {
             })
         })
 
-        return <div key={'hiradumiRow'+rowIndex} className="row" style={{display: 'flex'}}>{items}</div>;
+        return <div key={'hiradumiRow'+rowIndex} className="row">{items}</div>;
 
     }
 

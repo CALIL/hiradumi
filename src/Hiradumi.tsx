@@ -17,7 +17,6 @@ interface State {
 }
 
 interface Hiradumi {
-    rowHeight: number
     rowCount: number
     factors: number[]
     rowParams: any[]
@@ -38,8 +37,7 @@ class Hiradumi extends React.Component<Props, State> {
       Array.from({length: this.state.rowCount}).map((notValue, index) => {
           this.factors.push(this.getFactor(index))
       });
-      this.setRowParams()
-      this.setRowHeight()
+      this.setRowData()
   }
 
     componentDidMount() {
@@ -48,8 +46,7 @@ class Hiradumi extends React.Component<Props, State> {
     
     resize() {
         // console.log('resize')
-        this.setRowHeight();
-        this.setRowParams();
+        this.setRowData();
         this.forceUpdate();
     }
 
@@ -67,17 +64,7 @@ class Hiradumi extends React.Component<Props, State> {
         return factors[index]
     }
 
-
-    setRowHeight() {
-        this.rowHeight = 0;
-        this.factors.map((factor) => {
-            this.rowHeight += this.state.size * factor
-        });
-    }
-
-    setRowParams() {
-        console.log('setRowParams')
-        this.rowParams = [];
+    setRowData() {
 
         // dataから書影のascpetRatioを使う
         // heightが決まっているので、aspectでwidthを決める
@@ -87,6 +74,9 @@ class Hiradumi extends React.Component<Props, State> {
         let currentIndex = 0
 
         Array.from({length: 4}).map((notValue, index) => {
+            // 行の横幅
+            let rowWidth = 0
+
             // 行の高さ
             let height = this.state.size * this.factors[index]
 
@@ -95,10 +85,23 @@ class Hiradumi extends React.Component<Props, State> {
 
             const tempData = this.props.data.slice(currentIndex)
             tempData.map((item, index) => {
-                let width = height / item.aspect
-                this.props.data[currentIndex+index].width = height
-                this.props.data[currentIndex+index].width = width
-                columnCount += 1
+                if (item.properties && item.properties.aspect) {
+                    let width = height * item.properties.aspect
+                    if (window.innerWidth > rowWidth + width) {
+                        this.props.data[currentIndex+index].height = height
+                        this.props.data[currentIndex+index].width = width
+                        rowWidth += width
+                        columnCount += 1
+                    }
+                } else {
+                    let width = height * 0.66666
+                    if (window.innerWidth > rowWidth + width) {
+                        this.props.data[currentIndex+index].height = height
+                        this.props.data[currentIndex+index].width = width
+                        rowWidth += width
+                        columnCount += 1
+                    }
+                }
             })
             this.state.rowsData.push(this.props.data.slice(currentIndex, currentIndex+columnCount))
 
@@ -117,7 +120,6 @@ class Hiradumi extends React.Component<Props, State> {
                     size={this.state.size}
                     rowIndex={1}
                     isScrolling={false}
-                    rowParams={this.rowParams}
                     itemComponent={this.props.itemComponent}
                     // onRender={(i) => {
                     //     // 現在の冊数の更新
