@@ -9,11 +9,11 @@ export default class item extends Component {
     }
     render() {
         const item = this.props.item;
-        const fontSize = item.height / 14;
+        const fontSize = this.props.height / 14;
         return (
             <div className={'item'} ref="item" id={item.id} style={{
-                width: item.width+'px',
-                height: item.height+'px',
+                width: this.props.width+'px',
+                height: this.props.height+'px',
                 cursor: 'pointer',
                 position: 'relative',
                 display: 'inline-flex',
@@ -28,9 +28,7 @@ export default class item extends Component {
                         <div className="bg"></div>
                         <div className="textCover">
                             <div className="title" style={{fontSize: fontSize+'px'}}>{item.title}</div>
-                            {(item.row <= 3) ? (
-                                <div className="author">{item.author}</div>
-                            ) : null}
+                            <div className="author">{item.author}</div>
                         </div>
                     </React.Fragment>
                 )}

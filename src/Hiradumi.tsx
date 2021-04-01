@@ -1,125 +1,125 @@
-// @flow
-import "core-js/stable";
-// import 'resize-observer-polyfill/dist/ResizeObserver.global';
 import 'whatwg-fetch';
-
 import React, { Component } from 'react';
 
-type Props = {
-    maxRows: null
-    className: 'items'
-    items: Item[]
-    rowHeightList: number[]
-    view: Function
-    margin: number
-    className: string
-    maxRows: number | null
+import HiradumiRow from './HiradumiRow'
+
+interface Props {
+    data: any[]
+    size: number
+    rowCount: number
+    itemComponent: any
+}
+interface State {
+    size: number
+    rowCount: number
 }
 
-type Item = {
-    id: string
-    aspect: number
-    width: number | null
-    height: number
-    margin: number
-    row: number
-    fullWidth: boolean
+interface Hiradumi {
+    rowHeight: number
+    rowCount: number
+    columnCount: number
+    factors: number[]
+    rowParams: any[]
+    currentCount: number
 }
 
-type State = {
-    items: Item[]
-    width: number | null
-}
 
-export default class Hiradumi extends Component<Props, State> {
-    constructor(props) {
-      super(props);
-      this.state = {
-        items: props.items,
-        width: null,
-      };
-    }
+class Hiradumi extends React.Component<Props, State> {
+    constructor(props: Props) {
+      super(props)
+      this.state ={
+          size: this.props.size ? this.props.size : 200,
+          rowCount: this.props.rowCount ? this.props.rowCount : 4
+      }
+      this.rowCount = 0
+      this.factors = []
+      Array.from({length: this.state.rowCount}).map((notValue, index) => {
+          this.factors.push(this.getFactor(index))
+      });
+      this.setRowParams()
+      this.setRowHeight()
+  }
+
     componentDidMount() {
-        if (this.refs.items.clientWidth) {
-            this.setState({width: this.refs.items.clientWidth});
-        } else {
-            setTimeout(() => {
-                this.setState({width: this.refs.items.clientWidth});
-            }, 300)
-        }
-        window.addEventListener('resize', () => {
-            if (this.refs.items.clientWidth) {
-                this.setState({width: this.refs.items.clientWidth})
-            }
-        });
-        // const resizeObserver = new ResizeObserver(entries => {
-        //     for (const entry of entries) {
-        //         this.setState({width: parseInt(entry.contentRect.width)})
-        //     }
-        // });
-        // resizeObserver.observe(this.refs.items);
+        window.addEventListener('resize', this.resize.bind(this));
     }
-    render() {
-        let rows = [];
-        let rowCount = 1;
-        let itemIndex = 0;
-        while (this.state.items.length-1 > itemIndex) {
-            let rowHeight;
-            rowHeight = this.props.rowHeightList[rowCount-1];
-            if (!rowHeight) rowHeight = this.props.rowHeightList[this.props.rowHeightList.length-1];
-            let rowItems = [];
-            let x = 0;
-            // 行数指定
-            if (this.props.maxRows && rowCount > this.props.maxRows) break;
-            this.state.items.slice(itemIndex).some((item) => {
-                item.width = rowHeight * item.aspect;
-                item.height = rowHeight;
-                item.margin = this.props.margin;
-                item.row = rowCount;
-                x += item.width + this.props.margin;
-                // 横幅を超えたら行の終わり
-                if (this.state.width && x > this.state.width) {
-                    // 全体の余白のあまり分、大きくする
-                    x = x - (item.width + this.props.margin);
-                    let scale = this.state.width / x;
-                    rowItems.map((item) => {
-                        if (rowItems.length === 1) {
-                            item.width = this.state.width;
-                            item.height = this.state.width / item.aspect;
-                            item.fullWidth = true;
-                        } else {
-                            item.width = item.width * scale;
-                            item.height = item.height * scale;
-                            item.fullWidth = false;
-                        }
-                    });
-                    rows.push(rowItems);
-                    rowCount += 1;
-                    return true;
-                }
-                rowItems.push(item);
-                itemIndex += 1;
-            });
+    
+    resize() {
+        // console.log('resize')
+        this.setRowHeight();
+        this.setRowParams();
+        this.forceUpdate();
+    }
+
+
+    // 縦サイズの係数 4パターン
+    getFactor(i) {
+        // console.log('getFactor')
+        const index = i % 4; // 0 1 2 3
+        let factors
+        if (window.innerWidth > 767) {
+            factors = [1, 0.9, 0.8, 0.7]
+        } else {
+            factors = [0.97, 0.75, 0.65, 0.55]
         }
-        let items = [];
-        rows.map((rowItems) => {
-            items = items.concat(rowItems);
+        return factors[index]
+    }
+
+
+    setRowHeight() {
+        this.rowHeight = 0;
+        this.factors.map((factor) => {
+            this.rowHeight += this.state.size * factor
         });
-        const View = this.props.view;
-        return (
-            <div className={this.props.className} ref="items" style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-              }}>
-                {items.map((item) => {
-                    return (
-                        <div key={item.id} style={{width: item.width+'px', height: item.height+'px', margin: '0 ' + item.margin/2 + 'px ' + item.margin + 'px', transition: 'width 0.075s linear, height 0.075s linear', willChange: 'width, height'}}>
-                            <View item={item} />
-                        </div>
-                    );
-                })}
-            </div>
-        );
+    }
+
+    setRowParams() {
+        console.log('setRowParams')
+        this.columnCount = 0;
+        this.rowParams = [];
+        Array.from({length: 4}).map((notValue, index) => {
+            // 書影の高さ・幅 一行に入る数の計算
+            let height = this.state.size * this.factors[index];
+            let width = height / 1.5;
+            let columnCount = Math.floor(window.innerWidth / width) - 1;
+
+            this.columnCount += columnCount;
+            console.log(columnCount)
+            this.rowParams.push({
+                columnCount: columnCount,
+                width: width,
+                height: height
+            });
+        });
+    }
+
+
+
+    render() {
+        console.log(this.props.data)
+        return (<React.Fragment>
+            {this.props.data.length>0 ? (
+                <HiradumiRow
+                    data={this.props.data}
+                    size={this.state.size}
+                    rowIndex={1}
+                    isScrolling={false}
+                    columnCount={this.columnCount}
+                    rowParams={this.rowParams}
+                    itemComponent={this.props.itemComponent}
+                    onRender={(i) => {
+                        // 現在の冊数の更新
+                        this.currentCount = i - this.columnCount;
+                        if (this.currentCount > this.props.data.length - 100) this.currentCount = this.props.data.length;
+                }} />
+            ) : null}
+        </React.Fragment>)
     }
 }
+
+export default Hiradumi
+
+
+
+
+

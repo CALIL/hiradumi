@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import 'whatwg-fetch';
 
-import {List} from 'react-virtualized';
+// import {List} from 'react-virtualized';
 
 
 const shuffle = ([...array]) => {
@@ -46,6 +46,7 @@ class BookWalk extends React.Component {
         let sort = this.state.sort==='random' ? 'isbn' : this.state.sort;
         const url = 'https://nxc.calil.dev/bibs/' + sort + '.json'
         fetch(url).then((r) => r.json()).then((data) => {
+            data = data.slice(0, 200)
             if (this.state.sort==='random') data = shuffle(data);
             this.setState({data: data});
         });
@@ -205,14 +206,14 @@ class BookWalk extends React.Component {
         // console.log('render')
         // ヘッダーとコントロールUIぶんの高さを表示領域からひく
         let headerHeight = document.querySelector('header') ? document.querySelector('header').clientHeight : 0;
-        if (window.innerWidth <= 767 && (this.state.sizeLabel === 'small' || this.state.sizeLabel === 'medium')) {
-            headerHeight += document.querySelector('nav') ? document.querySelector('nav').clientHeight : 0;
-        }
+        // if (window.innerWidth <= 767 && (this.state.sizeLabel === 'small' || this.state.sizeLabel === 'medium')) {
+        //     headerHeight += document.querySelector('nav') ? document.querySelector('nav').clientHeight : 0;
+        // }
 
         //　表示領域の幅と高さを求める
         let width = window.innerWidth - 20;
         if (window.innerWidth <= 767) width = window.innerWidth * 0.96;
-        let height = window.innerHeight - 43 - document.querySelector('.covidHeader').clientHeight - headerHeight;
+        // let height = window.innerHeight - 43 - document.querySelector('.covidHeader').clientHeight - headerHeight;
 
         // 行数を求める
         let rowCount;
@@ -226,7 +227,7 @@ class BookWalk extends React.Component {
             <div>
                 {this.state.data.length > 0 ? (
                     <React.Fragment>
-                        <List
+                        {/* <List
                             className="items"
                             width={width}
                             height={height}
@@ -238,7 +239,10 @@ class BookWalk extends React.Component {
                                 if (this.timer) clearTimeout(this.timer);
                                 this.timer = setTimeout(() => this.setState({}), 50);
                             }}
-                        />
+                        /> */}
+                        {this.state.data.map((book, index) => {
+                            return this.hiradumiRowRenderer(book)
+                        })}
                         <nav>
                             <div className="itemCount">
                                 <img src="./assets/icon-book.svg" alt="" />
