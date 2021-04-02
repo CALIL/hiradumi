@@ -8,8 +8,8 @@ export default class item extends Component {
         window.open('https://calil.jp/book/' + this.props.item.isbn, '_parent');
     }
     render() {
-        const item = this.props.item;
-        const fontSize = this.props.height / 14;
+        const item = this.props.item
+        const fontSize = this.props.height / 14
         return (
             <div className={'book'} ref="item" id={item.id} style={{
                 width: item.width+'px',

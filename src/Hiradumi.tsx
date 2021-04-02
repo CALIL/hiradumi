@@ -76,9 +76,9 @@ class Hiradumi extends React.Component<Props, State> {
     setRowData() {
         // 計算している本のindex
         let currentIndex = 0
-        const hiradumiWidth = this.hiradumiDiv.clientWidth
+        const hiradumiWidth = this.hiradumiDiv.clientWidth * 0.95
         if (this.cachedData.length === 0) {
-            Array.from({length: 4}).map((notValue, index) => {
+            this.factors.map((notValue, index) => {
                 // 行の横幅
                 let rowWidth = 0
                 // 行の高さ
@@ -86,33 +86,39 @@ class Hiradumi extends React.Component<Props, State> {
                 // 一行に入る数の計算
                 let columnCount = 0
                 const tempData = this.props.data.slice(currentIndex)
-                tempData.map((item, index) => {
+                tempData.some((item, index) => {
                     if (item.properties && item.properties.aspect) {
-                        let width = height * item.properties.aspect
+                        let width = Math.floor(height * item.properties.aspect)
+                        // if (item.isbn === '9784093865975') console.log(width)
                         if (hiradumiWidth > rowWidth + width) {
                             this.props.data[currentIndex+index].height = height
                             this.props.data[currentIndex+index].width = width
                             rowWidth += width
                             columnCount += 1
+                        } else {
+                            return true
                         }
                     } else {
-                        let width = height * 0.66666
+                        let width = Math.floor(height * 0.66666)
                         if (hiradumiWidth > rowWidth + width) {
                             this.props.data[currentIndex+index].height = height
                             this.props.data[currentIndex+index].width = width
                             rowWidth += width
                             columnCount += 1
+                        } else {
+                            return true
                         }
                     }
                 })
                 const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
                 this.state.rowsData.push(rowData)
-                this.cachedData.concat(rowData)
+                this.cachedData = this.cachedData.concat(rowData)
 
                 currentIndex += columnCount
             });
         } else {
-            Array.from({length: 4}).map((notValue, index) => {
+            this.state.rowsData = []
+            this.factors.map((notValue, index) => {
                 // 行の横幅
                 let rowWidth = 0
                 // 一行に入る数の計算

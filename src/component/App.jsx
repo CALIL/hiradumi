@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Hiradumi from '../Hiradumi.jsx';
 import SettingUI from './SettingUI';
-import Book from './Book';
+import Book from './Book.tsx';
 import items from '../Kochi_Motoyama_plus.json';
 
 export default class App extends Component {
