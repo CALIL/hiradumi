@@ -11,7 +11,7 @@ export default class item extends Component {
         const item = this.props.item;
         const fontSize = this.props.height / 14;
         return (
-            <div className={'item'} ref="item" id={item.id} style={{
+            <div className={'book'} ref="item" id={item.id} style={{
                 width: item.width+'px',
                 height: item.height+'px',
                 cursor: 'pointer',

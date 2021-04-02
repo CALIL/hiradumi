@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import HiradumiRow from './HiradumiRow'
 import { threadId } from 'node:worker_threads';
+import { isTemplateTail } from 'typescript';
 
 interface Props {
     data: any[]
@@ -20,7 +21,8 @@ interface Hiradumi {
     rowCount: number
     factors: number[]
     rowParams: any[]
-    currentCount: number
+    // currentCount: number
+    cachedData: any[]
 }
 
 
@@ -37,6 +39,7 @@ class Hiradumi extends React.Component<Props, State> {
       Array.from({length: this.state.rowCount}).map((notValue, index) => {
           this.factors.push(this.getFactor(index))
       });
+      this.cachedData = []
       this.setRowData()
   }
 
@@ -73,61 +76,89 @@ class Hiradumi extends React.Component<Props, State> {
         // 計算している本のindex
         let currentIndex = 0
 
-        Array.from({length: 4}).map((notValue, index) => {
-            // 行の横幅
-            let rowWidth = 0
+        if (this.cachedData.length === 0) {
+            Array.from({length: 4}).map((notValue, index) => {
+                // 行の横幅
+                let rowWidth = 0
 
-            // 行の高さ
-            let height = this.state.size * this.factors[index]
+                // 行の高さ
+                let height = this.state.size * this.factors[index]
 
-            // 一行に入る数の計算
-            let columnCount = 0
+                // 一行に入る数の計算
+                let columnCount = 0
 
-            const tempData = this.props.data.slice(currentIndex)
-            tempData.map((item, index) => {
-                if (item.properties && item.properties.aspect) {
-                    let width = height * item.properties.aspect
-                    if (window.innerWidth > rowWidth + width) {
-                        this.props.data[currentIndex+index].height = height
-                        this.props.data[currentIndex+index].width = width
-                        rowWidth += width
+                const tempData = this.props.data.slice(currentIndex)
+                tempData.map((item, index) => {
+                    if (item.properties && item.properties.aspect) {
+                        let width = height * item.properties.aspect
+                        if (window.innerWidth > rowWidth + width) {
+                            this.props.data[currentIndex+index].height = height
+                            this.props.data[currentIndex+index].width = width
+                            rowWidth += width
+                            columnCount += 1
+                        }
+                    } else {
+                        let width = height * 0.66666
+                        if (window.innerWidth > rowWidth + width) {
+                            this.props.data[currentIndex+index].height = height
+                            this.props.data[currentIndex+index].width = width
+                            rowWidth += width
+                            columnCount += 1
+                        }
+                    }
+                })
+                const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
+                this.state.rowsData.push(rowData)
+                this.cachedData.concat(rowData)
+
+                currentIndex += columnCount
+            });
+        } else {
+            Array.from({length: 4}).map((notValue, index) => {
+                // 行の横幅
+                let rowWidth = 0
+
+                // 一行に入る数の計算
+                let columnCount = 0
+
+                const tempData = this.cachedData.slice(currentIndex)
+                tempData.map((item, index) => {
+                    if (window.innerWidth > rowWidth + item.width) {
+                        rowWidth += item.width
                         columnCount += 1
                     }
-                } else {
-                    let width = height * 0.66666
-                    if (window.innerWidth > rowWidth + width) {
-                        this.props.data[currentIndex+index].height = height
-                        this.props.data[currentIndex+index].width = width
-                        rowWidth += width
-                        columnCount += 1
-                    }
-                }
-            })
-            this.state.rowsData.push(this.props.data.slice(currentIndex, currentIndex+columnCount))
+                })
+                const rowData = this.cachedData.slice(currentIndex, currentIndex+columnCount)
+                this.state.rowsData.push(rowData)
 
-            currentIndex += columnCount
-        });
+                currentIndex += columnCount
+            });
+        }
     }
 
 
 
     render() {
-        console.log(this.props.data)
+        let rows = []
+        Array.from({length: this.state.rowsData.length}).map((notValue, index) => {
+            let items = <HiradumiRow
+                rowData={this.state.rowsData[index]}
+                size={this.state.size}
+                rowIndex={1}
+                isScrolling={false}
+                itemComponent={this.props.itemComponent}
+                // onRender={(i) => {
+                //     // 現在の冊数の更新
+                //     this.currentCount = i - this.columnCount;
+                //     if (this.currentCount > this.props.data.length - 100) this.currentCount = this.props.data.length;
+                // }}
+            />
+            rows.push(items);
+        });
+
+        if (this.props.data.length===0) return null
         return (<React.Fragment>
-            {this.props.data.length>0 ? (
-                <HiradumiRow
-                    rowsData={this.state.rowsData}
-                    size={this.state.size}
-                    rowIndex={1}
-                    isScrolling={false}
-                    itemComponent={this.props.itemComponent}
-                    // onRender={(i) => {
-                    //     // 現在の冊数の更新
-                    //     this.currentCount = i - this.columnCount;
-                    //     if (this.currentCount > this.props.data.length - 100) this.currentCount = this.props.data.length;
-                    // }}
-                />
-            ) : null}
+            {rows}
         </React.Fragment>)
     }
 }
