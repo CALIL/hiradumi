@@ -9,7 +9,7 @@ export default class item extends Component {
     }
     render() {
         const item = this.props.item
-        const fontSize = this.props.height / 14
+        const fontSize = this.props.width / 14
         return (
             <div className={'book'} ref="item" id={item.id} style={{
                 width: item.width+'px',
