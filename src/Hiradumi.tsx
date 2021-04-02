@@ -50,8 +50,7 @@ class Hiradumi extends React.Component<Props, State> {
 
     componentDidMount() {
         this.resize()
-        // window.addEventListener('resize', this.resize.bind(this))
-        window.addEventListener('resize', () => location.reload())
+        window.addEventListener('resize', this.resize.bind(this))
     }
     
     resize() {
@@ -77,7 +76,7 @@ class Hiradumi extends React.Component<Props, State> {
     setRowData() {
         // 計算している本のindex
         let currentIndex = 0
-        const hiradumiWidth = this.hiradumiDiv.clientWidth - 20
+        const hiradumiWidth = this.hiradumiDiv.clientWidth * 0.925
         if (this.cachedData.length === 0) {
             this.factors.map((notValue, index) => {
                 // 行の横幅
