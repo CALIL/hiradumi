@@ -77,7 +77,9 @@ class Hiradumi extends React.Component<Props, State> {
         // 計算している本のindex
         let currentIndex = 0
         const hiradumiWidth = this.hiradumiDiv.clientWidth * 0.925
-        if (this.cachedData.length === 0) {
+        console.log(hiradumiWidth)
+        this.state.rowsData = []
+        // if (this.cachedData.length === 0) {
             this.factors.map((notValue, index) => {
                 // 行の横幅
                 let rowWidth = 0
@@ -89,7 +91,6 @@ class Hiradumi extends React.Component<Props, State> {
                 tempData.some((item, index) => {
                     if (item.properties && item.properties.aspect) {
                         let width = Math.floor(height * item.properties.aspect)
-                        // if (item.isbn === '9784093865975') console.log(width)
                         if (hiradumiWidth > rowWidth + width) {
                             this.props.data[currentIndex+index].height = height
                             this.props.data[currentIndex+index].width = width
@@ -112,30 +113,30 @@ class Hiradumi extends React.Component<Props, State> {
                 })
                 const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
                 this.state.rowsData.push(rowData)
-                this.cachedData = this.cachedData.concat(rowData)
+                // this.cachedData = this.cachedData.concat(rowData)
 
                 currentIndex += columnCount
             });
-        } else {
-            this.state.rowsData = []
-            this.factors.map((notValue, index) => {
-                // 行の横幅
-                let rowWidth = 0
-                // 一行に入る数の計算
-                let columnCount = 0
-                const tempData = this.cachedData.slice(currentIndex)
-                tempData.map((item, index) => {
-                    if (hiradumiWidth > rowWidth + item.width) {
-                        rowWidth += item.width
-                        columnCount += 1
-                    }
-                })
-                const rowData = this.cachedData.slice(currentIndex, currentIndex+columnCount)
-                this.state.rowsData.push(rowData)
+        // } else {
+        //     this.state.rowsData = []
+        //     this.factors.map((notValue, index) => {
+        //         // 行の横幅
+        //         let rowWidth = 0
+        //         // 一行に入る数の計算
+        //         let columnCount = 0
+        //         const tempData = this.cachedData.slice(currentIndex)
+        //         tempData.map((item, index) => {
+        //             if (hiradumiWidth > rowWidth + item.width) {
+        //                 rowWidth += item.width
+        //                 columnCount += 1
+        //             }
+        //         })
+        //         const rowData = this.cachedData.slice(currentIndex, currentIndex+columnCount)
+        //         this.state.rowsData.push(rowData)
 
-                currentIndex += columnCount
-            });
-        }
+        //         currentIndex += columnCount
+        //     });
+        // }
     }
 
     render() {
