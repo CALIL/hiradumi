@@ -36,9 +36,6 @@ class Hiradumi extends React.Component<Props, State> {
       }
       this.rowCount = 0
       this.factors = []
-      Array.from({length: this.state.rowCount}).map((notValue, index) => {
-          this.factors.push(this.getFactor(index))
-      });
       this.cachedData = []
 
       this.hiradumiDiv = null;
@@ -49,6 +46,9 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     componentDidMount() {
+        Array.from({length: this.state.rowCount}).map((notValue, index) => {
+            this.factors.push(this.getFactor(index))
+        });
         this.resize()
         window.addEventListener('resize', this.resize.bind(this))
     }
@@ -65,7 +65,7 @@ class Hiradumi extends React.Component<Props, State> {
         // console.log('getFactor')
         const index = i % 4; // 0 1 2 3
         let factors
-        if (window.innerWidth > 767) {
+        if (this.hiradumiDiv.clientWidth > 767) {
             factors = [1, 0.9, 0.8, 0.7]
         } else {
             factors = [0.97, 0.75, 0.65, 0.55]
