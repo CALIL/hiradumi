@@ -22,7 +22,7 @@ export default class item extends Component {
               
             }} onClick={this.onClick.bind(this)}>
                 {this.props.item.cover ? (
-                    <img src={item.cover} alt={item.title} data-aspect={item.properties.aspect} ref="cover" style={{height: '100%'}} />
+                    <img src={item.cover} alt={item.title} data-aspect={item.properties.aspect} ref="cover" style={{height: item.height+'px', width: item.width+'px'}} />
                 ) : (
                     <React.Fragment>
                         <div className="bg"></div>

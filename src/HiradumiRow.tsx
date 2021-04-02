@@ -13,7 +13,7 @@ interface State {
 }
 
 interface HiradumiRow {
-    lastCount: number
+    // lastCount: number
     size: number
 }
 
@@ -21,7 +21,7 @@ interface HiradumiRow {
 class HiradumiRow extends React.Component<Props, State> {
     constructor(props: Props) {
       super(props)
-      this.lastCount = 0
+    //   this.lastCount = 0
       this.size = this.props.size * window.devicePixelRatio
     }
  
