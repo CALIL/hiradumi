@@ -20,7 +20,6 @@ interface Hiradumi {
     factors: number[]
     rowParams: any[]
     // currentCount: number
-    cachedData: any[]
     hiradumiDiv: HTMLDivElement
     setHiradumiDiv: (element) => void 
 }
@@ -36,7 +35,6 @@ class Hiradumi extends React.Component<Props, State> {
       }
       this.rowCount = 0
       this.factors = []
-      this.cachedData = []
 
       this.hiradumiDiv = null;
 
@@ -77,66 +75,57 @@ class Hiradumi extends React.Component<Props, State> {
         // 計算している本のindex
         let currentIndex = 0
         const hiradumiWidth = this.hiradumiDiv.clientWidth * 0.925
-        console.log(hiradumiWidth)
+        // console.log(hiradumiWidth)
         this.state.rowsData = []
-        // if (this.cachedData.length === 0) {
-            this.factors.map((notValue, index) => {
-                // 行の横幅
-                let rowWidth = 0
-                // 行の高さ
-                let height = this.state.size * this.factors[index]
-                // 一行に入る数の計算
-                let columnCount = 0
-                const tempData = this.props.data.slice(currentIndex)
-                tempData.some((item, index) => {
-                    if (item.properties && item.properties.aspect) {
-                        let width = Math.floor(height * item.properties.aspect)
-                        if (hiradumiWidth > rowWidth + width) {
-                            this.props.data[currentIndex+index].height = height
-                            this.props.data[currentIndex+index].width = width
-                            rowWidth += width
-                            columnCount += 1
-                        } else {
-                            return true
-                        }
+        this.factors.map((notValue, index) => {
+            // 行の横幅
+            let rowWidth = 0
+            // 行の高さ
+            let height = this.state.size * this.factors[index]
+            // 一行に入る数の計算
+            let columnCount = 0
+            const tempData = this.props.data.slice(currentIndex)
+            tempData.some((item, index) => {
+                if (item.properties && item.properties.aspect) {
+                    let width = Math.floor(height * item.properties.aspect)
+                    if (hiradumiWidth > rowWidth + width) {
+                        this.props.data[currentIndex+index].height = height
+                        this.props.data[currentIndex+index].width = width
+                        rowWidth += width
+                        columnCount += 1
                     } else {
-                        let width = Math.floor(height * 0.66666)
-                        if (hiradumiWidth > rowWidth + width) {
-                            this.props.data[currentIndex+index].height = height
-                            this.props.data[currentIndex+index].width = width
-                            rowWidth += width
-                            columnCount += 1
-                        } else {
-                            return true
-                        }
+                        return true
                     }
+                } else {
+                    let width = Math.floor(height * 0.66666)
+                    if (hiradumiWidth > rowWidth + width) {
+                        this.props.data[currentIndex+index].height = height
+                        this.props.data[currentIndex+index].width = width
+                        rowWidth += width
+                        columnCount += 1
+                    } else {
+                        return true
+                    }
+                }
+            })
+
+            if (columnCount === 2) {
+                const remainWidth = hiradumiWidth - rowWidth
+                tempData.some((item, index) => {
+                    if (index > 2) return true
+                    const width = this.props.data[currentIndex+index].width
+                    const scaleUpWidth = width + remainWidth / 2
+                    const scaleUpRatio = scaleUpWidth / width
+                    this.props.data[currentIndex+index].width += remainWidth / 2
+                    this.props.data[currentIndex+index].height = this.props.data[currentIndex+index].height * scaleUpRatio
                 })
-                const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
-                this.state.rowsData.push(rowData)
-                // this.cachedData = this.cachedData.concat(rowData)
+            }
 
-                currentIndex += columnCount
-            });
-        // } else {
-        //     this.state.rowsData = []
-        //     this.factors.map((notValue, index) => {
-        //         // 行の横幅
-        //         let rowWidth = 0
-        //         // 一行に入る数の計算
-        //         let columnCount = 0
-        //         const tempData = this.cachedData.slice(currentIndex)
-        //         tempData.map((item, index) => {
-        //             if (hiradumiWidth > rowWidth + item.width) {
-        //                 rowWidth += item.width
-        //                 columnCount += 1
-        //             }
-        //         })
-        //         const rowData = this.cachedData.slice(currentIndex, currentIndex+columnCount)
-        //         this.state.rowsData.push(rowData)
+            const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
+            this.state.rowsData.push(rowData)
 
-        //         currentIndex += columnCount
-        //     });
-        // }
+            currentIndex += columnCount
+        });
     }
 
     render() {
