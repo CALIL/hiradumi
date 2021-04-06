@@ -83,55 +83,43 @@ class Hiradumi extends React.Component<Props, State> {
             let rowWidth = 0
             // 行の高さ
             let height = this.state.size * this.factors[index]
-            // 一行に入る数の計算
+            // 一行に入る数
             let columnCount = 0
             const currentIndexData = this.props.data.slice(currentIndex)
-            currentIndexData.some((item, index) => {
+            currentIndexData.some((item) => {
+                let width
+                let isRowLastItem = false
                 if (item.properties && item.properties.aspect) {
-                    let width = Math.floor(height * item.properties.aspect)
-                    if (hiradumiWidth > rowWidth + width) {
-                        item.height = height
-                        item.width = width
-                        rowWidth += width
-                        columnCount += 1
-                    } else {
-                        return true
-                    }
+                    width = Math.floor(height * item.properties.aspect)
+                    isRowLastItem = hiradumiWidth <= rowWidth + width
                 } else {
-                    let width = Math.floor(height * 0.66666)
-                    if (hiradumiWidth > rowWidth + width) {
-                        item.height = height
-                        item.width = width
-                        rowWidth += width
-                        columnCount += 1
-                    } else {
-                        return true
-                    }
+                    width = Math.floor(height * 0.66666)
+                    isRowLastItem = hiradumiWidth <= rowWidth + width
                 }
+                // 行の最後のアイテムなら終了
+                if (isRowLastItem) return true
+                item.height = height
+                item.width = width
+                rowWidth += width
+                columnCount += 1
             })
 
+            // 残りの横幅分、サイズを調整
             const scaleUpRatio = hiradumiWidth / rowWidth
-            currentIndexData.some((item, index) => {
-                if (index === columnCount) return true
-                item.width = Math.floor(item.width * scaleUpRatio)
-                item.height = Math.floor(item.height * scaleUpRatio)
-            })
+            // 最後の行の縦が大きすぎないように規制
+            if (scaleUpRatio < 2) {
+                currentIndexData.some((item, index) => {
+                    if (index === columnCount) return true
+                    item.width = Math.floor(item.width * scaleUpRatio)
+                    item.height = Math.floor(item.height * scaleUpRatio)
+                })
+            }
 
             const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
             rowsData.push(rowData)
 
             currentIndex += columnCount
         });
-        // let count = 0
-        // rowsData.map((rowData) => {
-        //     count += rowData.length
-        //     rowData.map(item => {
-        //         if (item.width === undefined) {
-        //             console.log(item)
-        //         }
-        //     })
-        // })
-        // console.log(count)
         this.setState({rowsData})
     }
 

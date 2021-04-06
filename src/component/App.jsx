@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Hiradumi from '../Hiradumi.jsx';
 import SettingUI from './SettingUI';
 import Book from './Book.tsx';
-import items from '../Kochi_Motoyama_plus.json';
+// import items from '../Kochi_Motoyama_plus.json';
+import items from '../Gifu_Nakatsugawa_plus.json';
 
 export default class App extends Component {
   constructor(props) {
