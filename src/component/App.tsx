@@ -8,7 +8,7 @@ import items from '../Gifu_Nakatsugawa_plus.json';
 interface App {
   factors: number[]
   hiradumi: any
-  setHiradumi: () => void
+  setHiradumi: (element: any) => void
 }
 interface Props {
 }
@@ -29,7 +29,7 @@ class App extends Component<Props, State> {
       size: 200,
       width: 100,
       margin: 10,
-      rowCount: 30,
+      rowCount: 4,
       rowFactors: null
     }
     this.hiradumi = null;
@@ -49,7 +49,6 @@ class App extends Component<Props, State> {
   onChange(state) {
     this.setState(state, () => {
       this.hiradumi.setRowData()
-      this.hiradumi.forceUpdate()
     })
   }
 
