@@ -6,7 +6,7 @@ function execCopy(string){
   pre.style.webkitUserSelect = 'auto';
   pre.style.userSelect = 'auto';
   tmp.appendChild(pre).textContent = string;
-    var s = tmp.style;
+  var s = tmp.style;
   s.position = 'fixed';
   s.right = '200%';
   document.body.appendChild(tmp);
@@ -15,9 +15,21 @@ function execCopy(string){
   document.body.removeChild(tmp);
   return result;
 }
-  
 
-export default class SettingUI extends Component {
+interface Props {
+  size: number,
+  width: number,
+  margin: number,
+  rowCount: number,
+  rowFactors: number[] | null,
+  onChange: (state: any) => void
+}
+
+interface State {
+
+}
+
+class SettingUI extends Component<Props, State> {
     constructor(props) {
       super(props);
     }
@@ -38,7 +50,7 @@ export default class SettingUI extends Component {
           if(rowHeight.value!=='') {
             rowHeightList.push(rowHeight.value);
           } else {
-            rowHeightList.push(parseInt(rowHeight.placeholder));
+            rowHeightList.push(parseFloat(rowHeight.placeholder));
           }
         });
         execCopy(rowHeightList.toString())
@@ -57,13 +69,13 @@ export default class SettingUI extends Component {
                 &nbsp;
                 <label htmlFor="margin">MaxRows:</label>
                 <input type="range" id="maxRow" name="width" min="1" max="30" onChange={(e) => this.props.onChange({maxRow: parseInt(e.target.value)})} />
-                {this.props.maxRow}
+                {this.props.rowCount}
               </div>
               <br />
               <div>
                 <label>RowHeightList:</label>
-                {this.props.rowHeightList.map((rowHeight, i) => {
-                  return <input type="number" placeholder={rowHeight} className="rowHeight" key={i} index={i} onChange={this.setRowHeight.bind(this)} style={{width: '3rem'}} />
+                {this.props.rowFactors.map((rowHeight, i) => {
+                  return <input type="number" placeholder={String(rowHeight)} className="rowHeight" key={i} onChange={this.setRowHeight.bind(this)} style={{width: '3rem'}} />
                 })}
                 <button onClick={this.copy.bind(this)}>Copy</button>
               </div>
@@ -72,3 +84,5 @@ export default class SettingUI extends Component {
 
     }
 }
+
+export default SettingUI

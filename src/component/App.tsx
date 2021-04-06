@@ -16,7 +16,7 @@ interface State {
   size: number
   margin: number
   rowCount: number
-  rowFactors: number[]
+  rowFactors: number[] | null
 }
 
 class App extends Component<Props, State> {
@@ -32,7 +32,6 @@ class App extends Component<Props, State> {
     }
   }
   componentDidMount() {
-    console.log(document.body.clientWidth)
     if (document.body.clientWidth > 767) {
       this.setState({rowFactors: [1, 0.9, 0.8, 0.7]})
     } else {
@@ -46,19 +45,28 @@ class App extends Component<Props, State> {
 
     return (
       <div>
-        {/* <SettingUI onChange={this.setState.bind(this)} {...this.state} /> */}
-        <div style={{width: this.state.width + '%', margin: '0 auto'}}>
           {this.state.rowFactors ? (
-            <Hiradumi
-              data={this.state.items}
-              size={this.state.size}
-              margin={this.state.margin}
-              rowCount={this.state.rowCount}
-              rowFactors={this.state.rowFactors}
-              itemComponent={Book}
-            />      
+            <React.Fragment>
+              <SettingUI
+                size={this.state.size}
+                width={this.state.width}
+                margin={this.state.margin}
+                rowCount={this.state.rowCount}
+                rowFactors={this.state.rowFactors}
+                onChange={this.setState.bind(this)}
+              />
+              <div style={{width: this.state.width + '%', margin: '0 auto'}}>
+                <Hiradumi
+                  data={this.state.items}
+                  size={this.state.size}
+                  margin={this.state.margin}
+                  rowCount={this.state.rowCount}
+                  rowFactors={this.state.rowFactors}
+                  itemComponent={Book}
+                />      
+              </div>
+            </React.Fragment>
           ) : null}
-        </div>
       </div>
     );
   }

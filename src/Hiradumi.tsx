@@ -29,7 +29,6 @@ interface Hiradumi {
 class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
       super(props)
-      console.log(props.rowFactors)
       this.state ={
           size: this.props.size ? this.props.size : 200,
           rowCount: this.props.rowCount ? this.props.rowCount : 4,
