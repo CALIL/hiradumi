@@ -20,10 +20,12 @@ class HiradumiRow extends React.Component<Props, State> {
  
     render() {
         let items = [];
-        this.props.rowData.map((item) => {
-            items.push(<this.props.itemComponent item={item} margin={this.props.margin} />);
-        })
-        return <div className="row">{items}</div>;
+        
+        return <div className="row">
+            {this.props.rowData.map((item) => {
+                return <this.props.itemComponent item={item} margin={this.props.margin} />
+            })}
+        </div>;
     }
 
 }

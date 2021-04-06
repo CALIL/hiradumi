@@ -68,7 +68,7 @@ class SettingUI extends Component<Props, State> {
                 {this.props.margin}
                 &nbsp;
                 <label htmlFor="margin">MaxRows:</label>
-                <input type="range" id="maxRow" name="width" min="1" max="30" onChange={(e) => this.props.onChange({maxRow: parseInt(e.target.value)})} />
+                <input type="range" id="maxRow" name="width" min="1" max="30" onChange={(e) => this.props.onChange({rowCount: parseInt(e.target.value)})} />
                 {this.props.rowCount}
               </div>
               <br />

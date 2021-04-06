@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactComponentElement } from 'react';
 import Hiradumi from '../Hiradumi.jsx';
 import SettingUI from './SettingUI';
 import Book from './Book.tsx';
@@ -7,6 +7,8 @@ import items from '../Gifu_Nakatsugawa_plus.json';
 
 interface App {
   factors: number[]
+  hiradumi: any
+  setHiradumi: () => void
 }
 interface Props {
 }
@@ -30,6 +32,11 @@ class App extends Component<Props, State> {
       rowCount: 30,
       rowFactors: null
     }
+    this.hiradumi = null;
+
+    this.setHiradumi = element => {
+      this.hiradumi = element;
+    }
   }
   componentDidMount() {
     if (document.body.clientWidth > 767) {
@@ -37,6 +44,13 @@ class App extends Component<Props, State> {
     } else {
       this.setState({rowFactors: [0.97, 0.75, 0.65, 0.55]})
     }
+  }
+
+  onChange(state) {
+    this.setState(state, () => {
+      this.hiradumi.setRowData()
+      this.hiradumi.forceUpdate()
+    })
   }
 
   render() {
@@ -53,10 +67,11 @@ class App extends Component<Props, State> {
                 margin={this.state.margin}
                 rowCount={this.state.rowCount}
                 rowFactors={this.state.rowFactors}
-                onChange={this.setState.bind(this)}
+                onChange={this.onChange.bind(this)}
               />
               <div style={{width: this.state.width + '%', margin: '0 auto'}}>
                 <Hiradumi
+                  ref={this.setHiradumi}
                   data={this.state.items}
                   size={this.state.size}
                   margin={this.state.margin}

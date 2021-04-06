@@ -13,7 +13,6 @@ interface Props {
 }
 interface State {
     size: number
-    margin: number
     rowsData: any[]
     rowCount: number
 }
@@ -32,7 +31,6 @@ class Hiradumi extends React.Component<Props, State> {
       super(props)
       this.state ={
           size: this.props.size ? this.props.size : 200,
-          margin: this.props.margin ? this.props.margin : 0,
           rowCount: this.props.rowCount ? this.props.rowCount : 4,
           rowsData: [],
       }
@@ -70,7 +68,8 @@ class Hiradumi extends React.Component<Props, State> {
         const scrollBarWidth = window.innerWidth - document.body.clientWidth
         const hiradumiWidth = this.hiradumiDiv.clientWidth - scrollBarWidth
         const rowsData = []
-        this.factors.map((notValue, index) => {
+        this.factors.some((notValue, index) => {
+            if (rowsData.length >= this.props.rowCount) return true
             // 行の横幅
             let rowWidth = 0
             // 行の高さ
@@ -92,7 +91,6 @@ class Hiradumi extends React.Component<Props, State> {
                 if (isRowLastItem) return true
                 item.height = height
                 item.width = width
-                item.margin = this.props.margin
                 rowWidth += width
                 columnCount += 1
             })
@@ -117,19 +115,15 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     render() {
-        let rows = []
-        Array.from({length: this.state.rowsData.length}).map((notValue, index) => {
-            let items = <HiradumiRow
-                rowData={this.state.rowsData[index]}
-                margin={this.state.margin}
-                itemComponent={this.props.itemComponent}
-            />
-            rows.push(items);
-        });
-
         if (this.props.data.length===0) return null
         return (<div className="hiradumi" ref={this.setHiradumiDiv}>
-            {rows}
+            {Array.from({length: this.state.rowsData.length}).map((notValue, index) => {
+                return <HiradumiRow
+                    rowData={this.state.rowsData[index]}
+                    margin={this.props.margin}
+                    itemComponent={this.props.itemComponent}
+                />
+            })}
         </div>)
     }
 }
