@@ -1,4 +1,4 @@
-# hiradumi [![Netlify Status](https://api.netlify.com/api/v1/badges/9e517911-3441-4e21-bfd0-cde1de0f3f99/deploy-status)](https://app.netlify.com/sites/hiradumi/deploys)
+# hiradumi
 アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント
 
 ![](./screencapture.gif "")
@@ -10,7 +10,7 @@
 - 横幅の変化に合わせてレイアウトを自動変更
 
 ## デモ
-[https://hiradumi.netlify.com/](https://hiradumi.netlify.com/)
+[https://calil.github.io/hiradumi/](https://calil.github.io/hiradumi/)
 
 
 ## 開発手順

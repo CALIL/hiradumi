@@ -6,7 +6,9 @@ import HiradumiRow from './HiradumiRow'
 interface Props {
     data: any[]
     size: number
+    margin: number
     rowCount: number
+    rowFactors: number[]
     itemComponent: any
 }
 interface State {
@@ -19,7 +21,6 @@ interface Hiradumi {
     rowCount: number
     factors: number[]
     rowParams: any[]
-    // currentCount: number
     hiradumiDiv: HTMLDivElement
     setHiradumiDiv: (element) => void 
 }
@@ -28,10 +29,11 @@ interface Hiradumi {
 class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
       super(props)
+      console.log(props.rowFactors)
       this.state ={
           size: this.props.size ? this.props.size : 200,
           rowCount: this.props.rowCount ? this.props.rowCount : 4,
-          rowsData: []
+          rowsData: [],
       }
       this.rowCount = 0
       this.factors = []
@@ -44,8 +46,9 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        Array.from({length: this.state.rowCount}).map((notValue, index) => {
-            this.factors.push(this.getFactor(index))
+        Array.from({length: this.state.rowCount}).map((notValue, i) => {
+            const index = i % this.props.rowFactors.length
+            this.factors.push(this.props.rowFactors[index])
         });
         
         this.setRowData()
@@ -60,18 +63,6 @@ class Hiradumi extends React.Component<Props, State> {
         window.addEventListener('resize', this.setRowData.bind(this))
     }
     
-    // 縦サイズの係数 4パターン
-    getFactor(i) {
-        const index = i % 4; // 0 1 2 3
-        let factors
-        if (this.hiradumiDiv.clientWidth > 767) {
-            factors = [1, 0.9, 0.8, 0.7]
-        } else {
-            factors = [0.97, 0.75, 0.65, 0.55]
-        }
-        return factors[index]
-    }
-
     setRowData() {
         // 計算している本のindex
         let currentIndex = 0
@@ -132,11 +123,6 @@ class Hiradumi extends React.Component<Props, State> {
                 rowIndex={1}
                 isScrolling={false}
                 itemComponent={this.props.itemComponent}
-                // onRender={(i) => {
-                //     // 現在の冊数の更新
-                //     this.currentCount = i - this.columnCount;
-                //     if (this.currentCount > this.props.data.length - 100) this.currentCount = this.props.data.length;
-                // }}
             />
             rows.push(items);
         });
