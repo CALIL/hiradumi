@@ -47,20 +47,21 @@ class Hiradumi extends React.Component<Props, State> {
         Array.from({length: this.state.rowCount}).map((notValue, index) => {
             this.factors.push(this.getFactor(index))
         });
-        this.resize()
-        window.addEventListener('resize', this.resize.bind(this))
+        
+        this.setRowData()
+
+        // PC版のスクロールバー対応
+        // コンテンツがないとスクロールバーが出ないので、追加後に再計算
+        setTimeout(() => {
+            const scrollBarWidth = window.innerWidth - document.body.clientWidth
+            if (scrollBarWidth > 0) this.setRowData()
+        }, 10)
+
+        window.addEventListener('resize', this.setRowData.bind(this))
     }
     
-    resize() {
-        // console.log('resize')
-        this.setRowData()
-        this.forceUpdate()
-    }
-
-
     // 縦サイズの係数 4パターン
     getFactor(i) {
-        // console.log('getFactor')
         const index = i % 4; // 0 1 2 3
         let factors
         if (this.hiradumiDiv.clientWidth > 767) {
@@ -74,9 +75,9 @@ class Hiradumi extends React.Component<Props, State> {
     setRowData() {
         // 計算している本のindex
         let currentIndex = 0
-        const hiradumiWidth = this.hiradumiDiv.clientWidth * 0.925
-        // console.log(hiradumiWidth)
-        this.state.rowsData = []
+        const scrollBarWidth = window.innerWidth - document.body.clientWidth
+        const hiradumiWidth = this.hiradumiDiv.clientWidth - scrollBarWidth
+        const rowsData = []
         this.factors.map((notValue, index) => {
             // 行の横幅
             let rowWidth = 0
@@ -84,13 +85,13 @@ class Hiradumi extends React.Component<Props, State> {
             let height = this.state.size * this.factors[index]
             // 一行に入る数の計算
             let columnCount = 0
-            const tempData = this.props.data.slice(currentIndex)
-            tempData.some((item, index) => {
+            const currentIndexData = this.props.data.slice(currentIndex)
+            currentIndexData.some((item, index) => {
                 if (item.properties && item.properties.aspect) {
                     let width = Math.floor(height * item.properties.aspect)
                     if (hiradumiWidth > rowWidth + width) {
-                        this.props.data[currentIndex+index].height = height
-                        this.props.data[currentIndex+index].width = width
+                        item.height = height
+                        item.width = width
                         rowWidth += width
                         columnCount += 1
                     } else {
@@ -99,8 +100,8 @@ class Hiradumi extends React.Component<Props, State> {
                 } else {
                     let width = Math.floor(height * 0.66666)
                     if (hiradumiWidth > rowWidth + width) {
-                        this.props.data[currentIndex+index].height = height
-                        this.props.data[currentIndex+index].width = width
+                        item.height = height
+                        item.width = width
                         rowWidth += width
                         columnCount += 1
                     } else {
@@ -109,23 +110,29 @@ class Hiradumi extends React.Component<Props, State> {
                 }
             })
 
-            if (columnCount === 2) {
-                const remainWidth = hiradumiWidth - rowWidth
-                tempData.some((item, index) => {
-                    if (index > 2) return true
-                    const width = this.props.data[currentIndex+index].width
-                    const scaleUpWidth = width + remainWidth / 2
-                    const scaleUpRatio = scaleUpWidth / width
-                    this.props.data[currentIndex+index].width += remainWidth / 2
-                    this.props.data[currentIndex+index].height = this.props.data[currentIndex+index].height * scaleUpRatio
-                })
-            }
+            const scaleUpRatio = hiradumiWidth / rowWidth
+            currentIndexData.some((item, index) => {
+                if (index === columnCount) return true
+                item.width = Math.floor(item.width * scaleUpRatio)
+                item.height = Math.floor(item.height * scaleUpRatio)
+            })
 
             const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
-            this.state.rowsData.push(rowData)
+            rowsData.push(rowData)
 
             currentIndex += columnCount
         });
+        // let count = 0
+        // rowsData.map((rowData) => {
+        //     count += rowData.length
+        //     rowData.map(item => {
+        //         if (item.width === undefined) {
+        //             console.log(item)
+        //         }
+        //     })
+        // })
+        // console.log(count)
+        this.setState({rowsData})
     }
 
     render() {
