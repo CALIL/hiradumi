@@ -67,13 +67,13 @@ class SettingUI extends Component<Props, State> {
                 <input type="range" id="margin" name="width" min="0" max="30" value={this.props.margin} onChange={(e) => this.props.onChange({margin: parseInt(e.target.value)})} />
                 {this.props.margin}
                 &nbsp;
-                <label htmlFor="margin">MaxRows:</label>
+                <label htmlFor="margin">RowCount:</label>
                 <input type="range" id="maxRow" name="width" min="1" max="30" onChange={(e) => this.props.onChange({rowCount: parseInt(e.target.value)})} />
                 {this.props.rowCount}
               </div>
               <br />
               <div>
-                <label>RowHeightList:</label>
+                <label>RowFactors:</label>
                 {this.props.rowFactors.map((rowHeight, i) => {
                   return <input type="number" placeholder={String(rowHeight)} className="rowHeight" key={i} onChange={this.setRowHeight.bind(this)} style={{width: '3rem'}} />
                 })}
