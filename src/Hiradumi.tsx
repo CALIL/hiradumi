@@ -100,6 +100,7 @@ class Hiradumi extends React.Component<Props, State> {
                     rowWidth += width
                     columnCount += 1
                 })
+                if(columnCount===0) return true
 
                 // 残りの横幅分、サイズを調整
                 const scaleUpRatio = hiradumiWidth / rowWidth
@@ -110,14 +111,32 @@ class Hiradumi extends React.Component<Props, State> {
                         item.width = Math.floor(item.width * scaleUpRatio)
                         item.height = Math.floor(item.height * scaleUpRatio)
                     })
+                    const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
+                    rowsData.push(rowData)
+                } else {
+
+                    // 前の行の調整
+                    const prevRowData = this.props.data.slice(currentIndex-rowsData[rowsData.length-1].length, currentIndex)
+                    // rowWidth分詰めたい
+                    const scaleDownWidth = rowWidth / prevRowData.length
+                    prevRowData.some((item, index) => {
+                        item.width = Math.floor(item.width - scaleDownWidth)
+                        const scaleDownRatio = item.width / (item.width + scaleDownWidth)
+                        item.height = Math.floor(item.height * scaleDownRatio)
+                    })
+
+                    // 今の行のサイズを調整
+                    const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
+                    const scaleRatio = prevRowData[0].height / rowData[0].height
+                    rowData.some((item, index) => {
+                        item.width = Math.floor(item.width * scaleRatio)
+                        item.height = Math.floor(item.height * scaleRatio)
+                    })
+
+                    rowsData.pop()
+                    const newRowData = this.props.data.slice(currentIndex-prevRowData.length, currentIndex+columnCount)
+                    rowsData.push(newRowData)
                 }
-
-                // 大きすぎる時は前の行に押し込む
-                // 前のデータに追加して、最適化？
-
-                const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
-                rowsData.push(rowData)
-
                 currentIndex += columnCount
             });
         }

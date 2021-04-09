@@ -29,7 +29,7 @@ class App extends Component<Props, State> {
       size: 200,
       width: 100,
       margin: 10,
-      rowCount: 4,
+      rowCount: 10,
       rowFactors: null
     }
     this.hiradumi = null;
