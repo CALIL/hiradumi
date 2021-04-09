@@ -68,49 +68,57 @@ class Hiradumi extends React.Component<Props, State> {
         const scrollBarWidth = window.innerWidth - document.body.clientWidth
         const hiradumiWidth = this.hiradumiDiv.clientWidth - scrollBarWidth
         const rowsData = []
-        this.factors.some((notValue, index) => {
-            if (rowsData.length >= this.props.rowCount) return true
-            // 行の横幅
-            let rowWidth = 0
-            // 行の高さ
-            let height = this.state.size * this.factors[index]
-            // 一行に入る数
-            let columnCount = 0
-            const currentIndexData = this.props.data.slice(currentIndex)
-            currentIndexData.some((item) => {
-                let width
-                let isRowLastItem = false
-                if (item.properties && item.properties.aspect) {
-                    width = Math.floor(height * item.properties.aspect)
-                    isRowLastItem = hiradumiWidth <= rowWidth + width
-                } else {
-                    width = Math.floor(height * 0.66666)
-                    isRowLastItem = hiradumiWidth <= rowWidth + width
-                }
-                // 行の最後のアイテムなら終了
-                if (isRowLastItem) return true
-                item.height = height
-                item.width = width
-                rowWidth += width
-                columnCount += 1
-            })
-
-            // 残りの横幅分、サイズを調整
-            const scaleUpRatio = hiradumiWidth / rowWidth
-            // 最後の行の縦が大きすぎないように規制
-            if (scaleUpRatio < 2) {
-                currentIndexData.some((item, index) => {
-                    if (index === columnCount) return true
-                    item.width = Math.floor(item.width * scaleUpRatio)
-                    item.height = Math.floor(item.height * scaleUpRatio)
+        while(currentIndex < this.props.data.length) {
+            this.factors.some((notValue, index) => {
+                if (rowsData.length >= this.props.rowCount) {
+                    currentIndex = this.props.data.length
+                    return true
+                } 
+                // 行の横幅
+                let rowWidth = 0
+                // 行の高さ
+                let height = this.state.size * this.factors[index]
+                // 一行に入る数
+                let columnCount = 0
+                const currentIndexData = this.props.data.slice(currentIndex)
+                currentIndexData.some((item) => {
+                    let width
+                    let isRowLastItem = false
+                    if (item.properties && item.properties.aspect) {
+                        width = Math.floor(height * item.properties.aspect)
+                        isRowLastItem = hiradumiWidth <= rowWidth + width
+                    } else {
+                        width = Math.floor(height * 0.66666)
+                        isRowLastItem = hiradumiWidth <= rowWidth + width
+                    }
+                    // 行の最後のアイテムなら終了
+                    if (isRowLastItem) return true
+                    item.height = height
+                    item.width = width
+                    rowWidth += width
+                    columnCount += 1
                 })
-            }
 
-            const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
-            rowsData.push(rowData)
+                // 残りの横幅分、サイズを調整
+                const scaleUpRatio = hiradumiWidth / rowWidth
+                // 最後の行の縦が大きすぎないように規制
+                if (scaleUpRatio < 2) {
+                    currentIndexData.some((item, index) => {
+                        if (index === columnCount) return true
+                        item.width = Math.floor(item.width * scaleUpRatio)
+                        item.height = Math.floor(item.height * scaleUpRatio)
+                    })
+                }
 
-            currentIndex += columnCount
-        });
+                // 大きすぎる時は前の行に押し込む
+                // 前のデータに追加して、最適化？
+
+                const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
+                rowsData.push(rowData)
+
+                currentIndex += columnCount
+            });
+        }
         this.setState({rowsData})
     }
 
