@@ -68,8 +68,10 @@ class Hiradumi extends React.Component<Props, State> {
         const scrollBarWidth = window.innerWidth - document.body.clientWidth
         const hiradumiWidth = this.hiradumiDiv.clientWidth - scrollBarWidth
         const rowsData = []
+        // すべての本を処理するまで繰り返す
         while(currentIndex < this.props.data.length) {
             this.factors.some((notValue, index) => {
+                // すべての本の処理が終わったらループから抜ける
                 if (rowsData.length >= this.props.rowCount) {
                     currentIndex = this.props.data.length
                     return true
