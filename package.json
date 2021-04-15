@@ -20,7 +20,8 @@
         "build:copy:assets": "cpx \"src/assets/**/*\" docs/assets/",
         "test": "echo \"Error: no test specified\" && exit 1",
         "//prepare": "babel src/ -d lib/ --extensions '.ts,.tsx'",
-        "prepare": "browserify -p esmify docs/index.js -o lib/index.js",
+        "prepare": "esbuild ./src/Hiradumi.tsx --outfile=./lib/Hiradumi.js --bundle --minify --sourcemap --define:process.env.NODE_ENV='\"production\"'",
+        "//prepare": "browserify -p esmify lib/Hiradumi.js -o lib/Hiradumi.js",
         "//preinstall": "npx npm-force-resolutions"
     },
     "repository": {
