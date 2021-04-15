@@ -24,14 +24,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/deguchi/template.git"
+        "url": "git+https://github.com/CALIL/hiradumi.git"
     },
     "author": "",
     "license": "",
     "bugs": {
-        "url": "https://github.com/deguchi/template/issues"
+        "url": "https://github.com/CALIL/hiradumi/issues"
     },
-    "homepage": "https://github.com/deguchi/template#readme",
+    "homepage": "https://github.com/CALIL/hiradumi#readme",
     "devDependencies": {
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.7",
