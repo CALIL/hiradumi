@@ -20,7 +20,7 @@
         "build:copy:assets": "cpx \"src/assets/**/*\" docs/assets/",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prepare": "babel src/ -d lib/ --extensions '.ts,.tsx'",
-        "preinstall": "npx npm-force-resolutions"
+        "//preinstall": "npx npm-force-resolutions"
     },
     "repository": {
         "type": "git",
