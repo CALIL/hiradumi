@@ -19,7 +19,8 @@
         "build:pug": "pug -O pug_env.js src/ --out ./docs/",
         "build:copy:assets": "cpx \"src/assets/**/*\" docs/assets/",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "prepare": "babel src/ -d lib/ --extensions '.ts,.tsx'",
+        "//prepare": "babel src/ -d lib/ --extensions '.ts,.tsx'",
+        "prepare": "browserify -p esmify docs/index.js -o lib/index.js",
         "//preinstall": "npx npm-force-resolutions"
     },
     "repository": {
