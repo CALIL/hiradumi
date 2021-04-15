@@ -77,7 +77,7 @@ class App extends Component<Props, State> {
                   rowCount={this.state.rowCount}
                   rowFactors={this.state.rowFactors}
                   itemComponent={Book}
-                />      
+                />
               </div>
             </React.Fragment>
           ) : null}
