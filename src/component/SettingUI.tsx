@@ -54,7 +54,14 @@ class SettingUI extends Component<Props, State> {
           }
         });
         execCopy(rowHeightList.toString())
-    }    
+    }
+    setRowFactors() {
+      const rowFactors = []
+      Array.prototype.slice.call(document.querySelectorAll('input[type="number"]')).map((input) => {
+        rowFactors.push(input.value)
+      })
+      this.props.onChange({rowFactors: rowFactors})
+    }
     render() {
         return (
             <div style={{maxWidth: '1400px', margin: '0 auto', padding: '10px'}}>
@@ -75,7 +82,7 @@ class SettingUI extends Component<Props, State> {
               <div>
                 <label>RowFactors:</label>
                 {this.props.rowFactors.map((rowHeight, i) => {
-                  return <input type="number" placeholder={String(rowHeight)} className="rowHeight" key={i} onChange={this.setRowHeight.bind(this)} style={{width: '3rem'}} />
+                  return <input type="number" placeholder={String(rowHeight)} value={String(rowHeight)} step="0.1" className="rowHeight" key={i} onChange={this.setRowFactors.bind(this)} style={{width: '3rem'}} />
                 })}
                 <button onClick={this.copy.bind(this)}>Copy</button>
               </div>
