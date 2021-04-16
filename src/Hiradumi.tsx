@@ -2,6 +2,8 @@ import 'whatwg-fetch';
 import React, { Component } from 'react';
 
 import HiradumiRow from './HiradumiRow'
+import Book from './component/Book'
+
 
 interface Props {
     data: any[]
@@ -24,6 +26,75 @@ interface Hiradumi {
     setHiradumiDiv: (element) => void 
 }
 
+const styles = `
+.row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap
+}
+`
+
+const bookStyles = `
+.row .book {
+    box-sizing: border-box;
+    animation: fadeIn 1s ease 0s 1 normal;
+    overflow: hidden
+}
+
+.row .book.nocover {
+    border: 1px solid #eee
+}
+
+.row .book.nocover .bg {
+    position: absolute;
+    background-color: #eee;
+    width: 80%;
+    height: 100%;
+    top: 0;
+    left: 10%;
+    z-index: -1
+}
+
+.row .book.nocover .textCover {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 30% 0 0
+}
+
+.row .book.nocover .textCover .title {
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 5px;
+    line-height: 120%;
+    z-index: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word
+}
+
+.row .book.nocover .textCover .author {
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    font-size: 80%;
+    color: #e00;
+    font-weight: bold;
+    z-index: 1
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+`
 
 class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -135,12 +206,17 @@ class Hiradumi extends React.Component<Props, State> {
 
     render() {
         if (this.props.data.length===0) return null
+        let css = styles
+        if (!this.props.itemComponent) {
+            css += bookStyles
+        }
         return (<div className="hiradumi" ref={this.setHiradumiDiv}>
+            <style>{css}</style>
             {Array.from({length: this.state.rowsData.length}).map((notValue, index) => {
                 return <HiradumiRow
                     rowData={this.state.rowsData[index]}
                     margin={this.props.margin}
-                    itemComponent={this.props.itemComponent}
+                    itemComponent={this.props.itemComponent ? this.props.itemComponent : Book}
                 />
             })}
         </div>)

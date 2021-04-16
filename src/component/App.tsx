@@ -76,7 +76,7 @@ class App extends Component<Props, State> {
                   margin={this.state.margin}
                   rowCount={this.state.rowCount}
                   rowFactors={this.state.rowFactors}
-                  itemComponent={Book}
+                  itemComponent={null}
                 />
               </div>
             </React.Fragment>
