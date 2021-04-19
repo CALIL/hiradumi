@@ -13,6 +13,7 @@
         "watch:ts": "chokidar \"./src/**/*.tsx\" --command \"npm run build:ts\"",
         "build": "npm-run-all clean build:** -s",
         "build:ts": "esbuild ./src/index.tsx --outfile=./docs/index.js --bundle --minify --sourcemap --define:process.env.NODE_ENV='\"production\"'",
+        "build:babel": "babel docs/index.js --out-file docs/index.js",
         "build:browserify": "browserify -p esmify docs/index.js -o docs/index.js",
         "build:sass": "sass ./src/index.sass ./docs/index.css --style compressed --no-source-map",
         "build:autoprefixer": "postcss ./docs/index.css -o ./docs/index.css --config ./postcss.config.js",
