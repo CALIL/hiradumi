@@ -3,8 +3,7 @@ import Hiradumi from '../Hiradumi';
 import SettingUI from './SettingUI';
 import Book from './Book';
 // import items from '../Kochi_Motoyama_plus.json';
-// import items from '../../Gifu_Nakatsugawa_plus.json';
-const items = []
+import items from '../../Gifu_Nakatsugawa_plus.json';
 
 interface App {
   factors: number[]
