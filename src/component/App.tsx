@@ -1,9 +1,10 @@
 import React, { Component, ReactComponentElement } from 'react';
-import Hiradumi from '../Hiradumi.tsx';
+import Hiradumi from '../Hiradumi';
 import SettingUI from './SettingUI';
-import Book from './Book.tsx';
+import Book from './Book';
 // import items from '../Kochi_Motoyama_plus.json';
-import items from '../../Gifu_Nakatsugawa_plus.json';
+// import items from '../../Gifu_Nakatsugawa_plus.json';
+const items = []
 
 interface App {
   factors: number[]

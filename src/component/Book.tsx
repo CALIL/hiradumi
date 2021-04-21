@@ -1,6 +1,26 @@
 import React, {Component} from 'react';
 
-export default class item extends Component {
+
+interface Book {
+    id: string
+    title: string
+    author: string
+    isbn: string
+    width: number
+    height: number
+    cover: string | null
+    properties: {
+        aspect: number
+    }
+}
+interface Props {
+    item: Book
+    margin: number
+}
+interface State {
+}
+
+export default class item extends Component<Props, State> {
     constructor(props) {
         super(props);
     }

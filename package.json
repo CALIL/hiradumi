@@ -19,8 +19,7 @@
         "build:pug": "pug -O pug_env.js src/ --out ./docs/",
         "build:copy:assets": "cpx \"src/assets/**/*\" docs/assets/",
         "deploy": "npm-run-all clean deploy:ts build:sass build:pug -s",
-        "//": "parcel-bundlerをローカルにインストールではエラーになるのでnpxで実行",
-        "deploy:ts": "npx parcel-bundler build ./src/index.tsx --out-dir ./docs/",
+        "deploy:ts": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prepare": "babel src/ -d lib/ --extensions '.ts,.tsx'",
         "//preinstall": "npx npm-force-resolutions"
