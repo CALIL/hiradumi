@@ -31,7 +31,7 @@ export default class item extends Component<Props, State> {
         const item = this.props.item
         const fontSize = (this.props.item.width - this.props.margin) / 14
         return (
-            <div className={'book ' + (!this.props.item.cover ? 'nocover' : '')} ref="item" id={item.id} style={{
+            <div className={'hiradumiBook ' + (!this.props.item.cover ? 'nocover' : '')} ref="item" id={item.id} style={{
                 width: item.width - this.props.margin + 'px',
                 height: item.height - this.props.margin + 'px',
                 margin: this.props.margin / 2 + 'px',

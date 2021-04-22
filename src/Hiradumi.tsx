@@ -14,7 +14,6 @@ interface Props {
     itemComponent: any
 }
 interface State {
-    size: number
     rowsData: any[]
 }
 
@@ -35,17 +34,17 @@ const styles = `
 `
 
 const bookStyles = `
-.row .book {
+.row .hiradumiBook {
     box-sizing: border-box;
     animation: fadeIn 1s ease 0s 1 normal;
     overflow: hidden
 }
 
-.row .book.nocover {
+.row .hiradumiBook.nocover {
     border: 1px solid #eee
 }
 
-.row .book.nocover .bg {
+.row .hiradumiBook.nocover .bg {
     position: absolute;
     background-color: #eee;
     width: 80%;
@@ -55,14 +54,14 @@ const bookStyles = `
     z-index: -1
 }
 
-.row .book.nocover .textCover {
+.row .hiradumiBook.nocover .textCover {
     position: relative;
     height: 100%;
     width: 100%;
     padding: 30% 0 0
 }
 
-.row .book.nocover .textCover .title {
+.row .hiradumiBook.nocover .textCover .title {
     position: relative;
     width: 90%;
     margin: 0 auto;
@@ -75,7 +74,7 @@ const bookStyles = `
     overflow-wrap: break-word
 }
 
-.row .book.nocover .textCover .author {
+.row .hiradumiBook.nocover .textCover .author {
     position: relative;
     width: 90%;
     margin: 0 auto;
@@ -100,7 +99,6 @@ class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
       super(props)
       this.state ={
-          size: this.props.size ? this.props.size : 200,
           rowsData: []
       }
       this.factors = []
@@ -142,7 +140,7 @@ class Hiradumi extends React.Component<Props, State> {
             // 行の横幅
             let rowWidth = 0
             // 行の高さ
-            let height = this.state.size * this.factors[index]
+            let height = this.props.size * this.factors[index]
             // 一行に入る数
             let columnCount = 0
             const currentIndexData = this.props.data.slice(currentIndex)

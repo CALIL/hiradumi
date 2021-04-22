@@ -8,11 +8,6 @@ interface Props {
 interface State {
 }
 
-interface HiradumiRow {
-    size: number
-}
-
-
 class HiradumiRow extends React.Component<Props, State> {
     constructor(props: Props) {
       super(props)

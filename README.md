@@ -13,6 +13,56 @@
 [https://calil.github.io/hiradumi/](https://calil.github.io/hiradumi/)
 
 
+## 利用方法
+
+[Hiradumi.tsx](./src/Hiradumi.tsx)
+
+```
+interface Props {
+    data: any[]
+    size: number
+    margin: number
+    rowCount: number
+    rowFactors: number[]
+    itemComponent: any
+}
+```
+
+- data　画像のアスペクト比が入ったItemの配列
+```
+interface Item {
+    ...
+    properties: {
+        aspect: number
+    }
+}
+```
+- size　画像の高さの基準値
+- margin 画像のマージン
+- rowCount 最大行数
+- rowFactors 行ごとの比率
+- itemComponent itemを表示するコンポーネント （デフォルト: [Book.tsx](./src/component/Book.tsx))
+
+```
+<Hiradumi
+    data={}
+    size={}
+    margin={}
+    rowCount={}
+    rowFactors={}
+    itemComponent={}
+/>
+```
+
+
+## サンプルコード
+
+[App.tsx](./src/component/App.tsx)
+
+## サンプルデータ
+
+[Gifu_Nakatsugawa_plus.json](./Gifu_Nakatsugawa_plus.json)
+
 ## 開発手順
 
 ```bash

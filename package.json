@@ -25,8 +25,8 @@
         "type": "git",
         "url": "git+https://github.com/CALIL/hiradumi.git"
     },
-    "author": "",
-    "license": "",
+    "author": "CALIL Inc.",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/CALIL/hiradumi/issues"
     },
