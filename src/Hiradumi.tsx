@@ -179,7 +179,7 @@ class Hiradumi extends React.Component<Props, State> {
                 const prevRowData = this.props.data.slice(currentIndex-rowsData[rowsData.length-1].length, currentIndex)
                 // rowWidth分詰めたい
                 const scaleDownWidth = rowWidth / prevRowData.length
-                prevRowData.some((item, index) => {
+                prevRowData.some((item) => {
                     item.width = Math.floor(item.width - scaleDownWidth)
                     const scaleDownRatio = item.width / (item.width + scaleDownWidth)
                     item.height = Math.floor(item.height * scaleDownRatio)
@@ -188,7 +188,7 @@ class Hiradumi extends React.Component<Props, State> {
                 // 今の行のサイズを調整
                 const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
                 const scaleRatio = prevRowData[0].height / rowData[0].height
-                rowData.some((item, index) => {
+                rowData.some((item) => {
                     item.width = Math.floor(item.width * scaleRatio)
                     item.height = Math.floor(item.height * scaleRatio)
                 })

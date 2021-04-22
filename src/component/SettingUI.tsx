@@ -69,15 +69,15 @@ class SettingUI extends Component<Props, State> {
                 <label htmlFor="width">Width:</label>
                 <input type="range" id="width" name="width" min="10" max="100" step="10" defaultValue="100" onChange={(e) => this.props.onChange({width: e.target.value})} />
                 {this.props.width}%
-                &nbsp
+                &nbsp;
                 <label htmlFor="margin">Size:</label>
                 <input type="range" id="size" name="width" min="10" max="600" value={this.props.size} onChange={(e) => this.props.onChange({size: parseInt(e.target.value)})} />
                 {this.props.size}
-                &nbsp
+                &nbsp;
                 <label htmlFor="margin">Margin:</label>
                 <input type="range" id="margin" name="width" min="0" max="30" value={this.props.margin} onChange={(e) => this.props.onChange({margin: parseInt(e.target.value)})} />
                 {this.props.margin}
-                &nbsp
+                &nbsp;
                 <label htmlFor="margin">RowCount:</label>
                 <input type="range" id="maxRow" name="width" min="1" max="30" value={this.props.rowCount} onChange={(e) => this.props.onChange({rowCount: parseInt(e.target.value)})} />
                 {this.props.rowCount}
