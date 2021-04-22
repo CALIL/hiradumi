@@ -1,9 +1,8 @@
-import React, { Component, ReactComponentElement } from 'react';
-import Hiradumi from '../Hiradumi';
-import SettingUI from './SettingUI';
-import Book from './Book';
-// import items from '../Kochi_Motoyama_plus.json';
-import items from '../../Gifu_Nakatsugawa_plus.json';
+import React, { Component, ReactComponentElement } from 'react'
+import Hiradumi from '../Hiradumi'
+import SettingUI from './SettingUI'
+// import items from '../Kochi_Motoyama_plus.json'
+import items from '../../Gifu_Nakatsugawa_plus.json'
 
 interface App {
   factors: number[]
@@ -23,7 +22,7 @@ interface State {
 
 class App extends Component<Props, State> {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       items: items,
       size: 200,
@@ -32,10 +31,10 @@ class App extends Component<Props, State> {
       rowCount: 10,
       rowFactors: null
     }
-    this.hiradumi = null;
+    this.hiradumi = null
 
     this.setHiradumi = element => {
-      this.hiradumi = element;
+      this.hiradumi = element
     }
   }
   componentDidMount() {
@@ -54,7 +53,7 @@ class App extends Component<Props, State> {
 
   render() {
     
-    if (!this.state.items) return null;
+    if (!this.state.items) return null
 
     return (
       <div>
@@ -82,7 +81,7 @@ class App extends Component<Props, State> {
             </React.Fragment>
           ) : null}
       </div>
-    );
+    )
   }
 }
 

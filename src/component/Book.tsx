@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 
 
 interface Book {
@@ -22,10 +22,10 @@ interface State {
 
 export default class item extends Component<Props, State> {
     constructor(props) {
-        super(props);
+        super(props)
     }
     onClick() {
-        window.open('https://calil.jp/book/' + this.props.item.isbn, '_parent');
+        window.open('https://calil.jp/book/' + this.props.item.isbn, '_parent')
     }
     render() {
         const item = this.props.item
@@ -62,6 +62,6 @@ export default class item extends Component<Props, State> {
                     </React.Fragment>
                 )}
             </div>
-        );
+        )
     }
 }

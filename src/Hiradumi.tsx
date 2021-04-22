@@ -1,5 +1,5 @@
-import 'whatwg-fetch';
-import React, { Component } from 'react';
+import 'whatwg-fetch'
+import React, { Component } from 'react'
 
 import HiradumiRow from './HiradumiRow'
 import Book from './component/Book'
@@ -103,10 +103,10 @@ class Hiradumi extends React.Component<Props, State> {
       }
       this.factors = []
 
-      this.hiradumiDiv = null;
+      this.hiradumiDiv = null
 
       this.setHiradumiDiv = element => {
-        this.hiradumiDiv = element;
+        this.hiradumiDiv = element
       }
     }
 
@@ -198,7 +198,7 @@ class Hiradumi extends React.Component<Props, State> {
                 rowsData.push(newRowData)
             }
             currentIndex += columnCount
-        });
+        })
         this.setState({rowsData})
     }
 
