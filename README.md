@@ -44,7 +44,7 @@ interface Props {
         }
     }
     ```
-- size　画像の高さの基準値
+- size　画像の高さの基準サイズ
 - margin 画像のマージン
 - rowCount 最大行数
 - rowFactors 行ごとの比率
