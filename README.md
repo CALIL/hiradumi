@@ -15,6 +15,13 @@
 
 ## 利用方法
 
+### インストール
+
+```
+npm install github:CALIL/hiradumi#master
+```
+
+
 [Hiradumi.tsx](./src/Hiradumi.tsx)
 
 ```
@@ -29,14 +36,14 @@ interface Props {
 ```
 
 - data　画像のアスペクト比が入ったItemの配列
-```
-interface Item {
-    ...
-    properties: {
-        aspect: number
+    ```
+    interface Item {
+        ...
+        properties: {
+            aspect: number
+        }
     }
-}
-```
+    ```
 - size　画像の高さの基準値
 - margin 画像のマージン
 - rowCount 最大行数
@@ -63,7 +70,7 @@ interface Item {
 
 [Gifu_Nakatsugawa_plus.json](./Gifu_Nakatsugawa_plus.json)
 
-## 開発手順
+# 開発
 
 ```bash
 npm install
