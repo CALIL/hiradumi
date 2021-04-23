@@ -6,7 +6,7 @@ import Book from './component/Book'
 
 
 interface Props {
-    data: any[]
+    items: any[]
     size: number
     margin: number
     rowCount: number
@@ -143,7 +143,7 @@ class Hiradumi extends React.Component<Props, State> {
             let height = this.props.size * this.factors[index]
             // 一行に入る数
             let columnCount = 0
-            const currentIndexData = this.props.data.slice(currentIndex)
+            const currentIndexData = this.props.items.slice(currentIndex)
             currentIndexData.some((item) => {
                 let width
                 let isRowLastItem = false
@@ -172,11 +172,11 @@ class Hiradumi extends React.Component<Props, State> {
                     item.width = Math.floor(item.width * scaleUpRatio)
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
-                const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
+                const rowData = this.props.items.slice(currentIndex, currentIndex+columnCount)
                 rowsData.push(rowData)
             } else {
                 // 前の行の調整
-                const prevRowData = this.props.data.slice(currentIndex-rowsData[rowsData.length-1].length, currentIndex)
+                const prevRowData = this.props.items.slice(currentIndex-rowsData[rowsData.length-1].length, currentIndex)
                 // rowWidth分詰めたい
                 const scaleDownWidth = rowWidth / prevRowData.length
                 prevRowData.some((item) => {
@@ -186,7 +186,7 @@ class Hiradumi extends React.Component<Props, State> {
                 })
 
                 // 今の行のサイズを調整
-                const rowData = this.props.data.slice(currentIndex, currentIndex+columnCount)
+                const rowData = this.props.items.slice(currentIndex, currentIndex+columnCount)
                 const scaleRatio = prevRowData[0].height / rowData[0].height
                 rowData.some((item) => {
                     item.width = Math.floor(item.width * scaleRatio)
@@ -194,7 +194,7 @@ class Hiradumi extends React.Component<Props, State> {
                 })
 
                 rowsData.pop()
-                const newRowData = this.props.data.slice(currentIndex-prevRowData.length, currentIndex+columnCount)
+                const newRowData = this.props.items.slice(currentIndex-prevRowData.length, currentIndex+columnCount)
                 rowsData.push(newRowData)
             }
             currentIndex += columnCount
@@ -203,7 +203,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.props.data.length===0) return null
+        if (this.props.items.length===0) return null
         let css = styles
         if (!this.props.itemComponent) {
             css += bookStyles

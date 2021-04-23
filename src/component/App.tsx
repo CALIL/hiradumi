@@ -70,7 +70,7 @@ class App extends Component<Props, State> {
               <div style={{width: this.state.width + '%', margin: '0 auto'}}>
                 <Hiradumi
                   ref={this.setHiradumi}
-                  data={this.state.items}
+                  items={this.state.items}
                   size={this.state.size}
                   margin={this.state.margin}
                   rowCount={this.state.rowCount}

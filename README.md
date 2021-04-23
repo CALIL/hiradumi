@@ -26,7 +26,7 @@ npm install github:CALIL/hiradumi#master
 
 ```
 interface Props {
-    data: any[]
+    items: any[]
     size: number
     margin: number
     rowCount: number
@@ -35,7 +35,9 @@ interface Props {
 }
 ```
 
-- data　画像のアスペクト比が入ったItemの配列
+- items　Itemの配列データ  
+　　　　　画像のアスペクト比が入った
+
     ```
     interface Item {
         ...
@@ -52,7 +54,7 @@ interface Props {
 
 ```
 <Hiradumi
-    data={}
+    items={}
     size={}
     margin={}
     rowCount={}
