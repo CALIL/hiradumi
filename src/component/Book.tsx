@@ -16,6 +16,7 @@ interface Book {
 interface Props {
     item: Book
     margin: number
+    sortKey: string
 }
 interface State {
 }
@@ -42,16 +43,23 @@ export default class item extends Component<Props, State> {
                 justifyContent: 'center'
             }} onClick={this.onClick.bind(this)}>
                 {this.props.item.cover ? (
-                    <img src={item.cover}
-                         alt={item.title}
-                         data-aspect={item.properties.aspect}
-                         ref="cover"
-                         style={{
-                            height: item.height - this.props.margin + 'px',
-                            width: item.width - this.props.margin + 'px',
-                            margin: this.props.margin / 2 + 'px'
-                        }}
-                    />
+                    <React.Fragment>
+                        <img src={item.cover}
+                            alt={item.title}
+                            data-aspect={item.properties.aspect}
+                            ref="cover"
+                            style={{
+                                height: item.height - this.props.margin + 'px',
+                                width: item.width - this.props.margin + 'px',
+                                margin: this.props.margin / 2 + 'px'
+                            }}
+                        />
+                        {this.props.sortKey ? (
+                            <span className="sortKey" style={{
+                                opacity: item[this.props.sortKey] / 4
+                            }}>{item[this.props.sortKey]}</span>
+                        ) : null}
+                        </React.Fragment>
                 ) : (
                     <React.Fragment>
                         <div className="bg"></div>
@@ -59,6 +67,11 @@ export default class item extends Component<Props, State> {
                             <div className="title" style={{fontSize: fontSize+'px'}}>{item.title}</div>
                             <div className="author" style={{fontSize: fontSize*0.7+'px'}}>{item.author}</div>
                         </div>
+                        {this.props.sortKey ? (
+                            <span className="sortKey" style={{
+                                opacity: item[this.props.sortKey] / 4
+                            }}>{item[this.props.sortKey]}</span>
+                        ) : null}
                     </React.Fragment>
                 )}
             </div>

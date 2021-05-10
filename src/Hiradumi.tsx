@@ -41,6 +41,20 @@ const bookStyles = `
     overflow: hidden
 }
 
+.row .hiradumiBook .sortKey {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    background-color: #999;
+    border-radius: 50px;
+    width: 2rem;
+    height: 2rem;
+}
+
 .row .hiradumiBook.nocover {
     border: 1px solid #eee
 }
@@ -237,6 +251,7 @@ class Hiradumi extends React.Component<Props, State> {
                     rowData={this.state.rowsData[index]}
                     margin={this.props.margin}
                     itemComponent={this.props.itemComponent ? this.props.itemComponent : Book}
+                    sortKey={this.props.sortKey}
                 />
             })}
         </div>)

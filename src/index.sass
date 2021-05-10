@@ -9,10 +9,23 @@ body
   display: flex
   justify-content: space-between
   flex-wrap: wrap
-  .book
+  .hiradumiBook
+    position: relative
     box-sizing: border-box
     animation: fadeIn 1s ease 0s 1 normal
     overflow: hidden
+    .sortKey
+      color: #fff
+      display: flex
+      justify-content: center
+      align-items: center
+      position: absolute
+      right: 0.5rem
+      bottom: 0.5rem
+      background-color: #999
+      border-radius: 50px
+      width: 2rem
+      height: 2rem
     // coverなしの表示
     &.nocover
       border: 1px solid #eeeeee
