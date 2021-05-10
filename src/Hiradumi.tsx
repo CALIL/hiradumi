@@ -163,6 +163,7 @@ class Hiradumi extends React.Component<Props, State> {
             })
             if(columnCount===0) return true
 
+            let rowData
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = hiradumiWidth / rowWidth
             // 最後の行の縦が大きすぎないように規制
@@ -172,8 +173,7 @@ class Hiradumi extends React.Component<Props, State> {
                     item.width = Math.floor(item.width * scaleUpRatio)
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
-                const rowData = this.props.items.slice(currentIndex, currentIndex+columnCount)
-                rowsData.push(rowData)
+                rowData = this.props.items.slice(currentIndex, currentIndex+columnCount)
             } else {
                 // 前の行の調整
                 const prevRowData = this.props.items.slice(currentIndex-rowsData[rowsData.length-1].length, currentIndex)
@@ -186,17 +186,17 @@ class Hiradumi extends React.Component<Props, State> {
                 })
 
                 // 今の行のサイズを調整
-                const rowData = this.props.items.slice(currentIndex, currentIndex+columnCount)
-                const scaleRatio = prevRowData[0].height / rowData[0].height
-                rowData.some((item) => {
+                const tempRowData = this.props.items.slice(currentIndex, currentIndex+columnCount)
+                const scaleRatio = prevRowData[0].height / tempRowData[0].height
+                tempRowData.some((item) => {
                     item.width = Math.floor(item.width * scaleRatio)
                     item.height = Math.floor(item.height * scaleRatio)
                 })
 
                 rowsData.pop()
-                const newRowData = this.props.items.slice(currentIndex-prevRowData.length, currentIndex+columnCount)
-                rowsData.push(newRowData)
+                rowData = this.props.items.slice(currentIndex-prevRowData.length, currentIndex+columnCount)
             }
+            rowsData.push(rowData)
             currentIndex += columnCount
         })
         this.setState({rowsData})
