@@ -12,6 +12,7 @@ interface Props {
     rowCount: number
     rowFactors: number[]
     itemComponent: any
+    sortKey: string
 }
 interface State {
     rowsData: any[]
@@ -196,6 +197,27 @@ class Hiradumi extends React.Component<Props, State> {
                 rowsData.pop()
                 rowData = this.props.items.slice(currentIndex-prevRowData.length, currentIndex+columnCount)
             }
+
+
+            // sortLabelでソートして、中央から並べ直す
+            if (this.props.sortKey) {
+                const sortLabel = this.props.sortKey
+                rowData.sort(function(a,b){
+                    if(a[sortLabel] < b[sortLabel]) return 1;
+                    if(a[sortLabel] > b[sortLabel]) return -1;
+                    return 0;
+                });
+                const newRowData = {}
+                const rowLength = rowData.length
+                const centerIndex = Math.floor(rowLength / 2)
+                newRowData[centerIndex] = rowData[0]
+                Array.from({length: centerIndex}).map((item, index) => {
+                    if (rowData[index*2+1]) newRowData[centerIndex-1-index] = rowData[index*2+1]
+                    if (rowData[index*2+2]) newRowData[centerIndex+1+index] = rowData[index*2+2]
+                })
+                rowData = Object.values(newRowData)
+            }
+
             rowsData.push(rowData)
             currentIndex += columnCount
         })

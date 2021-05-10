@@ -76,6 +76,7 @@ class App extends Component<Props, State> {
                   rowCount={this.state.rowCount}
                   rowFactors={this.state.rowFactors}
                   itemComponent={null}
+                  sortKey={'term_popular_count'}
                 />
               </div>
             </React.Fragment>
