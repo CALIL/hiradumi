@@ -17,6 +17,7 @@ interface State {
   size: number
   margin: number
   rowCount: number
+  sortKey: string | null
   rowFactors: number[] | null
 }
 
@@ -29,6 +30,7 @@ class App extends Component<Props, State> {
       width: 100,
       margin: 10,
       rowCount: 10,
+      sortKey: 'term_popular_count',
       rowFactors: null
     }
     this.hiradumi = null
@@ -65,6 +67,7 @@ class App extends Component<Props, State> {
                 margin={this.state.margin}
                 rowCount={this.state.rowCount}
                 rowFactors={this.state.rowFactors}
+                sortKey={this.state.sortKey}
                 onChange={this.onChange.bind(this)}
               />
               <div style={{width: this.state.width + '%', margin: '0 auto'}}>
@@ -76,7 +79,7 @@ class App extends Component<Props, State> {
                   rowCount={this.state.rowCount}
                   rowFactors={this.state.rowFactors}
                   itemComponent={null}
-                  sortKey={'term_popular_count'}
+                  sortKey={this.state.sortKey}
                 />
               </div>
             </React.Fragment>

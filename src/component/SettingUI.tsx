@@ -22,6 +22,7 @@ interface Props {
   margin: number,
   rowCount: number,
   rowFactors: number[] | null,
+  sortKey: string | null
   onChange: (state: any) => void
 }
 
@@ -55,6 +56,13 @@ class SettingUI extends Component<Props, State> {
         })
         execCopy(rowHeightList.toString())
     }
+    setSortKey(sortKeyCheckBox) {
+      if (sortKeyCheckBox.checked) {
+        this.props.onChange({sortKey: 'term_popular_count'})
+      } else {
+        this.props.onChange({sortKey: null})
+      }
+    }
     setRowFactors() {
       const rowFactors = []
       Array.prototype.slice.call(document.querySelectorAll('input[type="number"]')).map((input) => {
@@ -81,6 +89,10 @@ class SettingUI extends Component<Props, State> {
                 <label htmlFor="margin">RowCount:</label>
                 <input type="range" id="maxRow" name="width" min="1" max="30" value={this.props.rowCount} onChange={(e) => this.props.onChange({rowCount: parseInt(e.target.value)})} />
                 {this.props.rowCount}
+                &nbsp;
+                <label htmlFor="sortKey">SortKey:</label>
+                <input type="checkbox" id="sortKey" name="sortKey" value={this.props.sortKey} defaultChecked={true} onChange={(e) => this.setSortKey(e.target)} />
+                <label htmlFor="sortKey">term_popular_count</label>
               </div>
               <br />
               <div>
