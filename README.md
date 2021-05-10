@@ -61,6 +61,7 @@ interface Props {
     margin={}
     rowCount={}
     rowFactors={}
+    sortKey={}
     itemComponent={}
 />
 ```
