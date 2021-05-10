@@ -36,11 +36,6 @@ export default class item extends Component<Props, State> {
                 width: item.width - this.props.margin + 'px',
                 height: item.height - this.props.margin + 'px',
                 margin: this.props.margin / 2 + 'px',
-                cursor: 'pointer',
-                position: 'relative',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center'
             }} onClick={this.onClick.bind(this)}>
                 {this.props.item.cover ? (
                     <React.Fragment>

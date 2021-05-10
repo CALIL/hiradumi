@@ -36,11 +36,16 @@ const styles = `
 
 const bookStyles = `
 .row .hiradumiBook {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
     animation: fadeIn 1s ease 0s 1 normal;
-    overflow: hidden
+    overflow: hidden;
+    cursor: pointer;
 }
-
+  
 .row .hiradumiBook .sortKey {
     color: #fff;
     display: flex;
