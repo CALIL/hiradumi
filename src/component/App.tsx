@@ -1,8 +1,15 @@
-import React, { Component, ReactComponentElement } from 'react'
+import React, { Component } from 'react'
 import Hiradumi from '../Hiradumi'
 import SettingUI from './SettingUI'
 // import items from '../Kochi_Motoyama_plus.json'
 import items from '../../Gifu_Nakatsugawa_plus.json'
+
+items.map((item) => {
+  if (item.cover==='') {
+    item.term_popular_count = 0
+  }
+})
+
 
 interface App {
   factors: number[]
