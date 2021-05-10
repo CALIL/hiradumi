@@ -4,7 +4,7 @@ interface Props {
     rowData: any[]
     margin: number
     itemComponent: any
-    sortKey: string
+    sortKey: string | null
 }
 interface State {
 }

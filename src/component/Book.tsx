@@ -16,7 +16,7 @@ interface Book {
 interface Props {
     item: Book
     margin: number
-    sortKey: string
+    sortKey: string | null
 }
 interface State {
 }

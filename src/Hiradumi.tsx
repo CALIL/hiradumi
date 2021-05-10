@@ -12,7 +12,7 @@ interface Props {
     rowCount: number
     rowFactors: number[]
     itemComponent: any
-    sortKey: string
+    sortKey: string | null
 }
 interface State {
     rowsData: any[]
