@@ -52,7 +52,7 @@ interface Props {
 - rowCount 最大行数
 - rowFactors 行ごとの比率
 - itemComponent itemを表示するコンポーネント （デフォルト: [Book.tsx](./src/component/Book.tsx))
-- sortKey １行毎のデータの並び替えに使うキーを指定。高いものほど中央に表示する。
+- sortKey(optional) １行毎のデータの並び替えに使うキーを指定。高いものほど中央に表示する。
 
 ```
 <Hiradumi
