@@ -69,7 +69,7 @@ export default class item extends Component<Props, State> {
                         </div>
                         {this.props.sortKey ? (
                             <span className="sortKey" style={{
-                                opacity: item[this.props.sortKey] / 4
+                                opacity: item[this.props.sortKey] / 4 + 0.1
                             }}>{item[this.props.sortKey]}</span>
                         ) : null}
                     </React.Fragment>
