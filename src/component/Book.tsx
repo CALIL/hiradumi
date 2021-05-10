@@ -45,8 +45,7 @@ export default class item extends Component<Props, State> {
                             ref="cover"
                             style={{
                                 height: item.height - this.props.margin + 'px',
-                                width: item.width - this.props.margin + 'px',
-                                margin: this.props.margin / 2 + 'px'
+                                width: item.width - this.props.margin + 'px'
                             }}
                         />
                         {this.props.sortKey ? (
