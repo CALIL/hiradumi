@@ -1,5 +1,6 @@
 import 'whatwg-fetch'
 import React, { Component } from 'react'
+import { FixedSizeList as List } from "react-window";
 
 import HiradumiRow from './HiradumiRow'
 import Book from './component/Book'
@@ -136,10 +137,10 @@ class Hiradumi extends React.Component<Props, State> {
 
         // PC版のスクロールバー対応
         // コンテンツがないとスクロールバーが出ないので、追加後に再計算
-        setTimeout(() => {
-            const scrollBarWidth = window.innerWidth - document.body.clientWidth
-            if (scrollBarWidth > 0) this.setRowData()
-        }, 10)
+        // setTimeout(() => {
+        //     const scrollBarWidth = window.innerWidth - document.body.clientWidth
+        //     if (scrollBarWidth > 0) this.setRowData()
+        // }, 10)
 
         window.addEventListener('resize', this.setRowData.bind(this))
     }
@@ -249,16 +250,28 @@ class Hiradumi extends React.Component<Props, State> {
         if (!this.props.itemComponent) {
             css += bookStyles
         }
+
+        const itemComponent = this.props.itemComponent ? this.props.itemComponent : Book
+        const Row = ({ index, style }) => {
+            return (
+                <div className="row" style={style}>
+                    {this.state.rowsData[index].map((item) => {
+                        return <Book item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                    })}
+                </div>
+            )
+        };
+       
         return (<div className="hiradumi" ref={this.setHiradumiDiv}>
             <style>{css}</style>
-            {Array.from({length: this.state.rowsData.length}).map((notValue, index) => {
-                return <HiradumiRow
-                    rowData={this.state.rowsData[index]}
-                    margin={this.props.margin}
-                    itemComponent={this.props.itemComponent ? this.props.itemComponent : Book}
-                    sortKey={this.props.sortKey}
-                />
-            })}
+            <List
+                height={800}
+                itemCount={this.state.rowsData.length}
+                itemSize={300}
+                width={document.body.clientWidth}
+            >
+                {Row}
+            </List>
         </div>)
     }
 }
