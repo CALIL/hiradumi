@@ -265,9 +265,9 @@ class Hiradumi extends React.Component<Props, State> {
         return (<div className="hiradumi" ref={this.setHiradumiDiv}>
             <style>{css}</style>
             <List
-                height={800}
+                height={700}
                 itemCount={this.state.rowsData.length}
-                itemSize={300}
+                itemSize={200}
                 width={document.body.clientWidth}
             >
                 {Row}

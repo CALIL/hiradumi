@@ -10,6 +10,11 @@ items.map((item) => {
   }
 })
 
+Array.from({length: 10}).map(() => {
+  ([].concat(items)).map((item) => {
+    items.push(item)
+  })
+})
 
 interface App {
   factors: number[]
@@ -36,7 +41,7 @@ class App extends Component<Props, State> {
       size: 200,
       width: 100,
       margin: 10,
-      rowCount: 10,
+      rowCount: 300,
       sortKey: 'term_popular_count',
       rowFactors: null
     }
