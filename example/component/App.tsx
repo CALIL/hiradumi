@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import Hiradumi from '../Hiradumi'
+import Hiradumi from '../../src/Hiradumi'
 import SettingUI from './SettingUI'
 // import items from '../Kochi_Motoyama_plus.json'
 import items from '../../Gifu_Nakatsugawa_plus.json'
+import DefaultBook from './DefaultBook'
+
 
 items.map((item) => {
   if (item.cover==='') {
@@ -90,7 +92,7 @@ class App extends Component<Props, State> {
                   margin={this.state.margin}
                   rowCount={this.state.rowCount}
                   rowFactors={this.state.rowFactors}
-                  itemComponent={null}
+                  itemComponent={DefaultBook}
                   sortKey={this.state.sortKey}
                 />
               </div>

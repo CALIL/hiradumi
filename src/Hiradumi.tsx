@@ -2,9 +2,7 @@ import 'whatwg-fetch'
 import React, { Component } from 'react'
 import { FixedSizeList as List } from "react-window";
 
-import HiradumiRow from './HiradumiRow'
-import Book from './component/Book'
-
+// import HiradumiRow from './HiradumiRow'
 
 interface Props {
     items: any[]
@@ -26,95 +24,6 @@ interface Hiradumi {
     hiradumiDiv: HTMLDivElement
     setHiradumiDiv: (element) => void 
 }
-
-const styles = `
-.row {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap
-}
-`
-
-const bookStyles = `
-.row .hiradumiBook {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    animation: fadeIn 1s ease 0s 1 normal;
-    overflow: hidden;
-    cursor: pointer;
-}
-  
-.row .hiradumiBook .sortKey {
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: 0.5rem;
-    bottom: 0.5rem;
-    background-color: #999;
-    border-radius: 50px;
-    width: 2rem;
-    height: 2rem;
-}
-
-.row .hiradumiBook.nocover {
-    border: 1px solid #eee
-}
-
-.row .hiradumiBook.nocover .bg {
-    position: absolute;
-    background-color: #eee;
-    width: 80%;
-    height: 100%;
-    top: 0;
-    left: 10%;
-    z-index: -1
-}
-
-.row .hiradumiBook.nocover .textCover {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    padding: 30% 0 0
-}
-
-.row .hiradumiBook.nocover .textCover .title {
-    position: relative;
-    width: 90%;
-    margin: 0 auto;
-    color: #333;
-    font-weight: bold;
-    margin-bottom: 5px;
-    line-height: 120%;
-    z-index: 1;
-    word-wrap: break-word;
-    overflow-wrap: break-word
-}
-
-.row .hiradumiBook.nocover .textCover .author {
-    position: relative;
-    width: 90%;
-    margin: 0 auto;
-    font-size: 80%;
-    color: #e00;
-    font-weight: bold;
-    z-index: 1
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0
-    }
-
-    100% {
-        opacity: 1
-    }
-}
-`
 
 class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -247,24 +156,22 @@ class Hiradumi extends React.Component<Props, State> {
 
     render() {
         if (this.props.items.length===0) return null
-        let css = styles
-        if (!this.props.itemComponent) {
-            css += bookStyles
-        }
-
-        const itemComponent = this.props.itemComponent ? this.props.itemComponent : Book
         const Row = ({ index, style }) => {
+            const rowStyle = {
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap'
+            }
             return (
-                <div className="row" style={style}>
+                <div className="row" style={Object.assign(rowStyle, style)}>
                     {this.state.rowsData[index].map((item) => {
-                        return <Book item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                        return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
                     })}
                 </div>
             )
         };
        
         return (<div className="hiradumi" ref={this.setHiradumiDiv}>
-            <style>{css}</style>
             <List
                 height={700}
                 itemCount={this.state.rowsData.length}
