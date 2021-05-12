@@ -18,6 +18,7 @@ interface Props {
 }
 interface State {
     rowsData: any[]
+    itemSize: number
 }
 
 interface Hiradumi {
@@ -33,7 +34,8 @@ class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
       super(props)
       this.state ={
-          rowsData: []
+          rowsData: [],
+          itemSize: 0
       }
       this.factors = []
 
@@ -174,13 +176,7 @@ class Hiradumi extends React.Component<Props, State> {
                 })
                 rowData = Object.values(newRowData)
             }
-
-            // const heights = []
-            // rowData.map((row) => {
-            //     // console.log(rows)
-            //     heights.push(row.height)
-            // })
-            
+           
             rowsData.push(rowData)
             currentIndex += columnCount
         })
@@ -190,17 +186,27 @@ class Hiradumi extends React.Component<Props, State> {
         let rows = []
         rowsData.map((row, index) => {
             rows.push(row)
-            if (index % this.props.rowFactors.length === 1) {
+            if (index % this.props.rowFactors.length === this.props.rowFactors.length - 1) {
                 packedRowsData.push(rows)
                 rows = []
             }
         })
         if (rows.length > 0) packedRowsData.push(rows)
-
         console.log(packedRowsData)
 
+        // 最初のセットで高さを割り出す
+        const rowHeights = []
+        const heights = []
+        packedRowsData[0].map((rowData) => {
+            rowData.map((row) => {
+                // console.log(rows)
+                heights.push(row.height)
+            })
+            rowHeights.push(Math.max(...heights))
+        })
+        const itemSize = rowHeights.reduce((size, height) => size + height, 0);
 
-        this.setState({rowsData: packedRowsData})
+        this.setState({rowsData: packedRowsData, itemSize: itemSize})
 
     }
 
@@ -212,7 +218,7 @@ class Hiradumi extends React.Component<Props, State> {
                 width={window.innerWidth}
                 height={600}
                 itemCount={this.state.rowsData.length}
-                itemSize={200}
+                itemSize={this.state.itemSize}
             >
                 {this.Row}
             </List>
