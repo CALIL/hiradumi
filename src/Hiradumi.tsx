@@ -2,7 +2,7 @@ import 'whatwg-fetch'
 import React, { Component } from 'react'
 import { FixedSizeList as List } from "react-window";
 
-// import HiradumiRow from './HiradumiRow'
+import DefaultItem from './DefaultItem'
 
 interface Props {
     items: any[]
@@ -166,7 +166,11 @@ class Hiradumi extends React.Component<Props, State> {
             return (
                 <div className="row" style={Object.assign(rowStyle, style)}>
                     {this.state.rowsData[index].map((item) => {
-                        return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                        if (this.props.itemComponent) {
+                            return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                        } else {
+                            return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                        }
                     })}
                 </div>
             )

@@ -92,7 +92,7 @@ class App extends Component<Props, State> {
                   margin={this.state.margin}
                   rowCount={this.state.rowCount}
                   rowFactors={this.state.rowFactors}
-                  itemComponent={DefaultItem}
+                  itemComponent={null}
                   className={'hiradumi'}
                   sortKey={this.state.sortKey}
                 />
