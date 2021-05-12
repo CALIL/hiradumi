@@ -11,6 +11,7 @@ interface Props {
     rowCount: number
     rowFactors: number[]
     itemComponent: any
+    className: string
     sortKey: string | null
 }
 interface State {
@@ -171,7 +172,7 @@ class Hiradumi extends React.Component<Props, State> {
             )
         };
        
-        return (<div className="hiradumi" ref={this.setHiradumiDiv}>
+        return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
             <List
                 height={700}
                 itemCount={this.state.rowsData.length}

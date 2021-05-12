@@ -21,22 +21,20 @@ interface Props {
 interface State {
 }
 
-export default class item extends Component<Props, State> {
+export default class Item extends Component<Props, State> {
     constructor(props) {
         super(props)
-    }
-    onClick() {
-        window.open('https://calil.jp/book/' + this.props.item.isbn, '_parent')
     }
     render() {
         const item = this.props.item
         const fontSize = (this.props.item.width - this.props.margin) / 14
         return (
-            <div className={'hiradumiBook' + (!this.props.item.cover ? ' nocover' : '')} ref="item" id={item.id} style={{
+            <div className={'hiradumiBook' + (!this.props.item.cover ? ' nocover' : '')} id={item.id} style={{
                 width: item.width - this.props.margin + 'px',
                 height: item.height - this.props.margin + 'px',
                 margin: this.props.margin / 2 + 'px',
-            }} onClick={this.onClick.bind(this)}>
+            }}>
+                <a href={'https://calil.jp/book/' + this.props.item.isbn} target="_blank">
                 {this.props.item.cover ? (
                     <React.Fragment>
                         <img src={item.cover}
@@ -53,7 +51,7 @@ export default class item extends Component<Props, State> {
                                 opacity: item[this.props.sortKey] / 4
                             }}>{item[this.props.sortKey]}</span>
                         ) : null}
-                        </React.Fragment>
+                    </React.Fragment>
                 ) : (
                     <React.Fragment>
                         <div className="bg"></div>
@@ -68,6 +66,7 @@ export default class item extends Component<Props, State> {
                         ) : null}
                     </React.Fragment>
                 )}
+                </a>
             </div>
         )
     }

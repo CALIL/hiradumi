@@ -3,7 +3,7 @@ import Hiradumi from '../../src/Hiradumi'
 import SettingUI from './SettingUI'
 // import items from '../Kochi_Motoyama_plus.json'
 import items from '../../Gifu_Nakatsugawa_plus.json'
-import DefaultBook from './DefaultBook'
+import DefaultItem from './DefaultItem'
 
 
 items.map((item) => {
@@ -92,7 +92,8 @@ class App extends Component<Props, State> {
                   margin={this.state.margin}
                   rowCount={this.state.rowCount}
                   rowFactors={this.state.rowFactors}
-                  itemComponent={DefaultBook}
+                  itemComponent={DefaultItem}
+                  className={'hiradumi'}
                   sortKey={this.state.sortKey}
                 />
               </div>
