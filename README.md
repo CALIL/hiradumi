@@ -47,12 +47,14 @@ interface Props {
         }
     }
     ```
-- size: number　画像の基準サイズ
-- margin: number 画像のマージン
-- rowCount: number 最大行数 上限を不明な場合、Infinityを指定
-- rowFactors: number[] 行ごとの比率
-- itemComponent itemを表示するコンポーネント （デフォルト: [Book.tsx](./src/component/Book.tsx))
-- sortKey: string | null １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。
+| プロパティ | 型 | 説明 |
+| ------------- | ------------- | ------------- |
+| size | number | 画像の基準サイズ |
+| margin | number | 画像のマージン |
+| rowCount | number | 最大行数 上限を不明な場合、Infinityを指定 |
+| rowFactors | number[] | 行ごとの比率 |
+| itemComponent | ReactComponent | itemを表示するコンポーネント （デフォルト: [Book.tsx](./src/component/Book.tsx))
+| sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
 
 ```
 <Hiradumi
