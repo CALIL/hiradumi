@@ -54,7 +54,7 @@ interface Props {
 | margin | number | 画像のマージン |
 | rowCount | number | 最大行数 上限を不明な場合、Infinityを指定 |
 | rowFactors | number[] | 行ごとの比率 |
-| itemComponent | ReactComponent | itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./example/component/DefaultItem.tsx) |
+| itemComponent | ReactComponent | itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |
 | className | string | Hiradumiの領域につけるクラス名<br />デフォルトはhiradumi |
 | sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
 
