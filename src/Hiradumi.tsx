@@ -1,5 +1,5 @@
 import 'whatwg-fetch'
-import React, { Component } from 'react'
+import React, { Component, ReactComponentElement } from 'react'
 import { FixedSizeList as List } from "react-window";
 
 import DefaultItem from './DefaultItem'
@@ -19,6 +19,7 @@ interface State {
 }
 
 interface Hiradumi {
+    Row: any
     rowCount: number
     factors: number[]
     rowParams: any[]
@@ -53,6 +54,28 @@ class Hiradumi extends React.Component<Props, State> {
         // }, 10)
 
         window.addEventListener('resize', this.setRowData.bind(this))
+
+
+        this.Row = ({ index, style }) => {
+            const rowStyle = {
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap'
+            }
+            return (
+                <div className="row" style={Object.assign(rowStyle, style)}>
+                    {this.state.rowsData[index].map((item) => {
+                        if (this.props.itemComponent) {
+                            return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                        } else {
+                            return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                        }
+                    })}
+                </div>
+            )
+        };
+
+
     }
     
     setRowData() {
@@ -157,24 +180,6 @@ class Hiradumi extends React.Component<Props, State> {
 
     render() {
         if (this.props.items.length===0) return null
-        const Row = ({ index, style }) => {
-            const rowStyle = {
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap'
-            }
-            return (
-                <div className="row" style={Object.assign(rowStyle, style)}>
-                    {this.state.rowsData[index].map((item) => {
-                        if (this.props.itemComponent) {
-                            return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                        } else {
-                            return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                        }
-                    })}
-                </div>
-            )
-        };
        
         return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
             <List
@@ -183,7 +188,7 @@ class Hiradumi extends React.Component<Props, State> {
                 itemSize={200}
                 width={document.body.clientWidth}
             >
-                {Row}
+                {this.Row}
             </List>
         </div>)
     }
