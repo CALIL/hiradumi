@@ -1,11 +1,13 @@
 import 'whatwg-fetch'
-import React, { Component, ReactComponentElement } from 'react'
+import React from 'react'
 import { FixedSizeList as List } from "react-window";
 
 import DefaultItem from './DefaultItem'
 
 interface Props {
     items: any[]
+    width: number
+    height: number
     size: number
     margin: number
     rowCount: number
@@ -46,15 +48,14 @@ class Hiradumi extends React.Component<Props, State> {
         
         this.setRowData()
 
-        // PC版のスクロールバー対応
-        // コンテンツがないとスクロールバーが出ないので、追加後に再計算
-        // setTimeout(() => {
-        //     const scrollBarWidth = window.innerWidth - document.body.clientWidth
-        //     if (scrollBarWidth > 0) this.setRowData()
-        // }, 10)
-
         window.addEventListener('resize', this.setRowData.bind(this))
 
+        // PC版のスクロールバー対応
+        // コンテンツがないとスクロールバーが出ないので、追加後に再計算
+        setTimeout(() => {
+            const scrollBarWidth = window.innerWidth - document.body.clientWidth
+            if (scrollBarWidth > 0) this.setRowData()
+        }, 10)
 
         this.Row = ({ index, style }) => {
             const rowStyle = {
@@ -64,12 +65,14 @@ class Hiradumi extends React.Component<Props, State> {
             }
             return (
                 <div className="row" style={Object.assign(rowStyle, style)}>
-                    {this.state.rowsData[index].map((item) => {
-                        if (this.props.itemComponent) {
-                            return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                        } else {
-                            return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                        }
+                    {this.state.rowsData[index].map((rows) => {
+                        return rows.map((item) => {
+                            if (this.props.itemComponent) {
+                                return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                            } else {
+                                return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                            }
+                        })
                     })}
                 </div>
             )
@@ -150,8 +153,8 @@ class Hiradumi extends React.Component<Props, State> {
 
                 rowsData.pop()
                 rowData = this.props.items.slice(currentIndex-prevRowData.length, currentIndex+columnCount)
-            }
 
+            }
 
             // sortLabelでソートして、中央から並べ直す
             if (this.props.sortKey) {
@@ -172,10 +175,33 @@ class Hiradumi extends React.Component<Props, State> {
                 rowData = Object.values(newRowData)
             }
 
+            // const heights = []
+            // rowData.map((row) => {
+            //     // console.log(rows)
+            //     heights.push(row.height)
+            // })
+            
             rowsData.push(rowData)
             currentIndex += columnCount
         })
-        this.setState({rowsData})
+
+        // this.props.rowFactorsの数毎に配列にして詰める
+        const packedRowsData = []
+        let rows = []
+        rowsData.map((row, index) => {
+            rows.push(row)
+            if (index % this.props.rowFactors.length === 1) {
+                packedRowsData.push(rows)
+                rows = []
+            }
+        })
+        if (rows.length > 0) packedRowsData.push(rows)
+
+        console.log(packedRowsData)
+
+
+        this.setState({rowsData: packedRowsData})
+
     }
 
     render() {
@@ -183,10 +209,10 @@ class Hiradumi extends React.Component<Props, State> {
        
         return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
             <List
-                height={700}
+                width={window.innerWidth}
+                height={600}
                 itemCount={this.state.rowsData.length}
                 itemSize={200}
-                width={document.body.clientWidth}
             >
                 {this.Row}
             </List>

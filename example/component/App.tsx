@@ -20,7 +20,7 @@ Array.from({length: 10}).map(() => {
 
 interface App {
   factors: number[]
-  hiradumi: any
+  hiradumiDiv: any
   setHiradumi: (element: any) => void
 }
 interface Props {
@@ -28,6 +28,7 @@ interface Props {
 interface State {
   items: any[]
   width: number
+  height: number
   size: number
   margin: number
   rowCount: number
@@ -41,16 +42,17 @@ class App extends Component<Props, State> {
     this.state = {
       items: items,
       size: 200,
-      width: 100,
+      width: window.innerWidth,
+      height: 0,
       margin: 10,
       rowCount: Infinity,
       sortKey: 'term_popular_count',
       rowFactors: null
     }
-    this.hiradumi = null
+    this.hiradumiDiv = null
 
     this.setHiradumi = element => {
-      this.hiradumi = element
+      this.hiradumiDiv = element
     }
   }
   componentDidMount() {
@@ -59,11 +61,17 @@ class App extends Component<Props, State> {
     } else {
       this.setState({rowFactors: [0.97, 0.75, 0.65, 0.55]})
     }
+
+    // this.setState({width: window.innerWidth, height: window.innerHeight - 92})
+    // window.addEventListener('resize', () => {
+    //   this.setState({width: window.innerWidth, height: window.innerHeight - 92})
+    // })
+
   }
 
   onChange(state) {
     this.setState(state, () => {
-      this.hiradumi.setRowData()
+      this.hiradumiDiv.setRowData()
     })
   }
 
@@ -84,9 +92,11 @@ class App extends Component<Props, State> {
                 sortKey={this.state.sortKey}
                 onChange={this.onChange.bind(this)}
               />
-              <div style={{width: this.state.width + '%', margin: '0 auto'}}>
+              <div style={{width: this.state.width + 'px', margin: '0 auto'}}>
                 <Hiradumi
                   ref={this.setHiradumi}
+                  width={this.state.width}
+                  height={this.state.height}
                   items={this.state.items}
                   size={this.state.size}
                   margin={this.state.margin}
