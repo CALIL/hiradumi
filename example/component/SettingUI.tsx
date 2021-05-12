@@ -89,7 +89,7 @@ class SettingUI extends Component<Props, State> {
                 <label htmlFor="margin">RowCount:</label>
                 <input type="range" id="maxRow" name="width" min="1" max="30" value={this.props.rowCount} onChange={(e) => this.props.onChange({rowCount: parseInt(e.target.value)})} />
                 {this.props.rowCount}
-                &nbsp;
+                &nbsp;&nbsp;
                 <label htmlFor="sortKey">SortKey:</label>
                 <input type="checkbox" id="sortKey" name="sortKey" value={this.props.sortKey} defaultChecked={true} onChange={(e) => this.setSortKey(e.target)} />
               </div>
