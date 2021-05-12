@@ -92,7 +92,6 @@ class SettingUI extends Component<Props, State> {
                 &nbsp;
                 <label htmlFor="sortKey">SortKey:</label>
                 <input type="checkbox" id="sortKey" name="sortKey" value={this.props.sortKey} defaultChecked={true} onChange={(e) => this.setSortKey(e.target)} />
-                <label htmlFor="sortKey">term_popular_count</label>
               </div>
               <br />
               <div>
