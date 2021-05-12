@@ -47,12 +47,12 @@ interface Props {
         }
     }
     ```
-- size　画像の基準サイズ
-- margin 画像のマージン
-- rowCount 最大行数
-- rowFactors 行ごとの比率
+- size: number　画像の基準サイズ
+- margin: number 画像のマージン
+- rowCount: number 最大行数 上限を不明な場合、Infinityを指定
+- rowFactors: number[] 行ごとの比率
 - itemComponent itemを表示するコンポーネント （デフォルト: [Book.tsx](./src/component/Book.tsx))
-- sortKey １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。
+- sortKey: string | null １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。
 
 ```
 <Hiradumi

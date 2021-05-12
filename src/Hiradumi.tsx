@@ -147,7 +147,8 @@ class Hiradumi extends React.Component<Props, State> {
     
     setRowData() {
         this.factors = []
-        Array.from({length: this.props.rowCount}).map((notValue, i) => {
+        const rowCount = this.props.rowCount===Infinity ? 10000000 : this.props.rowCount
+        Array.from({length: rowCount}).map((notValue, i) => {
             const index = i % this.props.rowFactors.length
             this.factors.push(this.props.rowFactors[index])
         });

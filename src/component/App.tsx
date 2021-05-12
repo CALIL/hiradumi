@@ -41,7 +41,7 @@ class App extends Component<Props, State> {
       size: 200,
       width: 100,
       margin: 10,
-      rowCount: 300,
+      rowCount: Infinity,
       sortKey: 'term_popular_count',
       rowFactors: null
     }
