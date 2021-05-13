@@ -14,11 +14,7 @@ items.map((item) => {
 
 Array.from({length: 10}).map(() => {
   ([].concat(items)).map((item) => {
-    if (item.properties && item.properties.aspect) {
-      newItems.push(item)
-    } else {
-      console.log(item)
-    }
+    newItems.push(item)
   })
 })
 
@@ -46,11 +42,11 @@ class App extends Component<Props, State> {
     this.state = {
       items: newItems,
       size: 200,
-      width: window.innerWidth,
+      width: 100,
       height: 0,
       margin: 10,
       rowCount: 5,
-      sortKey: 'term_popular_count',
+      sortKey: null,
       rowFactors: null
     }
     this.hiradumiDiv = null
