@@ -10,19 +10,17 @@ items.map((item) => {
   if (item.cover==='') {
     item.term_popular_count = 0
   }
-  if (item.properties && item.properties.aspect) {
-    newItems.push(item)
-  }
 })
 
-// const newItems = []
-// Array.from({length: 10}).map(() => {
-//   ([].concat(items)).map((item) => {
-//     if (item.properties && item.properties.aspect) {
-//       newItems.push(item)
-//     }
-//   })
-// })
+Array.from({length: 10}).map(() => {
+  ([].concat(items)).map((item) => {
+    if (item.properties && item.properties.aspect) {
+      newItems.push(item)
+    } else {
+      console.log(item)
+    }
+  })
+})
 
 interface App {
   factors: number[]
@@ -51,7 +49,7 @@ class App extends Component<Props, State> {
       width: window.innerWidth,
       height: 0,
       margin: 10,
-      rowCount: 6,
+      rowCount: 5,
       sortKey: 'term_popular_count',
       rowFactors: null
     }
