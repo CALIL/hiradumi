@@ -35,7 +35,7 @@ class Hiradumi extends React.Component<Props, State> {
         super(props)
         this.state = {
             rowsData: [],
-            itemSize: 1500
+            itemSize: 0
         }
         this.factors = []
 
@@ -59,32 +59,27 @@ class Hiradumi extends React.Component<Props, State> {
             if (scrollBarWidth > 0) this.setRowData()
         }, 10)
 
+
         this.Row = ({ index, style }) => {
-            const rowStyle = {
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap'
-            }
-            return this.state.rowsData[index].map((rows) => {
-                return rows.map((item) => {
-                    if (this.props.itemComponent) {
-                        return (
-                            <div className="row" style={Object.assign(rowStyle, style)}>
-                                <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div className="row" style={Object.assign(rowStyle, style)}>
-                                <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                            </div>
-                        )
-                    }
-                })
-            })            
-        };
-
-
+            const rows = this.state.rowsData[index]
+            return (<div style={style}>
+                {rows.map((row) => {
+                    return <div className="row" style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        flexWrap: 'wrap'
+                    }}>
+                        {row.map((item) => {
+                            if (this.props.itemComponent) {
+                                return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                            } else {
+                                return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                            }
+                        })}
+                    </div>
+                })}
+            </div>)
+        }
     }
 
     setRowData() {
@@ -196,21 +191,21 @@ class Hiradumi extends React.Component<Props, State> {
             }
         })
         if (rows.length > 0) packedRowsData.push(rows)
-        console.log(packedRowsData)
+        // console.log(packedRowsData)
 
         // 最初のセットで高さを割り出す
-        // const rowHeights = []
-        // const heights = []
-        // packedRowsData[0].map((rowData) => {
-        //     rowData.map((row) => {
-        //         // console.log(rows)
-        //         heights.push(row.height)
-        //     })
-        //     rowHeights.push(Math.max(...heights))
-        // })
-        // const itemSize = rowHeights.reduce((size, height) => size + height, 0);
+        const rowHeights = []
+        const heights = []
+        packedRowsData[0].map((rowData) => {
+            rowData.map((row) => {
+                // console.log(rows)
+                heights.push(row.height)
+            })
+            rowHeights.push(Math.max(...heights))
+        })
+        const itemSize = rowHeights.reduce((size, height) => size + height, 0);
 
-        this.setState({ rowsData: packedRowsData })
+        this.setState({rowsData: packedRowsData, itemSize: itemSize})
 
     }
 

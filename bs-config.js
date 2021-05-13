@@ -17,7 +17,7 @@
         "port": 3001
     },
     "files": [
-        "./src/**/*"
+        "./docs/**/*"
     ],
     "watchEvents": [
         "change"
