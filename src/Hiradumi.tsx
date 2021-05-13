@@ -27,27 +27,27 @@ interface Hiradumi {
     factors: number[]
     rowParams: any[]
     hiradumiDiv: HTMLDivElement
-    setHiradumiDiv: (element) => void 
+    setHiradumiDiv: (element) => void
 }
 
 class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
-      super(props)
-      this.state ={
-          rowsData: [],
-          itemSize: 0
-      }
-      this.factors = []
+        super(props)
+        this.state = {
+            rowsData: [],
+            itemSize: 1500
+        }
+        this.factors = []
 
-      this.hiradumiDiv = null
+        this.hiradumiDiv = null
 
-      this.setHiradumiDiv = element => {
-        this.hiradumiDiv = element
-      }
+        this.setHiradumiDiv = element => {
+            this.hiradumiDiv = element
+        }
     }
 
     componentDidMount() {
-        
+
         this.setRowData()
 
         window.addEventListener('resize', this.setRowData.bind(this))
@@ -65,28 +65,32 @@ class Hiradumi extends React.Component<Props, State> {
                 justifyContent: 'space-between',
                 flexWrap: 'wrap'
             }
-            return (
-                <div className="row" style={Object.assign(rowStyle, style)}>
-                    {this.state.rowsData[index].map((rows) => {
-                        return rows.map((item) => {
-                            if (this.props.itemComponent) {
-                                return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                            } else {
-                                return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                            }
-                        })
-                    })}
-                </div>
-            )
+            return this.state.rowsData[index].map((rows) => {
+                return rows.map((item) => {
+                    if (this.props.itemComponent) {
+                        return (
+                            <div className="row" style={Object.assign(rowStyle, style)}>
+                                <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div className="row" style={Object.assign(rowStyle, style)}>
+                                <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                            </div>
+                        )
+                    }
+                })
+            })            
         };
 
 
     }
-    
+
     setRowData() {
         this.factors = []
-        const rowCount = this.props.rowCount===Infinity ? 10000000 : this.props.rowCount
-        Array.from({length: rowCount}).map((notValue, i) => {
+        const rowCount = this.props.rowCount === Infinity ? 10000000 : this.props.rowCount
+        Array.from({ length: rowCount }).map((notValue, i) => {
             const index = i % this.props.rowFactors.length
             this.factors.push(this.props.rowFactors[index])
         });
@@ -121,7 +125,7 @@ class Hiradumi extends React.Component<Props, State> {
                 rowWidth += width
                 columnCount += 1
             })
-            if(columnCount===0) return true
+            if (columnCount === 0) return true
 
             let rowData
             // 残りの横幅分、サイズを調整
@@ -133,10 +137,10 @@ class Hiradumi extends React.Component<Props, State> {
                     item.width = Math.floor(item.width * scaleUpRatio)
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
-                rowData = this.props.items.slice(currentIndex, currentIndex+columnCount)
+                rowData = this.props.items.slice(currentIndex, currentIndex + columnCount)
             } else {
                 // 前の行の調整
-                const prevRowData = this.props.items.slice(currentIndex-rowsData[rowsData.length-1].length, currentIndex)
+                const prevRowData = this.props.items.slice(currentIndex - rowsData[rowsData.length - 1].length, currentIndex)
                 // rowWidth分詰めたい
                 const scaleDownWidth = rowWidth / prevRowData.length
                 prevRowData.some((item) => {
@@ -146,7 +150,7 @@ class Hiradumi extends React.Component<Props, State> {
                 })
 
                 // 今の行のサイズを調整
-                const tempRowData = this.props.items.slice(currentIndex, currentIndex+columnCount)
+                const tempRowData = this.props.items.slice(currentIndex, currentIndex + columnCount)
                 const scaleRatio = prevRowData[0].height / tempRowData[0].height
                 tempRowData.some((item) => {
                     item.width = Math.floor(item.width * scaleRatio)
@@ -154,29 +158,29 @@ class Hiradumi extends React.Component<Props, State> {
                 })
 
                 rowsData.pop()
-                rowData = this.props.items.slice(currentIndex-prevRowData.length, currentIndex+columnCount)
+                rowData = this.props.items.slice(currentIndex - prevRowData.length, currentIndex + columnCount)
 
             }
 
             // sortLabelでソートして、中央から並べ直す
             if (this.props.sortKey) {
                 const sortLabel = this.props.sortKey
-                rowData.sort(function(a,b){
-                    if(a[sortLabel] < b[sortLabel]) return 1;
-                    if(a[sortLabel] > b[sortLabel]) return -1;
+                rowData.sort(function (a, b) {
+                    if (a[sortLabel] < b[sortLabel]) return 1;
+                    if (a[sortLabel] > b[sortLabel]) return -1;
                     return 0;
                 });
                 const newRowData = {}
                 const rowLength = rowData.length
                 const centerIndex = Math.floor(rowLength / 2)
                 newRowData[centerIndex] = rowData[0]
-                Array.from({length: centerIndex}).map((item, index) => {
-                    if (rowData[index*2+1]) newRowData[centerIndex-1-index] = rowData[index*2+1]
-                    if (rowData[index*2+2]) newRowData[centerIndex+1+index] = rowData[index*2+2]
+                Array.from({ length: centerIndex }).map((item, index) => {
+                    if (rowData[index * 2 + 1]) newRowData[centerIndex - 1 - index] = rowData[index * 2 + 1]
+                    if (rowData[index * 2 + 2]) newRowData[centerIndex + 1 + index] = rowData[index * 2 + 2]
                 })
                 rowData = Object.values(newRowData)
             }
-           
+
             rowsData.push(rowData)
             currentIndex += columnCount
         })
@@ -195,24 +199,24 @@ class Hiradumi extends React.Component<Props, State> {
         console.log(packedRowsData)
 
         // 最初のセットで高さを割り出す
-        const rowHeights = []
-        const heights = []
-        packedRowsData[0].map((rowData) => {
-            rowData.map((row) => {
-                // console.log(rows)
-                heights.push(row.height)
-            })
-            rowHeights.push(Math.max(...heights))
-        })
-        const itemSize = rowHeights.reduce((size, height) => size + height, 0);
+        // const rowHeights = []
+        // const heights = []
+        // packedRowsData[0].map((rowData) => {
+        //     rowData.map((row) => {
+        //         // console.log(rows)
+        //         heights.push(row.height)
+        //     })
+        //     rowHeights.push(Math.max(...heights))
+        // })
+        // const itemSize = rowHeights.reduce((size, height) => size + height, 0);
 
-        this.setState({rowsData: packedRowsData, itemSize: itemSize})
+        this.setState({ rowsData: packedRowsData })
 
     }
 
     render() {
-        if (this.props.items.length===0) return null
-       
+        if (this.props.items.length === 0) return null
+
         return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
             <List
                 width={window.innerWidth}
