@@ -214,8 +214,8 @@ class Hiradumi extends React.Component<Props, State> {
 
         return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
             <List
-                width={window.innerWidth}
-                height={600}
+                width={this.props.width}
+                height={this.props.height}
                 itemCount={this.state.rowsData.length}
                 itemSize={this.state.itemSize}
             >
