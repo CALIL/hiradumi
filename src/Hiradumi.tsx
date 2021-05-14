@@ -73,6 +73,7 @@ class Hiradumi extends React.Component<Props, State> {
         let currentIndex = 0
 
         // スクロールバーを考慮して狭めにしておく、最後に調整されるので
+        const scrollBarWidth = document.querySelector('.hiradumi > div').offsetWidth - document.querySelector('.hiradumi > div').clientWidth
         const hiradumiWidth = this.hiradumiDiv.clientWidth - 100
 
         const rowsData = []
