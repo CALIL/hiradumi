@@ -197,7 +197,6 @@ class Hiradumi extends React.Component<Props, State> {
         packedRowsData[0].map((rowData) => {
             rowData.map((row) => {
                 heights.push(row.height)
-                console.log(row.height)
             })
             rowHeights.push(Math.max(...heights))
             heights = []
