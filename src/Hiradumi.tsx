@@ -73,7 +73,7 @@ class Hiradumi extends React.Component<Props, State> {
         let currentIndex = 0
 
         // スクロールバーを考慮して狭めにしておく、最後に調整されるので
-        const scrollBarWidth = this.hiradumiDiv.childNodes[0].offsetWidth - this.hiradumiDiv.childNodes[0].clientWidth
+        // const scrollBarWidth = this.hiradumiDiv.childNodes[0].offsetWidth - this.hiradumiDiv.childNodes[0].clientWidth
         const hiradumiWidth = this.hiradumiDiv.clientWidth - 100
 
         const rowsData = []
@@ -213,6 +213,15 @@ class Hiradumi extends React.Component<Props, State> {
 
     render() {
         if (this.props.items.length === 0) return null
+        return (<div
+                    style={{width: this.props.width, height: this.props.height}}
+                    className={this.props.className ? this.props.className : 'hiradumi'}
+                    ref={this.setHiradumiDiv}>
+                {this.state.rowsData.map((rows) => {
+                    console.log(rows)
+                    return rows.map((row) => this.renderRow(row))
+                })}
+        </div>)
 
         return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
             <List
