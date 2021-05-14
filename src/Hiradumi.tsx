@@ -181,7 +181,6 @@ class Hiradumi extends React.Component<Props, State> {
         // this.props.rowFactorsの数毎に配列にして詰める
         const packedRowsData = []
         let rows = []
-        console.log(packedRowsData)
         rowsData.map((row, index) => {
             rows.push(row)
             if (index % this.props.rowFactors.length === this.props.rowFactors.length - 1) {
@@ -190,20 +189,22 @@ class Hiradumi extends React.Component<Props, State> {
             }
         })
         if (rows.length > 0) packedRowsData.push(rows)
-        console.log(packedRowsData)
+        // console.log(packedRowsData)
 
         // 最初のセットで高さを割り出す
         const rowHeights = []
-        const heights = []
+        let heights = []
         packedRowsData[0].map((rowData) => {
             rowData.map((row) => {
-                // console.log(rows)
                 heights.push(row.height)
+                console.log(row.height)
             })
             rowHeights.push(Math.max(...heights))
+            heights = []
         })
-        const itemSize = rowHeights.reduce((size, height) => size + height, 0);
-
+        console.log(rowHeights)
+        const itemSize = rowHeights.reduce((size, height) => size + height, 0) + this.props.margin / 2
+        console.log(itemSize)
         this.setState({rowsData: packedRowsData, itemSize: itemSize})
 
     }
@@ -212,18 +213,18 @@ class Hiradumi extends React.Component<Props, State> {
     render() {
         if (this.props.items.length === 0) return null
 
-        let itemSize = 0
-        this.props.rowFactors.map((factor) => {
-          let height = this.props.size * factor
-          itemSize += height
-        })
+        // let itemSize = this.props.margin
+        // this.props.rowFactors.map((factor) => {
+        //   let height = this.props.size * factor
+        //   itemSize += height
+        // })
 
         return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
             <List
                 width={this.props.width}
                 height={this.props.height}
                 itemCount={this.state.rowsData.length}
-                itemSize={itemSize}
+                itemSize={this.state.itemSize}
             >
                 {this.Row}
             </List>

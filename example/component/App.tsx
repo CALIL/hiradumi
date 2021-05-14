@@ -46,7 +46,7 @@ class App extends Component<Props, State> {
       height: 0,
       margin: 10,
       rowCount: Infinity,
-      sortKey: null,
+      sortKey: 'term_popular_count',
       rowFactors: null
     }
     this.hiradumiDiv = null
