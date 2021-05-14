@@ -62,7 +62,7 @@ class App extends Component<Props, State> {
         }
       })
 
-      Array.from({length: 10}).map(() => {
+      Array.from({length: 1000}).map(() => {
         ([].concat(items)).map((item) => {
           newItems.push(Object.assign({}, item))
         })
