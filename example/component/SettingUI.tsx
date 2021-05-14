@@ -57,7 +57,6 @@ class SettingUI extends Component<Props, State> {
         execCopy(rowHeightList.toString())
     }
     setSortKey(sortKeyCheckBox) {
-      console.log(sortKeyCheckBox.checked)
       if (sortKeyCheckBox.checked) {
         this.props.onChange({sortKey: 'term_popular_count'})
       } else {
