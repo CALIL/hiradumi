@@ -213,26 +213,28 @@ class Hiradumi extends React.Component<Props, State> {
 
     render() {
         if (this.props.items.length === 0) return null
-        return (<div
-                    style={{width: this.props.width, height: this.props.height}}
-                    className={this.props.className ? this.props.className : 'hiradumi'}
-                    ref={this.setHiradumiDiv}>
-                {this.state.rowsData.map((rows) => {
-                    console.log(rows)
-                    return rows.map((row) => this.renderRow(row))
-                })}
-        </div>)
-
-        return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
-            <List
-                width={this.props.width}
-                height={this.props.height}
-                itemCount={this.state.rowsData.length}
-                itemSize={this.state.itemSize}
-            >
-                {this.Row}
-            </List>
-        </div>)
+        if (this.props.items.length <= 1000) {
+            return (<div
+                style={{width: this.props.width, height: this.props.height}}
+                className={this.props.className ? this.props.className : 'hiradumi'}
+                ref={this.setHiradumiDiv}>
+            {this.state.rowsData.map((rows) => {
+                console.log(rows)
+                return rows.map((row) => this.renderRow(row))
+            })}
+            </div>)
+        } else {
+            return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
+                <List
+                    width={this.props.width}
+                    height={this.props.height}
+                    itemCount={this.state.rowsData.length}
+                    itemSize={this.state.itemSize}
+                >
+                    {this.Row}
+                </List>
+            </div>)
+        }
     }
 }
 

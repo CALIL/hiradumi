@@ -68,7 +68,7 @@ class App extends Component<Props, State> {
         })
       })
 
-      this.setState({items: items})
+      this.setState({items: newItems})
     })
 
     if (document.body.clientWidth > 767) {
