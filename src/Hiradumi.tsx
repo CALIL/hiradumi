@@ -202,9 +202,7 @@ class Hiradumi extends React.Component<Props, State> {
             rowHeights.push(Math.max(...heights))
             heights = []
         })
-        console.log(rowHeights)
         const itemSize = rowHeights.reduce((size, height) => size + height, 0) + this.props.margin / 2
-        console.log(itemSize)
         this.setState({rowsData: packedRowsData, itemSize: itemSize})
 
     }
@@ -212,12 +210,6 @@ class Hiradumi extends React.Component<Props, State> {
 
     render() {
         if (this.props.items.length === 0) return null
-
-        // let itemSize = this.props.margin
-        // this.props.rowFactors.map((factor) => {
-        //   let height = this.props.size * factor
-        //   itemSize += height
-        // })
 
         return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
             <List
