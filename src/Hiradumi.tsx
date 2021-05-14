@@ -12,7 +12,7 @@ interface Props {
     margin: number
     rowCount: number
     rowFactors: number[]
-    itemComponent: any
+    itemComponent: Element
     className: string
     sortKey: string | null
 }
@@ -25,7 +25,6 @@ interface Hiradumi {
     Row: any
     rowCount: number
     factors: number[]
-    rowParams: any[]
     hiradumiDiv: HTMLDivElement
     setHiradumiDiv: (element) => void
 }
@@ -55,31 +54,11 @@ class Hiradumi extends React.Component<Props, State> {
         // PC版のスクロールバー対応
         // コンテンツがないとスクロールバーが出ないので、追加後に再計算
         setTimeout(() => {
-            const scrollBarWidth = window.innerWidth - document.body.clientWidth
+            const scrollBarWidth = document.body.offsetWidth - document.body.clientWidth
             if (scrollBarWidth > 0) this.setRowData()
         }, 10)
 
 
-        this.Row = ({ index, style }) => {
-            const rows = this.state.rowsData[index]
-            return (<div style={style}>
-                {rows.map((row) => {
-                    return <div className="row" style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        flexWrap: 'wrap'
-                    }}>
-                        {row.map((item) => {
-                            if (this.props.itemComponent) {
-                                return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                            } else {
-                                return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                            }
-                        })}
-                    </div>
-                })}
-            </div>)
-        }
     }
 
     setRowData() {
@@ -93,8 +72,8 @@ class Hiradumi extends React.Component<Props, State> {
         // 計算している本のindex
         let currentIndex = 0
 
-        // スクロールバーを考慮して狭めにしておく、最後に調整されるので
-        const hiradumiWidth = this.hiradumiDiv.clientWidth - 50
+        const scrollBarWidth = document.body.offsetWidth - document.body.clientWidth
+        const hiradumiWidth = this.hiradumiDiv.clientWidth - scrollBarWidth
 
         const rowsData = []
         this.factors.some((notValue, index) => {
@@ -206,6 +185,30 @@ class Hiradumi extends React.Component<Props, State> {
 
     }
 
+    Row = ({ index, style }) => {
+        const rows = this.state.rowsData[index]
+        return (<div style={style}>
+            {rows.map((row) => this.renderRow(row))}
+        </div>)
+    }
+
+    renderRow(row) {
+        return (
+            <div className="row" style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap'
+            }}>
+                {row.map((item) => {
+                    if (this.props.itemComponent) {
+                        return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                    } else {
+                        return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                    }
+                })}
+            </div>
+        )
+    }
 
     render() {
         if (this.props.items.length === 0) return null

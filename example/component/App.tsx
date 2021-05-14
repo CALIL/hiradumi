@@ -68,7 +68,7 @@ class App extends Component<Props, State> {
         })
       })
 
-      this.setState({items: newItems})
+      this.setState({items: items})
     })
 
     if (document.body.clientWidth > 767) {
@@ -77,7 +77,7 @@ class App extends Component<Props, State> {
       this.setState({rowFactors: [0.97, 0.75, 0.65, 0.55]})
     }
 
-    const uiHeight = 92
+    const uiHeight = 100
     this.setState({width: window.innerWidth, height: window.innerHeight - uiHeight})
     window.addEventListener('resize', () => {
       this.setState({width: window.innerWidth, height: window.innerHeight - uiHeight})
