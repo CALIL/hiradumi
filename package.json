@@ -10,7 +10,7 @@
         "watch:browser-sync": "browser-sync start --config ./bs-config.js",
         "watch:pug": "npm run build:pug -- --watch --pretty",
         "watch:sass": "chokidar \"./example/**/*.sass\" --command \"npm run build:sass && npm run build:autoprefixer\"",
-        "watch:ts": "chokidar \"./src/**/*.tsx|./example/**/*.tsx\" --command \"npm run build:ts\"",
+        "watch:ts": "chokidar \"./**/*.tsx\" --command \"npm run build:ts\"",
         "build": "npm-run-all clean build:** -s",
         "build:ts": "esbuild ./example/index.tsx --outfile=./docs/index.js --bundle --minify --sourcemap --define:process.env.NODE_ENV='\"production\"'",
         "build:sass": "sass ./example/index.sass ./docs/index.css --style compressed --no-source-map",

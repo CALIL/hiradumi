@@ -14,7 +14,7 @@ items.map((item) => {
 
 Array.from({length: 10}).map(() => {
   ([].concat(items)).map((item) => {
-    newItems.push(item)
+    newItems.push(Object.assign({}, item))
   })
 })
 
@@ -45,7 +45,7 @@ class App extends Component<Props, State> {
       width: 100,
       height: 0,
       margin: 10,
-      rowCount: 5,
+      rowCount: Infinity,
       sortKey: null,
       rowFactors: null
     }

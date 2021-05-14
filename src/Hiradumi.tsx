@@ -208,15 +208,22 @@ class Hiradumi extends React.Component<Props, State> {
 
     }
 
+
     render() {
         if (this.props.items.length === 0) return null
+
+        let itemSize = 0
+        this.props.rowFactors.map((factor) => {
+          let height = this.props.size * factor
+          itemSize += height
+        })
 
         return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
             <List
                 width={this.props.width}
                 height={this.props.height}
                 itemCount={this.state.rowsData.length}
-                itemSize={this.state.itemSize}
+                itemSize={itemSize}
             >
                 {this.Row}
             </List>
