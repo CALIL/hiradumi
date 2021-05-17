@@ -41,7 +41,8 @@ class App extends Component<Props, State> {
       width: 100,
       height: 0,
       margin: 10,
-      rowCount: Infinity,
+      rowCount: 10,
+      // rowCount: Infinity,
       sortKey: 'term_popular_count',
       rowFactors: null
     }
@@ -60,13 +61,14 @@ class App extends Component<Props, State> {
         if (item.cover==='') {
           item.term_popular_count = 0
         }
+        newItems.push(Object.assign({}, item))
       })
 
-      Array.from({length: 1000}).map(() => {
-        ([].concat(items)).map((item) => {
-          newItems.push(Object.assign({}, item))
-        })
-      })
+      // Array.from({length: 1000}).map(() => {
+      //   ([].concat(items)).map((item) => {
+      //     newItems.push(Object.assign({}, item))
+      //   })
+      // })
 
       this.setState({items: newItems})
     })

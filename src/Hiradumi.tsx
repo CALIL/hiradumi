@@ -47,7 +47,8 @@ class Hiradumi extends React.Component<Props, State> {
 
     componentDidMount() {
 
-        this.setRowData()
+        this.newSetRowData()
+        // this.setRowData()
 
         window.addEventListener('resize', this.setRowData.bind(this))
 
@@ -61,7 +62,81 @@ class Hiradumi extends React.Component<Props, State> {
 
     }
 
+    newSetRowData() {
+        // 計算している本のindex
+        let currentIndex = 0
+
+        const itemLength = this.props.items.length
+        const rowFactorsLength = this.props.rowFactors.length
+        let rowsData = []
+        let rowData = []
+        let rowItemCount = 0
+        let rowTotalWidth = 0
+        // スクロールバーを考慮して狭めにしておく、最後に調整されるので
+        const hiradumiWidth = this.hiradumiDiv.clientWidth - 100
+        let tempRowsData = []
+        for (let index = 0; index < itemLength; index++) {
+            const rowFactorsIndex = index % rowFactorsLength
+
+            const currentIndexData = this.props.items.slice(currentIndex)
+            currentIndexData.some((item) => {
+                const height = this.props.size * this.props.rowFactors[rowFactorsIndex]
+
+                let width
+                if (item.properties && item.properties.aspect) {
+                    width = Math.floor(height * item.properties.aspect)
+                } else {
+                    width = Math.floor(height * 0.666666)
+                }
+                // 行よりも大きくなるなら終了
+                if (hiradumiWidth <= rowTotalWidth + width) return true
+                item.height = height
+                item.width = width
+                rowData.push(item)
+                rowTotalWidth += width
+                rowItemCount += 1
+
+            })
+            if (rowItemCount === 0) break
+
+            currentIndex += rowItemCount
+            tempRowsData.push(rowData)
+
+            rowData = []
+            rowItemCount = 0
+            rowTotalWidth = 0
+            // rowFactorsの長さ毎に行を入れていく
+            if (tempRowsData.length === this.props.rowFactors.length) {
+                rowsData.push(tempRowsData)
+                tempRowsData = []
+            }
+            if (rowsData.length === this.props.rowCount) break
+        }
+
+        if (tempRowsData.length > 0) {
+            rowsData.push(tempRowsData)
+        }
+
+        // console.log(rowsData)
+
+
+        // 最初のセットで高さを割り出す
+        const rowHeights = []
+        let heights = []
+        rowsData[0].map((rowData) => {
+            rowData.map((row) => {
+                heights.push(row.height)
+            })
+            rowHeights.push(Math.max(...heights))
+            heights = []
+        })
+        const itemSize = rowHeights.reduce((size, height) => size + height, 0) + this.props.margin / 2
+        this.setState({ rowsData: rowsData, itemSize: itemSize })
+
+    }
+
     setRowData() {
+
         this.factors = []
         const rowCount = this.props.rowCount === Infinity ? 10000000 : this.props.rowCount
         Array.from({ length: rowCount }).map((notValue, i) => {
@@ -81,7 +156,7 @@ class Hiradumi extends React.Component<Props, State> {
             let rowTotalWidth = 0
             let rowItemCount = 0
             const height = this.props.size * this.factors[index]
-            
+
             const currentIndexData = this.props.items.slice(currentIndex)
             currentIndexData.some((item) => {
                 let width
@@ -89,7 +164,7 @@ class Hiradumi extends React.Component<Props, State> {
                     width = Math.floor(height * item.properties.aspect)
                 } else {
                     width = Math.floor(height * 0.666666)
-                }              
+                }
                 // 行よりも大きくなるなら終了
                 if (hiradumiWidth <= rowTotalWidth + width) return true
                 item.height = height
@@ -182,7 +257,7 @@ class Hiradumi extends React.Component<Props, State> {
             heights = []
         })
         const itemSize = rowHeights.reduce((size, height) => size + height, 0) + this.props.margin / 2
-        this.setState({rowsData: packedRowsData, itemSize: itemSize})
+        this.setState({ rowsData: packedRowsData, itemSize: itemSize })
 
     }
 
@@ -215,13 +290,13 @@ class Hiradumi extends React.Component<Props, State> {
         if (this.props.items.length === 0) return null
         if (this.props.items.length <= 1000) {
             return (<div
-                style={{width: this.props.width, height: this.props.height}}
+                style={{ width: this.props.width, height: this.props.height }}
                 className={this.props.className ? this.props.className : 'hiradumi'}
                 ref={this.setHiradumiDiv}>
-            {this.state.rowsData.map((rows) => {
-                console.log(rows)
-                return rows.map((row) => this.renderRow(row))
-            })}
+                {this.state.rowsData.map((rows) => {
+                    // console.log(rows)
+                    return rows.map((row) => this.renderRow(row))
+                })}
             </div>)
         } else {
             return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
