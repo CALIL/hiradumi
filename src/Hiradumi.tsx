@@ -13,10 +13,10 @@ function getScrollbarWidth() {
     const inner = document.createElement('div')
     outer.appendChild(inner)
   
-    const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth)
+    const scrollBarWidth = (outer.offsetWidth - inner.offsetWidth)
  
     outer.parentNode.removeChild(outer)
-    return scrollbarWidth
+    return scrollBarWidth
 }
 
 interface Props {
