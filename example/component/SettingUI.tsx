@@ -21,7 +21,7 @@ interface Props {
   width: number,
   margin: number,
   rowCount: number,
-  rowFactors: number[] | null,
+  rowRatios: number[] | null,
   sortKey: string | null
   onChange: (state: any) => void
 }
@@ -64,11 +64,11 @@ class SettingUI extends Component<Props, State> {
       }
     }
     setRowFactors() {
-      const rowFactors = []
+      const rowRatios = []
       Array.prototype.slice.call(document.querySelectorAll('input[type="number"]')).map((input) => {
-        rowFactors.push(input.value)
+        rowRatios.push(input.value)
       })
-      this.props.onChange({rowFactors: rowFactors})
+      this.props.onChange({rowRatios: rowRatios})
     }
     render() {
         return (
@@ -95,8 +95,8 @@ class SettingUI extends Component<Props, State> {
               </div>
               <br />
               <div>
-                <label>RowFactors:</label>
-                {this.props.rowFactors.map((rowHeight, i) => {
+                <label>RowRatios:</label>
+                {this.props.rowRatios.map((rowHeight, i) => {
                   return <input type="number" placeholder={String(rowHeight)} value={String(rowHeight)} step="0.1" className="rowHeight" key={i} onChange={this.setRowFactors.bind(this)} style={{width: '3rem'}} />
                 })}
                 <button onClick={this.copy.bind(this)}>Copy</button>

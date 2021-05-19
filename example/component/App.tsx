@@ -29,7 +29,7 @@ interface State {
   margin: number
   rowCount: number
   sortKey: string | null
-  rowFactors: number[] | null
+  rowRatios: number[] | null
 }
 
 class App extends Component<Props, State> {
@@ -44,7 +44,7 @@ class App extends Component<Props, State> {
       // rowCount: 10,
       rowCount: Infinity,
       sortKey: 'term_popular_count',
-      rowFactors: null
+      rowRatios: null
     }
     this.hiradumiDiv = null
 
@@ -64,7 +64,7 @@ class App extends Component<Props, State> {
         // newItems.push(Object.assign({}, item))
       })
 
-      Array.from({length: 3000}).map(() => {
+      Array.from({length: 1000}).map(() => {
         ([].concat(items)).map((item) => {
           newItems.push(Object.assign({}, item))
         })
@@ -74,9 +74,9 @@ class App extends Component<Props, State> {
     })
 
     if (document.body.clientWidth > 767) {
-      this.setState({rowFactors: [1, 0.9, 0.8, 0.7]})
+      this.setState({rowRatios: [1, 0.9, 0.8, 0.7]})
     } else {
-      this.setState({rowFactors: [0.97, 0.75, 0.65, 0.55]})
+      this.setState({rowRatios: [0.97, 0.75, 0.65, 0.55]})
     }
 
     const uiHeight = 92
@@ -102,14 +102,14 @@ class App extends Component<Props, State> {
 
     return (
       <div>
-          {this.state.rowFactors ? (
+          {this.state.rowRatios ? (
             <React.Fragment>
               <SettingUI
                 size={this.state.size}
                 width={this.state.width}
                 margin={this.state.margin}
                 rowCount={this.state.rowCount}
-                rowFactors={this.state.rowFactors}
+                rowRatios={this.state.rowRatios}
                 sortKey={this.state.sortKey}
                 onChange={this.onChange.bind(this)}
               />
@@ -122,7 +122,7 @@ class App extends Component<Props, State> {
                   size={this.state.size}
                   margin={this.state.margin}
                   rowCount={this.state.rowCount}
-                  rowFactors={this.state.rowFactors}
+                  rowRatios={this.state.rowRatios}
                   itemComponent={DefaultItem}
                   className={'hiradumi'}
                   sortKey={this.state.sortKey}
