@@ -84,22 +84,24 @@ class Hiradumi extends React.Component<Props, State> {
 
         const itemLength = this.state.items.length
         const rowRatiosLength = this.props.rowRatios.length
-        let rowsItemsByFactors = []
+        let rowsItemsByRowRatios = []
         let rowsItems = []
         let rowItems = []
         let prevRowData
         let rowItemCount = 0
         let rowTotalWidth = 0
-        const scrollBarWidth = getScrollbarWidth()
-        // スクロールバーを考慮して狭めにしておく、最後に調整されるので
-        const rowWidth = this.hiradumiDiv.clientWidth - (scrollBarWidth > 0 ? 100 : 0)
+        // スクロールバーがあれば大きめにしておく、最後に調整されるので
+        const scrollBarWidth = getScrollbarWidth() > 0 ? 100 : 0
+        const rowWidth = this.hiradumiDiv.clientWidth - scrollBarWidth
+
         for (let index = 0; index < itemLength; index++) {
 
             const currentItems = this.state.items.slice(currentIndex)
             if (currentItems.length === 0) break
 
             // 行の幅の範囲内にアイテムを入れる
-            const height = this.props.size * this.props.rowRatios[index % rowRatiosLength]
+            const rowRatio = this.props.rowRatios[index % rowRatiosLength]
+            const height = this.props.size * rowRatio
             currentItems.some((item) => {
                 let aspect: number
                 if (item.properties && item.properties.aspect) {
@@ -172,23 +174,23 @@ class Hiradumi extends React.Component<Props, State> {
 
             // rowRatiosの長さ毎に行を入れていく
             if (rowsItems.length === this.props.rowRatios.length) {
-                rowsItemsByFactors.push(rowsItems)
+                rowsItemsByRowRatios.push(rowsItems)
                 rowsItems = []
             }
-            if (rowsItemsByFactors.length === this.props.rowCount) break
+            if (rowsItemsByRowRatios.length === this.props.rowCount) break
 
         }
 
         // 余りがあれば追加する
         if (rowsItems.length > 0) {
-            rowsItemsByFactors.push(rowsItems)
+            rowsItemsByRowRatios.push(rowsItems)
         }
 
 
         // 最初のセットで高さを割り出す
         const rowHeights = []
         let heights = []
-        rowsItemsByFactors[0].map((rowItems) => {
+        rowsItemsByRowRatios[0].map((rowItems) => {
             rowItems.map((row) => {
                 heights.push(row.height)
             })
@@ -196,7 +198,7 @@ class Hiradumi extends React.Component<Props, State> {
             heights = []
         })
         const itemSize = rowHeights.reduce((size, height) => size + height, 0) + this.props.margin / 2
-        this.setState({ rowsItems: rowsItemsByFactors, itemSize: itemSize })
+        this.setState({ rowsItems: rowsItemsByRowRatios, itemSize: itemSize })
 
     }
 
