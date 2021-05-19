@@ -88,8 +88,8 @@ class Hiradumi extends React.Component<Props, State> {
         let prevRowData
         let rowItemCount = 0
         let rowTotalWidth = 0
-        // スクロールバーを考慮して狭めにしておく、最後に調整されるので
         const scrollBarWidth = getScrollbarWidth()
+        // スクロールバーを考慮して狭めにしておく、最後に調整されるので
         const hiradumiWidth = this.hiradumiDiv.clientWidth - (scrollBarWidth > 0 ? 100 : 0)
         for (let index = 0; index < itemLength; index++) {
             const rowFactorsIndex = index % rowFactorsLength

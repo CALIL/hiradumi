@@ -64,7 +64,7 @@ class App extends Component<Props, State> {
         // newItems.push(Object.assign({}, item))
       })
 
-      Array.from({length: 1000}).map(() => {
+      Array.from({length: 3000}).map(() => {
         ([].concat(items)).map((item) => {
           newItems.push(Object.assign({}, item))
         })
@@ -79,7 +79,7 @@ class App extends Component<Props, State> {
       this.setState({rowFactors: [0.97, 0.75, 0.65, 0.55]})
     }
 
-    const uiHeight = 100
+    const uiHeight = 92
     this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
     setTimeout(() => {
       this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
