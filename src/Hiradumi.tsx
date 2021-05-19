@@ -94,15 +94,18 @@ class Hiradumi extends React.Component<Props, State> {
         for (let index = 0; index < itemLength; index++) {
             const rowFactorsIndex = index % rowFactorsLength
 
-            this.props.items.slice(currentIndex).some((item) => {
-                const height = this.props.size * this.props.rowFactors[rowFactorsIndex]
+            const currentItems = this.props.items.slice(currentIndex)
+            if (currentItems.length === 0) break
 
-                let width
-                if (item.properties && item.properties.aspect) {
-                    width = Math.floor(height * item.properties.aspect)
+            const height = this.props.size * this.props.rowFactors[rowFactorsIndex]
+            currentItems.some((item) => {
+                let aspect
+                if (currentItems[0].properties && currentItems[0].properties.aspect) {
+                    aspect = currentItems[0].properties.aspect
                 } else {
-                    width = Math.floor(height * 0.666666)
+                    aspect = 0.666666
                 }
+                const width = Math.floor(height * aspect)
                 // 行よりも大きくなるなら終了
                 if (rowTotalWidth + width > hiradumiWidth) return true
                 item.height = height
@@ -112,7 +115,6 @@ class Hiradumi extends React.Component<Props, State> {
                 rowItemCount += 1
 
             })
-            if (rowItemCount === 0) break
 
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = hiradumiWidth / rowTotalWidth
