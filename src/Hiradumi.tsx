@@ -75,7 +75,6 @@ class Hiradumi extends React.Component<Props, State> {
         // 計算しているitemのindex
         let currentItemIndex = 0
 
-        let rowsItemsByRowRatios = []
         let rowsItems = []
         let prevRowItems
 
@@ -89,7 +88,7 @@ class Hiradumi extends React.Component<Props, State> {
             if (currentItems.length === 0) break
 
             // 行の幅の範囲内にアイテムを入れる
-            const putItem = (currentItems, rowWidth):[items:any[], rowTotalWidth:number] => {
+            const putItem = (currentItems, rowWidth) => {
                 const items = []
                 let rowTotalWidth = 0
                 const rowRatio = this.props.rowRatios[index % this.props.rowRatios.length]
@@ -105,79 +104,86 @@ class Hiradumi extends React.Component<Props, State> {
                     items.push(item)
                     rowTotalWidth += width
                 })
-                return [items, rowTotalWidth]
+                return items
             }
 
-            let [rowItems, rowTotalWidth] = putItem(currentItems, rowWidth)
+            let rowItems = putItem(currentItems, rowWidth)
+
+            // 前の行をrowTotalWidth分詰めて、今の行を押し込む
+            const scaleAdjust = (items, prevItems, rowTotalWidth) => {
+                const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
+                const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
+                prevItems.some((item) => {
+                    item.width = Math.floor(item.width * scaleDownRatio)
+                    item.height = Math.floor(item.height * scaleDownRatio)
+                })    
+                // 今の行のサイズを調整
+                const scaleRatio = prevItems[0].height / items[0].height
+                items.some((item) => {
+                    item.width = Math.floor(item.width * scaleRatio)
+                    item.height = Math.floor(item.height * scaleRatio)
+                })
+                return prevItems.concat(items)
+            }
+
+            const rowTotalWidth = rowItems.reduce((size, item) => size + item.width, 0)
 
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = rowWidth / rowTotalWidth
             // 縦が大きすぎないように規制
-            if (scaleUpRatio < 2 || rowItems.length == 1) {
+            if (scaleUpRatio < 2 && rowItems.length > 1) {
                 rowItems.some((item, index) => {
                     item.width = Math.floor(item.width * scaleUpRatio)
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
             } else {
-                // 前の行をrowTotalWidth分詰めて、今の行を押し込む
-                const scaleAdjust = (items, prevItems) => {
-                    const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
-                    const rowTotalWidth = items.reduce((size, item) => size + item.width, 0)
-                    const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
-                    prevItems.some((item) => {
-                        item.width = Math.floor(item.width * scaleDownRatio)
-                        item.height = Math.floor(item.height * scaleDownRatio)
-                    })    
-                    // 今の行のサイズを調整
-                    const scaleRatio = prevItems[0].height / items[0].height
-                    items.some((item) => {
-                        item.width = Math.floor(item.width * scaleRatio)
-                        item.height = Math.floor(item.height * scaleRatio)
-                    })
-                    return prevItems.concat(items)
-                }
-                rowItems = scaleAdjust(rowItems, prevRowItems)
+                rowItems = scaleAdjust(rowItems, prevRowItems, rowTotalWidth)
                 rowsItems.pop()
             }
 
-            // sortLabelでソートして、中央から並べ直す
-            // if (this.props.sortKey) {
-            //     const sortLabel = this.props.sortKey
-            //     rowItems.sort(function (a, b) {
-            //         if (a[sortLabel] < b[sortLabel]) return 1;
-            //         if (a[sortLabel] > b[sortLabel]) return -1;
-            //         return 0;
-            //     });
-            //     const newRowData = {}
-            //     const rowLength = rowItems.length
-            //     const centerIndex = Math.floor(rowLength / 2)
-            //     newRowData[centerIndex] = rowItems[0]
-            //     Array.from({ length: centerIndex }).map((item, index) => {
-            //         if (rowItems[index * 2 + 1]) newRowData[centerIndex - 1 - index] = rowItems[index * 2 + 1]
-            //         if (rowItems[index * 2 + 2]) newRowData[centerIndex + 1 + index] = rowItems[index * 2 + 2]
-            //     })
-            //     rowItems = Object.values(newRowData)
-            // }
+
+            // sortKeyでソートして、中央から並べ直す
+            const sortCenter = () => {
+                const sortLabel = this.props.sortKey
+                rowItems.sort(function (a, b) {
+                    if (a[sortLabel] < b[sortLabel]) return 1
+                    if (a[sortLabel] > b[sortLabel]) return -1
+                    return 0
+                })
+                const newRowData = {}
+                const centerIndex = Math.floor(rowItems.length / 2)
+                newRowData[centerIndex] = rowItems[0]
+                Array.from({ length: centerIndex }).map((item, index) => {
+                    if (rowItems[index * 2 + 1]) newRowData[centerIndex - 1 - index] = rowItems[index * 2 + 1]
+                    if (rowItems[index * 2 + 2]) newRowData[centerIndex + 1 + index] = rowItems[index * 2 + 2]
+                })
+                return Object.values(newRowData)
+            }
+            
+            if (this.props.sortKey) rowItems = sortCenter()
 
             currentItemIndex += rowItems.length
             rowsItems.push(rowItems)
 
-            prevRowItems = rowItems
+            // prevRowItems = rowItems
+            prevRowItems = rowItems.map( item => ({...item}))
 
-            // rowRatiosの長さ毎に行を入れていく
-            if (rowsItems.length === this.props.rowRatios.length) {
-                rowsItemsByRowRatios.push(rowsItems)
-                rowsItems = []
+        }
+
+
+        // 配列をn個毎の配列に分割して返す関数
+        const splitByNumber = (sourceArray, splitNumber) => {
+            const sourceArrayLength  = sourceArray.length
+            var splitArray = []
+            for(var i = 0; i < Math.ceil(sourceArrayLength / splitNumber); i++) {
+                const array = sourceArray.slice(i * splitNumber, i * splitNumber + splitNumber)
+                splitArray.push(array)
             }
-            if (rowsItemsByRowRatios.length === this.props.rowCount) break
-
+            return splitArray
         }
-
-        // 余りがあれば追加する
-        if (rowsItems.length > 0) {
-            rowsItemsByRowRatios.push(rowsItems)
-        }
-
+        // console.log(splitByNumber([1,2,3,4,5,6,7,8,9,0], 3))
+        
+        const rowsItemsByRowRatios = splitByNumber(rowsItems, this.props.rowRatios.length)
 
         // 最初のセットで高さを割り出す
         const rowHeights = []
