@@ -77,8 +77,7 @@ class Hiradumi extends React.Component<Props, State> {
 
         let rowsItemsByRowRatios = []
         let rowsItems = []
-        let prevRowData
-        let prevRowTotalWidth
+        let prevRowItems
 
         // スクロールバーがあれば大きめにしておく、最後に調整されるので
         const scrollBarWidth = getScrollbarWidth() > 0 ? 100 : 0
@@ -120,23 +119,24 @@ class Hiradumi extends React.Component<Props, State> {
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
             } else {
-                const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
                 // 前の行をrowTotalWidth分詰めて、今の行を押し込む
-                const scaleAdjust = (rowItems, prevRowData, scaleDownRatio) => {
-                    prevRowData.some((item) => {
+                const scaleAdjust = (items, prevItems) => {
+                    const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
+                    const rowTotalWidth = items.reduce((size, item) => size + item.width, 0)
+                    const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
+                    prevItems.some((item) => {
                         item.width = Math.floor(item.width * scaleDownRatio)
                         item.height = Math.floor(item.height * scaleDownRatio)
-                    })
-    
+                    })    
                     // 今の行のサイズを調整
-                    const scaleRatio = prevRowData[0].height / rowItems[0].height
-                    rowItems.some((item) => {
+                    const scaleRatio = prevItems[0].height / items[0].height
+                    items.some((item) => {
                         item.width = Math.floor(item.width * scaleRatio)
                         item.height = Math.floor(item.height * scaleRatio)
                     })
-                    return prevRowData.concat(rowItems)
+                    return prevItems.concat(items)
                 }
-                rowItems = scaleAdjust(rowItems, prevRowData, scaleDownRatio)
+                rowItems = scaleAdjust(rowItems, prevRowItems)
                 rowsItems.pop()
             }
 
@@ -162,8 +162,7 @@ class Hiradumi extends React.Component<Props, State> {
             currentItemIndex += rowItems.length
             rowsItems.push(rowItems)
 
-            prevRowData = rowItems
-            prevRowTotalWidth = rowTotalWidth
+            prevRowItems = rowItems
 
             // rowRatiosの長さ毎に行を入れていく
             if (rowsItems.length === this.props.rowRatios.length) {
