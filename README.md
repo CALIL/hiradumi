@@ -27,7 +27,7 @@ npm install github:CALIL/hiradumi#master
 ```
 interface Props {
     items: any[]
-    size: number
+    itemHeight: number
     margin: number
     rowCount: number
     rowRatios: number[]
@@ -53,18 +53,18 @@ interface Props {
 | width | number | Hiradumiの横幅(px) |
 | height | number | Hiradumiの縦幅(px) |
 | items | Item[] | 画像のアスペクト比が入ったItemの配列 |
-| size | number | 画像の基準サイズ |
-| margin | number | 画像のマージン |
+| itemHeight | number | Itemの高さの基準 |
+| margin | number | Itemのマージン |
 | rowCount | number | 最大行数 上限を不明な場合、Infinityを指定 |
 | rowRatios | number[] | 行ごとの比率 |
-| itemComponent | ReactComponent | itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |
+| itemComponent | ReactComponent | Itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |
 | className | string | Hiradumiの領域につけるクラス名<br />デフォルトはhiradumi |
 | sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
 
 ```
 <Hiradumi
     items={}
-    size={}
+    itemHeight={}
     margin={}
     rowCount={}
     rowRatios={}
