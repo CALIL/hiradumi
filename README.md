@@ -50,6 +50,8 @@ interface Props {
     ```
 | プロパティ | 型 | 説明 |
 | ------------- | ------------- | ------------- |
+| width | number | Hiradumiの横幅(px) |
+| height | number | Hiradumiの縦幅(px) |
 | items | Item[] | 画像のアスペクト比が入ったItemの配列 |
 | size | number | 画像の基準サイズ |
 | margin | number | 画像のマージン |
