@@ -25,7 +25,7 @@ interface State {
   items: any[]
   width: number
   height: number
-  size: number
+  itemHeight: number
   margin: number
   rowCount: number
   sortKey: string | null
@@ -37,7 +37,7 @@ class App extends Component<Props, State> {
     super(props)
     this.state = {
       items: null,
-      size: 200,
+      itemHeight: 200,
       width: 100,
       height: 0,
       margin: 10,
@@ -105,7 +105,7 @@ class App extends Component<Props, State> {
           {this.state.rowRatios ? (
             <React.Fragment>
               <SettingUI
-                size={this.state.size}
+                itemHeight={this.state.itemHeight}
                 width={this.state.width}
                 margin={this.state.margin}
                 rowCount={this.state.rowCount}
@@ -119,7 +119,7 @@ class App extends Component<Props, State> {
                   width={this.state.width}
                   height={this.state.height}
                   items={this.state.items}
-                  size={this.state.size}
+                  itemHeight={this.state.itemHeight}
                   margin={this.state.margin}
                   rowCount={this.state.rowCount}
                   rowRatios={this.state.rowRatios}

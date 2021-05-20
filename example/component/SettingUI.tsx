@@ -17,7 +17,7 @@ function execCopy(string){
 }
 
 interface Props {
-  size: number,
+  itemHeight: number,
   width: number,
   margin: number,
   rowCount: number,
@@ -78,24 +78,24 @@ class SettingUI extends Component<Props, State> {
                 <input type="range" id="width" name="width" min="10" max="100" step="10" defaultValue="100" onChange={(e) => this.props.onChange({width: e.target.value})} />
                 {this.props.width}px
                 &nbsp; */}
-                <label htmlFor="margin">Size:</label>
-                <input type="range" id="size" name="width" min="10" max="600" value={this.props.size} onChange={(e) => this.props.onChange({size: parseInt(e.target.value)})} />
-                {this.props.size}
+                <label htmlFor="margin">itemHeight:</label>
+                <input type="range" id="itemHeight" name="width" min="10" max="600" value={this.props.itemHeight} onChange={(e) => this.props.onChange({itemHeight: parseInt(e.target.value)})} />
+                {this.props.itemHeight}
                 &nbsp;
-                <label htmlFor="margin">Margin:</label>
+                <label htmlFor="margin">margin:</label>
                 <input type="range" id="margin" name="width" min="0" max="30" value={this.props.margin} onChange={(e) => this.props.onChange({margin: parseInt(e.target.value)})} />
                 {this.props.margin}
                 &nbsp;
-                <label htmlFor="margin">RowCount:</label>
-                <input type="range" id="maxRow" name="width" min="1" max="30" value={this.props.rowCount} onChange={(e) => this.props.onChange({rowCount: parseInt(e.target.value)})} />
+                <label htmlFor="margin">rowCount:</label>
+                <input type="range" id="rowCount" name="width" min="1" max="30" value={this.props.rowCount} onChange={(e) => this.props.onChange({rowCount: parseInt(e.target.value)})} />
                 {this.props.rowCount}
                 &nbsp;&nbsp;
-                <label htmlFor="sortKey">SortKey:</label>
+                <label htmlFor="sortKey">sortKey:</label>
                 <input type="checkbox" id="sortKey" name="sortKey" value={this.props.sortKey} defaultChecked={true} onChange={(e) => this.setSortKey(e.target)} />
               </div>
               <br />
               <div>
-                <label>RowRatios:</label>
+                <label>rowRatios:</label>
                 {this.props.rowRatios.map((rowHeight, i) => {
                   return <input type="number" placeholder={String(rowHeight)} value={String(rowHeight)} step="0.1" className="rowHeight" key={i} onChange={this.setRowFactors.bind(this)} style={{width: '3rem'}} />
                 })}

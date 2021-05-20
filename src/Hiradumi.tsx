@@ -23,7 +23,7 @@ interface Props {
     items: any[]
     width: number
     height: number
-    size: number
+    itemHeight: number
     margin: number
     rowCount: number
     rowRatios: number[]
@@ -94,7 +94,7 @@ class Hiradumi extends React.Component<Props, State> {
 
             // 行の幅の範囲内にアイテムを入れる
             const rowRatio = this.props.rowRatios[index % rowRatiosLength]
-            const height = this.props.size * rowRatio
+            const height = this.props.itemHeight * rowRatio
             currentItems.some((item) => {
                 let aspect: number
                 if (item.properties && item.properties.aspect) {
