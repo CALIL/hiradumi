@@ -90,11 +90,11 @@ class Hiradumi extends React.Component<Props, State> {
             if (currentItems.length === 0) break
 
             let rowItems = []
-            let rowTotalWidth = 0
 
             // 行の幅の範囲内にアイテムを入れる
-            const putItem = (currentItems) => {
+            const putItem = (currentItems):[items:any[], rowTotalWidth:number] => {
                 const items = []
+                let rowTotalWidth = 0
                 const rowRatio = this.props.rowRatios[index % this.props.rowRatios.length]
                 const height = this.props.itemHeight * rowRatio
                 currentItems.some((item) => {
@@ -108,10 +108,10 @@ class Hiradumi extends React.Component<Props, State> {
                     items.push(item)
                     rowTotalWidth += width
                 })
-                return items
+                return [items, rowTotalWidth]
             }
 
-            const items = putItem(currentItems)
+            const [items, rowTotalWidth] = putItem(currentItems)
             rowItems.push(...items)
 
             // 残りの横幅分、サイズを調整
