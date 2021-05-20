@@ -75,17 +75,16 @@ class Hiradumi extends React.Component<Props, State> {
         // 計算している本のindex
         let currentIndex = 0
 
-        const itemLength = this.state.items.length
-        const rowRatiosLength = this.props.rowRatios.length
         let rowsItemsByRowRatios = []
         let rowsItems = []
         let prevRowData
         let prevRowTotalWidth
+
         // スクロールバーがあれば大きめにしておく、最後に調整されるので
         const scrollBarWidth = getScrollbarWidth() > 0 ? 100 : 0
         const rowWidth = this.props.width - scrollBarWidth
 
-        for (let index = 0; index < itemLength; index++) {
+        for (let index = 0; index < this.state.items.length; index++) {
 
             const currentItems = this.state.items.slice(currentIndex)
             if (currentItems.length === 0) break
@@ -94,23 +93,26 @@ class Hiradumi extends React.Component<Props, State> {
             let rowTotalWidth = 0
 
             // 行の幅の範囲内にアイテムを入れる
-            const rowRatio = this.props.rowRatios[index % rowRatiosLength]
-            const height = this.props.itemHeight * rowRatio
-            currentItems.some((item) => {
-                let aspect: number
-                if (item.properties && item.properties.aspect) {
-                    aspect = item.properties.aspect
-                } else {
-                    aspect = 0.666666
-                }
-                const width = Math.floor(height * aspect)
-                // 行よりも大きくなるなら終了
-                if (rowTotalWidth + width > rowWidth) return true
-                item.height = height
-                item.width = width
-                rowItems.push(item)
-                rowTotalWidth += width
-            })
+            const putItem = (currentItems) => {
+                const items = []
+                const rowRatio = this.props.rowRatios[index % this.props.rowRatios.length]
+                const height = this.props.itemHeight * rowRatio
+                currentItems.some((item) => {
+                    const hasAspect = item.properties && item.properties.aspect
+                    const aspect: number = hasAspect ? item.properties.aspect : 0.666666
+                    const width = Math.floor(height * aspect)
+                    // 行よりも大きくなるなら終了
+                    if (rowTotalWidth + width > rowWidth) return true
+                    item.height = height
+                    item.width = width
+                    items.push(item)
+                    rowTotalWidth += width
+                })
+                return items
+            }
+
+            const items = putItem(currentItems)
+            rowItems.push(...items)
 
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = rowWidth / rowTotalWidth
