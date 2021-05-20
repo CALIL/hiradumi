@@ -50,7 +50,7 @@ interface Props {
     ```
 | プロパティ | 型 | 説明 |
 | ------------- | ------------- | ------------- |
-| items | any[] | 画像のアスペクト比が入ったItemの配列 |
+| items | Item[] | 画像のアスペクト比が入ったItemの配列 |
 | size | number | 画像の基準サイズ |
 | margin | number | 画像のマージン |
 | rowCount | number | 最大行数 上限を不明な場合、Infinityを指定 |
