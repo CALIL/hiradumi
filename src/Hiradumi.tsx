@@ -79,10 +79,8 @@ class Hiradumi extends React.Component<Props, State> {
         const rowRatiosLength = this.props.rowRatios.length
         let rowsItemsByRowRatios = []
         let rowsItems = []
-        let rowItems = []
         let prevRowData
-        let rowItemCount = 0
-        let rowTotalWidth = 0
+        let prevRowTotalWidth
         // スクロールバーがあれば大きめにしておく、最後に調整されるので
         const scrollBarWidth = getScrollbarWidth() > 0 ? 100 : 0
         const rowWidth = this.props.width - scrollBarWidth
@@ -91,6 +89,9 @@ class Hiradumi extends React.Component<Props, State> {
 
             const currentItems = this.state.items.slice(currentIndex)
             if (currentItems.length === 0) break
+
+            let rowItems = []
+            let rowTotalWidth = 0
 
             // 行の幅の範囲内にアイテムを入れる
             const rowRatio = this.props.rowRatios[index % rowRatiosLength]
@@ -109,22 +110,20 @@ class Hiradumi extends React.Component<Props, State> {
                 item.width = width
                 rowItems.push(item)
                 rowTotalWidth += width
-                rowItemCount += 1
             })
 
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = rowWidth / rowTotalWidth
-            // 最後の行の縦が大きすぎないように規制
-            if (scaleUpRatio < 2 || scaleUpRatio > 2.5) {
+            // 縦が大きすぎないように規制
+            if (scaleUpRatio < 2) {
                 rowItems.some((item, index) => {
                     item.width = Math.floor(item.width * scaleUpRatio)
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
             } else {
-                // rowTotalWidth分詰めたい
-                const scaleDownWidth = rowTotalWidth / prevRowData.length
+                // 前の行をrowTotalWidth分詰めて、今の行を押し込む
+                const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
                 prevRowData.some((item) => {
-                    const scaleDownRatio = item.width / (item.width + scaleDownWidth)
                     item.width = Math.floor(item.width * scaleDownRatio)
                     item.height = Math.floor(item.height * scaleDownRatio)
                 })
@@ -135,35 +134,34 @@ class Hiradumi extends React.Component<Props, State> {
                     item.width = Math.floor(item.width * scaleRatio)
                     item.height = Math.floor(item.height * scaleRatio)
                 })
+                rowItems = prevRowData.concat(rowItems)
                 rowsItems.pop()
             }
 
             // sortLabelでソートして、中央から並べ直す
-            if (this.props.sortKey) {
-                const sortLabel = this.props.sortKey
-                rowItems.sort(function (a, b) {
-                    if (a[sortLabel] < b[sortLabel]) return 1;
-                    if (a[sortLabel] > b[sortLabel]) return -1;
-                    return 0;
-                });
-                const newRowData = {}
-                const rowLength = rowItems.length
-                const centerIndex = Math.floor(rowLength / 2)
-                newRowData[centerIndex] = rowItems[0]
-                Array.from({ length: centerIndex }).map((item, index) => {
-                    if (rowItems[index * 2 + 1]) newRowData[centerIndex - 1 - index] = rowItems[index * 2 + 1]
-                    if (rowItems[index * 2 + 2]) newRowData[centerIndex + 1 + index] = rowItems[index * 2 + 2]
-                })
-                rowItems = Object.values(newRowData)
-            }
+            // if (this.props.sortKey) {
+            //     const sortLabel = this.props.sortKey
+            //     rowItems.sort(function (a, b) {
+            //         if (a[sortLabel] < b[sortLabel]) return 1;
+            //         if (a[sortLabel] > b[sortLabel]) return -1;
+            //         return 0;
+            //     });
+            //     const newRowData = {}
+            //     const rowLength = rowItems.length
+            //     const centerIndex = Math.floor(rowLength / 2)
+            //     newRowData[centerIndex] = rowItems[0]
+            //     Array.from({ length: centerIndex }).map((item, index) => {
+            //         if (rowItems[index * 2 + 1]) newRowData[centerIndex - 1 - index] = rowItems[index * 2 + 1]
+            //         if (rowItems[index * 2 + 2]) newRowData[centerIndex + 1 + index] = rowItems[index * 2 + 2]
+            //     })
+            //     rowItems = Object.values(newRowData)
+            // }
 
-            currentIndex += rowItemCount
+            currentIndex += rowItems.length
             rowsItems.push(rowItems)
 
             prevRowData = rowItems
-            rowItems = []
-            rowItemCount = 0
-            rowTotalWidth = 0
+            prevRowTotalWidth = rowTotalWidth
 
             // rowRatiosの長さ毎に行を入れていく
             if (rowsItems.length === this.props.rowRatios.length) {
