@@ -203,11 +203,7 @@ class Hiradumi extends React.Component<Props, State> {
 
         }
         
-        // 配列をn個毎の配列に分割して返す関数
-        // console.log(splitByNumber([1,2,3,4,5,6,7,8,9,0], 3))
         const rowsItemsByRowRatios = splitByNumber(rowsItems, this.props.rowRatios.length)
-
-
         this.setState({ rowsItems: rowsItemsByRowRatios, itemSize: this.getItemSize(rowsItemsByRowRatios) })
 
     }
