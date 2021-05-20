@@ -72,8 +72,8 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     setRowData() {
-        // 計算している本のindex
-        let currentIndex = 0
+        // 計算しているitemのindex
+        let currentItemIndex = 0
 
         let rowsItemsByRowRatios = []
         let rowsItems = []
@@ -86,13 +86,11 @@ class Hiradumi extends React.Component<Props, State> {
 
         for (let index = 0; index < this.state.items.length; index++) {
 
-            const currentItems = this.state.items.slice(currentIndex)
+            const currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
             if (currentItems.length === 0) break
 
-            let rowItems = []
-
             // 行の幅の範囲内にアイテムを入れる
-            const putItem = (currentItems):[items:any[], rowTotalWidth:number] => {
+            const putItem = (currentItems, rowWidth):[items:any[], rowTotalWidth:number] => {
                 const items = []
                 let rowTotalWidth = 0
                 const rowRatio = this.props.rowRatios[index % this.props.rowRatios.length]
@@ -111,32 +109,34 @@ class Hiradumi extends React.Component<Props, State> {
                 return [items, rowTotalWidth]
             }
 
-            const [items, rowTotalWidth] = putItem(currentItems)
-            rowItems.push(...items)
+            let [rowItems, rowTotalWidth] = putItem(currentItems, rowWidth)
 
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = rowWidth / rowTotalWidth
             // 縦が大きすぎないように規制
-            if (scaleUpRatio < 2) {
+            if (scaleUpRatio < 2 || rowItems.length == 1) {
                 rowItems.some((item, index) => {
                     item.width = Math.floor(item.width * scaleUpRatio)
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
             } else {
-                // 前の行をrowTotalWidth分詰めて、今の行を押し込む
                 const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
-                prevRowData.some((item) => {
-                    item.width = Math.floor(item.width * scaleDownRatio)
-                    item.height = Math.floor(item.height * scaleDownRatio)
-                })
-
-                // 今の行のサイズを調整
-                const scaleRatio = prevRowData[0].height / rowItems[0].height
-                rowItems.some((item) => {
-                    item.width = Math.floor(item.width * scaleRatio)
-                    item.height = Math.floor(item.height * scaleRatio)
-                })
-                rowItems = prevRowData.concat(rowItems)
+                // 前の行をrowTotalWidth分詰めて、今の行を押し込む
+                const scaleAdjust = (rowItems, prevRowData, scaleDownRatio) => {
+                    prevRowData.some((item) => {
+                        item.width = Math.floor(item.width * scaleDownRatio)
+                        item.height = Math.floor(item.height * scaleDownRatio)
+                    })
+    
+                    // 今の行のサイズを調整
+                    const scaleRatio = prevRowData[0].height / rowItems[0].height
+                    rowItems.some((item) => {
+                        item.width = Math.floor(item.width * scaleRatio)
+                        item.height = Math.floor(item.height * scaleRatio)
+                    })
+                    return prevRowData.concat(rowItems)
+                }
+                rowItems = scaleAdjust(rowItems, prevRowData, scaleDownRatio)
                 rowsItems.pop()
             }
 
@@ -159,7 +159,7 @@ class Hiradumi extends React.Component<Props, State> {
             //     rowItems = Object.values(newRowData)
             // }
 
-            currentIndex += rowItems.length
+            currentItemIndex += rowItems.length
             rowsItems.push(rowItems)
 
             prevRowData = rowItems
