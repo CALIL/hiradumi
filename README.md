@@ -48,11 +48,11 @@ interface Props {
         }
     }
     ```
-| プロパティ | 型 | 説明 | デフォルト値 |
-| ------------- | ------------- | ------------- | ------------- |
-| items | Item[] | 画像のアスペクト比が入ったItemの配列 | 省略不可 |
-| size | number | 画像の基準サイズ | 200 |
-| margin | number | 画像のマージン | 
+| プロパティ | 型 | 説明 |
+| ------------- | ------------- | ------------- |
+| items | Item[] | 画像のアスペクト比が入ったItemの配列 |
+| size | number | 画像の基準サイズ |
+| margin | number | 画像のマージン |
 | rowCount | number | 最大行数 上限を不明な場合、Infinityを指定 |
 | rowRatios | number[] | 行ごとの比率 |
 | itemComponent | ReactComponent | itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |

@@ -41,8 +41,6 @@ interface Hiradumi {
     Row: any
     rowCount: number
     factors: number[]
-    hiradumiDiv: HTMLDivElement
-    setHiradumiDiv: (element) => void
 }
 
 class Hiradumi extends React.Component<Props, State> {
@@ -55,11 +53,6 @@ class Hiradumi extends React.Component<Props, State> {
         }
         this.factors = []
 
-        this.hiradumiDiv = null
-
-        this.setHiradumiDiv = element => {
-            this.hiradumiDiv = element
-        }
     }
 
     componentDidMount() {
@@ -92,7 +85,7 @@ class Hiradumi extends React.Component<Props, State> {
         let rowTotalWidth = 0
         // スクロールバーがあれば大きめにしておく、最後に調整されるので
         const scrollBarWidth = getScrollbarWidth() > 0 ? 100 : 0
-        const rowWidth = this.hiradumiDiv.clientWidth - scrollBarWidth
+        const rowWidth = this.props.width - scrollBarWidth
 
         for (let index = 0; index < itemLength; index++) {
 
