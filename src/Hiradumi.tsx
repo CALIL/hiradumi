@@ -224,16 +224,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.state.items.length <= 1000) {
-            return (<div
-                style={{ width: this.props.width, height: this.props.height, overflow: 'auto' }}
-                className={this.props.className ? this.props.className : 'hiradumi'}
-            >
-                {this.state.rows.map((rows) => {
-                    return rows.map((row) => this.renderRow(row))
-                })}
-            </div>)
-        } else {
+        if (this.props.efficientRendering) {
             return (<div className={this.props.className ? this.props.className : 'hiradumi'}>
                 <List
                     width={this.props.width}
@@ -243,6 +234,15 @@ class Hiradumi extends React.Component<Props, State> {
                 >
                     {this.Row}
                 </List>
+            </div>)
+        } else {
+            return (<div
+                style={{ width: this.props.width, height: this.props.height, overflow: 'auto' }}
+                className={this.props.className ? this.props.className : 'hiradumi'}
+            >
+                {this.state.rows.map((rows) => {
+                    return rows.map((row) => this.renderRow(row))
+                })}
             </div>)
         }
     }
