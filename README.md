@@ -60,7 +60,7 @@ interface Props {
 | itemComponent | ReactComponent | Itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |
 | className | string | Hiradumiの領域につけるクラス名<br />デフォルトはhiradumi |
 | sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
-| efficientRendering | boolean | [非推奨] より効率的な描画方法を有効にする<br />Itemの数が非常に多く通常の描画方法では追いつかない場合に有効<br />ただし、Hiradumiの仕組み上、一番下に空白ができる場合あり |
+| efficientRendering | boolean | [非推奨] より効率的な描画方法を有効にする<br />Itemの数が非常に多く通常の描画方法では追いつかない場合に有効<br />ただし、Hiradumiの仕組み上、一番下に空白ができる場合がある |
 
 ```
 <Hiradumi
