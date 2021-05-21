@@ -44,6 +44,7 @@ interface Props {
     sortKey: string | null
 }
 interface State {
+    width: number
     items: any[]
     rows: any[]
     itemSize: number
@@ -62,12 +63,11 @@ class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
+            width: this.props.width,
             items: props.items.map( item => ({...item})),
             rows: [],
             itemSize: 0
         }
-        this.factors = []
-
     }
 
     componentDidMount() {
@@ -79,15 +79,19 @@ class Hiradumi extends React.Component<Props, State> {
         // PC版のスクロールバー対応
         // コンテンツがないとスクロールバーが出ないので、追加後に再計算
         setTimeout(() => {
-            const scrollBarWidth = document.body.offsetWidth - document.body.clientWidth
-            if (scrollBarWidth > 0) this.setRowData()
-        }, 10)
+            const scrollBarWidth = getScrollbarWidth()
+            if (scrollBarWidth > 0) {
+                this.setState({width: this.props.width -  getScrollbarWidth()}, () => {
+                    this.setRowData()
+                })
+            }
+        }, 100)
 
 
     }
 
     // 行の幅の範囲内にアイテムを入れる
-    putItem(currentItems, rowWidth, rowRatio) {
+    putItem(currentItems, rowRatio) {
         const items = []
         let rowTotalWidth = 0
         
@@ -97,7 +101,7 @@ class Hiradumi extends React.Component<Props, State> {
             const aspect: number = hasAspect ? item.properties.aspect : 0.666666
             const width = Math.floor(height * aspect)
             // 行よりも大きくなるなら終了
-            if (rowTotalWidth + width > rowWidth) return true
+            if (rowTotalWidth + width > this.props.width) return true
             item.height = height
             item.width = width
             items.push(item)
@@ -160,19 +164,19 @@ class Hiradumi extends React.Component<Props, State> {
         let rows = []
         let prevRowItems
 
-        // スクロールバーがあれば大きめにしておく、最後に調整されるので
-        const scrollBarWidth = getScrollbarWidth() > 0 ? 100 : 0
-        const rowWidth = this.props.width - scrollBarWidth
-
         // 計算しているitemのindex
         let currentItemIndex = 0
         let currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
+
+        // スクロールバーを大きめにしておく
+        const scrollBarWidth = getScrollbarWidth() > 0 ? 100 : 0
+        const rowWidth = this.props.width - scrollBarWidth
 
         for (let index = 0; currentItems.length > 0; index++) {
 
             const rowRatio = this.props.rowRatios[index % this.props.rowRatios.length]
             // 行の幅の範囲内にアイテムを入れる
-            let items = this.putItem(currentItems, rowWidth, rowRatio)
+            let items = this.putItem(currentItems, rowRatio)
 
             const rowTotalWidth = items.reduce((size, item) => size + item.width, 0)
 
@@ -238,18 +242,18 @@ class Hiradumi extends React.Component<Props, State> {
         if (this.state.items.length === 0) return null
         if (this.state.items.length <= 1000) {
             return (<div
-                style={{ width: this.props.width, height: this.props.height }}
+                style={{ width: this.state.width, height: this.props.height }}
                 className={this.props.className ? this.props.className : 'hiradumi'}
-                ref={this.setHiradumiDiv}>
+                >
                 {this.state.rows.map((rows) => {
                     // console.log(rows)
                     return rows.map((row) => this.renderRow(row))
                 })}
             </div>)
         } else {
-            return (<div className={this.props.className ? this.props.className : 'hiradumi'} ref={this.setHiradumiDiv}>
+            return (<div className={this.props.className ? this.props.className : 'hiradumi'}>
                 <List
-                    width={this.props.width}
+                    width={this.state.width}
                     height={this.props.height}
                     itemCount={this.state.rows.length}
                     itemSize={this.state.itemSize}

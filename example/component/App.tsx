@@ -81,6 +81,11 @@ class App extends Component<Props, State> {
 
     const uiHeight = 92
     this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
+    console.log(document.body.clientWidth)
+    // setTimeout(() => {
+    //   console.log(document.body.clientWidth)
+    //   this.setState({width: document.body.clientWidth})
+    // }, 100)
     window.addEventListener('resize', () => {
       this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
     })
@@ -110,7 +115,7 @@ class App extends Component<Props, State> {
                 sortKey={this.state.sortKey}
                 onChange={this.onChange.bind(this)}
               />
-              <div style={{width: this.state.width + 'px', margin: '0 auto'}}>
+              <div style={{width: '100%', margin: '0 auto'}}>
                 <Hiradumi
                   ref={this.setHiradumi}
                   width={this.state.width}
