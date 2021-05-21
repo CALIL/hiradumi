@@ -1,4 +1,3 @@
-import 'whatwg-fetch'
 import React from 'react'
 import { FixedSizeList as List } from "react-window";
 
@@ -18,7 +17,6 @@ function getScrollbarWidth() {
     outer.parentNode.removeChild(outer)
     return scrollBarWidth
 }
-
 
 // 配列をn個毎の配列に分割して返す関数
 const splitByNumber = (sourceArray, splitNumber) => {
@@ -55,9 +53,6 @@ interface Hiradumi {
     rowCount: number
     factors: number[]
 }
-
-
-
 
 class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -157,9 +152,9 @@ class Hiradumi extends React.Component<Props, State> {
 
         const rowMaxWidth = this.props.width - getScrollbarWidth()
 
-        for (let index = 0; items.length > 0; index++) {
+        for (let i = 0; items.length > 0; i++) {
 
-            const rowRatioIndex = index % this.props.rowRatios.length
+            const rowRatioIndex = i % this.props.rowRatios.length
             const rowRatio = this.props.rowRatios[rowRatioIndex]
 
             // 行の幅の範囲内にアイテムを入れる
@@ -172,7 +167,7 @@ class Hiradumi extends React.Component<Props, State> {
 
             // 縦が大きすぎないように規制 && 最後の行が1冊以上の場合
             if (scaleUpRatio < 2 && rowItems.length > 1) {
-                rowItems.some((item, index) => {
+                rowItems.some((item) => {
                     item.width = Math.floor(item.width * scaleUpRatio)
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
@@ -239,7 +234,7 @@ class Hiradumi extends React.Component<Props, State> {
         } else {
             return (<div className={this.props.className ? this.props.className : 'hiradumi'}>
                 <List
-                    width={this.state.width}
+                    width={this.props.width}
                     height={this.props.height}
                     itemCount={this.state.rows.length}
                     rowsHeight={this.state.rowsHeight}

@@ -1,3 +1,4 @@
+import 'whatwg-fetch'
 import React, { Component } from 'react'
 import Hiradumi from '../../src/Hiradumi'
 import SettingUI from './SettingUI'
