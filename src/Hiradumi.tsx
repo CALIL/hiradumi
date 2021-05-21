@@ -204,8 +204,8 @@ class Hiradumi extends React.Component<Props, State> {
 
         }
         
-        const rowsByRowRatios = splitByNumber(rows, this.props.rowRatios.length)
-        this.setState({ rows: rowsByRowRatios, itemSize: this.getItemSize(rowsByRowRatios) })
+        const rowsByRowRatio = splitByNumber(rows, this.props.rowRatios.length)
+        this.setState({ rows: rowsByRowRatio, itemSize: this.getItemSize(rowsByRowRatio) })
 
     }
 
