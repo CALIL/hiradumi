@@ -155,7 +155,7 @@ class Hiradumi extends React.Component<Props, State> {
         let itemIndex = 0
         let items = this.state.items.slice(itemIndex, itemIndex+100)
 
-        const rowWidth = this.props.width - getScrollbarWidth()
+        const rowMaxWidth = this.props.width - getScrollbarWidth()
 
         for (let index = 0; items.length > 0; index++) {
 
@@ -163,14 +163,14 @@ class Hiradumi extends React.Component<Props, State> {
             const rowRatio = this.props.rowRatios[rowRatioIndex]
 
             // 行の幅の範囲内にアイテムを入れる
-            let rowItems = this.putItem(items, rowWidth, rowRatio)
+            let rowItems = this.putItem(items, rowMaxWidth, rowRatio)
 
-            const rowTotalWidth = rowItems.reduce((size, item) => size + item.width + this.props.margin, 0)
+            const rowWidth = rowItems.reduce((size, item) => size + item.width + this.props.margin, 0)
 
             // 残りの横幅分、サイズを調整
-            const scaleUpRatio = rowWidth / rowTotalWidth
+            const scaleUpRatio = rowMaxWidth / rowWidth
 
-            // 縦が大きすぎないように規制 && 最後の行1冊以上の場合
+            // 縦が大きすぎないように規制 && 最後の行が1冊以上の場合
             if (scaleUpRatio < 2 && rowItems.length > 1) {
                 rowItems.some((item, index) => {
                     item.width = Math.floor(item.width * scaleUpRatio)
@@ -179,7 +179,7 @@ class Hiradumi extends React.Component<Props, State> {
             } else {
                 if (prevRowItems.length > 0) {
                     // 前の行をrowTotalWidth分詰めて、今の行を押し込む
-                    rowItems = this.pushPreviousRow(rowItems, prevRowItems, rowTotalWidth)
+                    rowItems = this.pushPreviousRow(rowItems, prevRowItems, rowWidth)
                     rows.pop()
                 }
             }
