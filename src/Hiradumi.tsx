@@ -47,7 +47,7 @@ interface State {
     width: number
     items: any[]
     rows: any[]
-    itemSize: number
+    rowsHeight: number
 }
 
 interface Hiradumi {
@@ -66,7 +66,7 @@ class Hiradumi extends React.Component<Props, State> {
             width: this.props.width -  getScrollbarWidth(),
             items: props.items.map( item => ({...item})),
             rows: [],
-            itemSize: 0
+            rowsHeight: 0
         }
     }
 
@@ -134,7 +134,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     // 最初のセットで高さを割り出す
-    getItemSize(rowsByRowRatios) {
+    getRowsHeight(rowsByRowRatios) {
         const rowHeights = []
         let heights = []
         rowsByRowRatios[0].map((items) => {
@@ -196,7 +196,7 @@ class Hiradumi extends React.Component<Props, State> {
         }
         
         const rowsByRowRatio = splitByNumber(rows, this.props.rowRatios.length)
-        this.setState({ rows: rowsByRowRatio, itemSize: this.getItemSize(rowsByRowRatio) })
+        this.setState({ rows: rowsByRowRatio, rowsHeight: this.getRowsHeight(rowsByRowRatio) })
 
     }
 
@@ -226,7 +226,6 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.state.items.length === 0) return null
         if (this.state.items.length <= 1000) {
             return (<div
                 style={{ width: this.state.width, height: this.props.height }}
@@ -243,7 +242,7 @@ class Hiradumi extends React.Component<Props, State> {
                     width={this.state.width}
                     height={this.props.height}
                     itemCount={this.state.rows.length}
-                    itemSize={this.state.itemSize}
+                    rowsHeight={this.state.rowsHeight}
                 >
                     {this.Row}
                 </List>
