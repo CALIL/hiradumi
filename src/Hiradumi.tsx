@@ -159,7 +159,9 @@ class Hiradumi extends React.Component<Props, State> {
 
         for (let index = 0; currentItems.length > 0; index++) {
 
-            const rowRatio = this.props.rowRatios[index % this.props.rowRatios.length]
+            const rowRatioIndex = index % this.props.rowRatios.length
+            const rowRatio = this.props.rowRatios[rowRatioIndex]
+
             // 行の幅の範囲内にアイテムを入れる
             let items = this.putItem(currentItems, rowWidth, rowRatio)
 
@@ -168,7 +170,7 @@ class Hiradumi extends React.Component<Props, State> {
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = rowWidth / rowTotalWidth
 
-            // 縦が大きすぎないように規制
+            // 縦が大きすぎないように規制 && 最後の行1冊以上の場合
             if (scaleUpRatio < 2 && items.length > 1) {
                 items.some((item, index) => {
                     item.width = Math.floor(item.width * scaleUpRatio)
@@ -185,12 +187,10 @@ class Hiradumi extends React.Component<Props, State> {
             // sortKeyでソートして、中央から並べ直す
             if (this.props.sortKey) items = this.sortCenter(items)
 
-            currentItemIndex += items.length
             rows.push(items)
-
             prevRowItems = items
-            // prevRowItems = items.map( item => ({...item}))
 
+            currentItemIndex += items.length
             currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
 
         }
