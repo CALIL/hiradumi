@@ -157,8 +157,6 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     setRowData() {
-        // 計算しているitemのindex
-        let currentItemIndex = 0
         let rowsItems = []
         let prevRowItems
 
@@ -166,10 +164,11 @@ class Hiradumi extends React.Component<Props, State> {
         const scrollBarWidth = getScrollbarWidth() > 0 ? 100 : 0
         const rowWidth = this.props.width - scrollBarWidth
 
-        for (let index = 0; index < this.state.items.length; index++) {
+        // 計算しているitemのindex
+        let currentItemIndex = 0
+        let currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
 
-            const currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
-            if (currentItems.length === 0) break
+        for (let index = 0; currentItems.length > 0; index++) {
 
             // 行の幅の範囲内にアイテムを入れる
             const rowRatio = this.props.rowRatios[index % this.props.rowRatios.length]
@@ -200,6 +199,8 @@ class Hiradumi extends React.Component<Props, State> {
 
             // prevRowItems = rowItems
             prevRowItems = rowItems.map( item => ({...item}))
+
+            currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
 
         }
         
