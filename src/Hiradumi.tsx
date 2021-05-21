@@ -227,7 +227,7 @@ class Hiradumi extends React.Component<Props, State> {
             return (<div
                 style={{ width: this.state.width, height: this.props.height }}
                 className={this.props.className ? this.props.className : 'hiradumi'}
-                >
+            >
                 {this.state.rows.map((rows) => {
                     return rows.map((row) => this.renderRow(row))
                 })}
@@ -246,11 +246,6 @@ class Hiradumi extends React.Component<Props, State> {
         }
     }
 }
-
-
-const Row = ({ index, style }) => (
-    <div style={style}>Row {index}</div>
-  );
   
 export default Hiradumi
 
