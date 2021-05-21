@@ -225,7 +225,7 @@ class Hiradumi extends React.Component<Props, State> {
     render() {
         if (this.state.items.length <= 1000) {
             return (<div
-                style={{ width: this.state.width, height: this.props.height }}
+                style={{ width: this.props.width, height: this.props.height, overflow: 'auto' }}
                 className={this.props.className ? this.props.className : 'hiradumi'}
             >
                 {this.state.rows.map((rows) => {
