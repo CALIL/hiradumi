@@ -152,7 +152,7 @@ class Hiradumi extends React.Component<Props, State> {
 
         const rowMaxWidth = this.props.width - getScrollbarWidth()
 
-        for (let i = 0; items.length > 0; i++) {
+        for (let i = 0; items.length > 0 && rows.length < this.props.rowCount; i++) {
 
             const rowRatioIndex = i % this.props.rowRatios.length
             const rowRatio = this.props.rowRatios[rowRatioIndex]
