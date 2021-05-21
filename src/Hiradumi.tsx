@@ -100,13 +100,12 @@ class Hiradumi extends React.Component<Props, State> {
 
     // 前の行をrowTotalWidth分詰めて、今の行を押し込む
     pushPreviousRow(items, prevItems, rowTotalWidth) {
-        if (prevItems.length === 0) return items
         const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
         const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
         prevItems.some((item) => {
             item.width = Math.floor(item.width * scaleDownRatio)
             item.height = Math.floor(item.height * scaleDownRatio)
-        })    
+        })
         // 今の行のサイズを調整
         const scaleRatio = prevItems[0].height / items[0].height
         items.some((item) => {
@@ -164,7 +163,7 @@ class Hiradumi extends React.Component<Props, State> {
             // 行の幅の範囲内にアイテムを入れる
             let items = this.putItem(currentItems, rowWidth, rowRatio)
 
-            const rowTotalWidth = items.reduce((size, item) => size + item.width, 0)
+            const rowTotalWidth = items.reduce((size, item) => size + item.width + this.props.margin, 0)
 
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = rowWidth / rowTotalWidth
@@ -176,9 +175,11 @@ class Hiradumi extends React.Component<Props, State> {
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
             } else {
-                // 前の行をrowTotalWidth分詰めて、今の行を押し込む
-                items = this.pushPreviousRow(items, prevRowItems, rowTotalWidth)
-                rows.pop()
+                if (prevRowItems.length > 0) {
+                    // 前の行をrowTotalWidth分詰めて、今の行を押し込む
+                    items = this.pushPreviousRow(items, prevRowItems, rowTotalWidth)
+                    rows.pop()
+                }
             }
 
             // sortKeyでソートして、中央から並べ直す
@@ -187,8 +188,8 @@ class Hiradumi extends React.Component<Props, State> {
             currentItemIndex += items.length
             rows.push(items)
 
-            // prevRowItems = items
-            prevRowItems = items.map( item => ({...item}))
+            prevRowItems = items
+            // prevRowItems = items.map( item => ({...item}))
 
             currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
 
