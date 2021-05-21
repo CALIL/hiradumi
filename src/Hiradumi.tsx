@@ -196,6 +196,8 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     Row = ({ index, style }) => {
+        console.log(index)
+        console.log(style)
         const rows = this.state.rows[index]
         return (<div style={style}>
             {rows.map((row) => this.renderRow(row))}
@@ -227,7 +229,6 @@ class Hiradumi extends React.Component<Props, State> {
                 className={this.props.className ? this.props.className : 'hiradumi'}
                 >
                 {this.state.rows.map((rows) => {
-                    // console.log(rows)
                     return rows.map((row) => this.renderRow(row))
                 })}
             </div>)
@@ -237,7 +238,7 @@ class Hiradumi extends React.Component<Props, State> {
                     width={this.props.width}
                     height={this.props.height}
                     itemCount={this.state.rows.length}
-                    rowsHeight={this.state.rowsHeight}
+                    itemSize={this.state.rowsHeight}
                 >
                     {this.Row}
                 </List>
@@ -246,6 +247,11 @@ class Hiradumi extends React.Component<Props, State> {
     }
 }
 
+
+const Row = ({ index, style }) => (
+    <div style={style}>Row {index}</div>
+  );
+  
 export default Hiradumi
 
 
