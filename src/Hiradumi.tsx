@@ -45,7 +45,7 @@ interface Props {
 }
 interface State {
     items: any[]
-    rowsItems: any[]
+    rows: any[]
     itemSize: number
 }
 
@@ -63,7 +63,7 @@ class Hiradumi extends React.Component<Props, State> {
         super(props)
         this.state = {
             items: props.items.map( item => ({...item})),
-            rowsItems: [],
+            rows: [],
             itemSize: 0
         }
         this.factors = []
@@ -108,7 +108,7 @@ class Hiradumi extends React.Component<Props, State> {
 
 
     // 前の行をrowTotalWidth分詰めて、今の行を押し込む
-    scaleAdjust(items, prevItems, rowTotalWidth) {
+    pushPreviousRow(items, prevItems, rowTotalWidth) {
         const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
         const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
         prevItems.some((item) => {
@@ -143,11 +143,11 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     // 最初のセットで高さを割り出す
-    getItemSize(rowsItemsByRowRatios) {
+    getItemSize(rowsByRowRatios) {
         const rowHeights = []
         let heights = []
-        rowsItemsByRowRatios[0].map((rowItems) => {
-            rowItems.map((row) => {
+        rowsByRowRatios[0].map((items) => {
+            items.map((row) => {
                 heights.push(row.height)
             })
             rowHeights.push(Math.max(...heights))
@@ -157,7 +157,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     setRowData() {
-        let rowsItems = []
+        let rows = []
         let prevRowItems
 
         // スクロールバーがあれば大きめにしておく、最後に調整されるので
@@ -170,47 +170,47 @@ class Hiradumi extends React.Component<Props, State> {
 
         for (let index = 0; currentItems.length > 0; index++) {
 
-            // 行の幅の範囲内にアイテムを入れる
             const rowRatio = this.props.rowRatios[index % this.props.rowRatios.length]
-            let rowItems = this.putItem(currentItems, rowWidth, rowRatio)
+            // 行の幅の範囲内にアイテムを入れる
+            let items = this.putItem(currentItems, rowWidth, rowRatio)
 
-            const rowTotalWidth = rowItems.reduce((size, item) => size + item.width, 0)
+            const rowTotalWidth = items.reduce((size, item) => size + item.width, 0)
 
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = rowWidth / rowTotalWidth
 
             // 縦が大きすぎないように規制
-            if (scaleUpRatio < 2 && rowItems.length > 1) {
-                rowItems.some((item, index) => {
+            if (scaleUpRatio < 2 && items.length > 1) {
+                items.some((item, index) => {
                     item.width = Math.floor(item.width * scaleUpRatio)
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
             } else {
                 // 前の行をrowTotalWidth分詰めて、今の行を押し込む
-                rowItems = this.scaleAdjust(rowItems, prevRowItems, rowTotalWidth)
-                rowsItems.pop()
+                items = this.pushPreviousRow(items, prevRowItems, rowTotalWidth)
+                rows.pop()
             }
 
             // sortKeyでソートして、中央から並べ直す
-            if (this.props.sortKey) rowItems = this.sortCenter(rowItems)
+            if (this.props.sortKey) items = this.sortCenter(items)
 
-            currentItemIndex += rowItems.length
-            rowsItems.push(rowItems)
+            currentItemIndex += items.length
+            rows.push(items)
 
-            // prevRowItems = rowItems
-            prevRowItems = rowItems.map( item => ({...item}))
+            // prevRowItems = items
+            prevRowItems = items.map( item => ({...item}))
 
             currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
 
         }
         
-        const rowsItemsByRowRatios = splitByNumber(rowsItems, this.props.rowRatios.length)
-        this.setState({ rowsItems: rowsItemsByRowRatios, itemSize: this.getItemSize(rowsItemsByRowRatios) })
+        const rowsByRowRatios = splitByNumber(rows, this.props.rowRatios.length)
+        this.setState({ rows: rowsByRowRatios, itemSize: this.getItemSize(rowsByRowRatios) })
 
     }
 
     Row = ({ index, style }) => {
-        const rows = this.state.rowsItems[index]
+        const rows = this.state.rows[index]
         return (<div style={style}>
             {rows.map((row) => this.renderRow(row))}
         </div>)
@@ -241,7 +241,7 @@ class Hiradumi extends React.Component<Props, State> {
                 style={{ width: this.props.width, height: this.props.height }}
                 className={this.props.className ? this.props.className : 'hiradumi'}
                 ref={this.setHiradumiDiv}>
-                {this.state.rowsItems.map((rows) => {
+                {this.state.rows.map((rows) => {
                     // console.log(rows)
                     return rows.map((row) => this.renderRow(row))
                 })}
@@ -251,7 +251,7 @@ class Hiradumi extends React.Component<Props, State> {
                 <List
                     width={this.props.width}
                     height={this.props.height}
-                    itemCount={this.state.rowsItems.length}
+                    itemCount={this.state.rows.length}
                     itemSize={this.state.itemSize}
                 >
                     {this.Row}

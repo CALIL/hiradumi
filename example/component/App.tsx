@@ -81,9 +81,6 @@ class App extends Component<Props, State> {
 
     const uiHeight = 92
     this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
-    setTimeout(() => {
-      this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
-    }, 100)
     window.addEventListener('resize', () => {
       this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
     })
