@@ -63,7 +63,7 @@ class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
-            width: this.props.width,
+            width: this.props.width -  getScrollbarWidth(),
             items: props.items.map( item => ({...item})),
             rows: [],
             itemSize: 0
@@ -71,23 +71,10 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-
         this.setRowData()
-
-        window.addEventListener('resize', this.setRowData.bind(this))
-
-        // PC版のスクロールバー対応
-        // コンテンツがないとスクロールバーが出ないので、追加後に再計算
-        setTimeout(() => {
-            const scrollBarWidth = getScrollbarWidth()
-            if (scrollBarWidth > 0) {
-                this.setState({width: this.props.width -  getScrollbarWidth()}, () => {
-                    this.setRowData()
-                })
-            }
-        }, 100)
-
-
+        window.addEventListener('resize', () => {
+            this.setState({width: this.props.width -  getScrollbarWidth()}, this.setRowData)
+        })
     }
 
     // 行の幅の範囲内にアイテムを入れる
