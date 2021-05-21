@@ -40,6 +40,7 @@ interface Props {
     itemComponent: Element
     className: string
     sortKey: string | null
+    efficientRendering: boolean
 }
 interface State {
     width: number
