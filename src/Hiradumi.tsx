@@ -152,46 +152,46 @@ class Hiradumi extends React.Component<Props, State> {
         let prevRowItems = []
 
         // 計算しているitemのindex
-        let currentItemIndex = 0
-        let currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
+        let itemIndex = 0
+        let items = this.state.items.slice(itemIndex, itemIndex+100)
 
         const rowWidth = this.props.width - getScrollbarWidth()
 
-        for (let index = 0; currentItems.length > 0; index++) {
+        for (let index = 0; items.length > 0; index++) {
 
             const rowRatioIndex = index % this.props.rowRatios.length
             const rowRatio = this.props.rowRatios[rowRatioIndex]
 
             // 行の幅の範囲内にアイテムを入れる
-            let items = this.putItem(currentItems, rowWidth, rowRatio)
+            let rowItems = this.putItem(items, rowWidth, rowRatio)
 
-            const rowTotalWidth = items.reduce((size, item) => size + item.width + this.props.margin, 0)
+            const rowTotalWidth = rowItems.reduce((size, item) => size + item.width + this.props.margin, 0)
 
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = rowWidth / rowTotalWidth
 
             // 縦が大きすぎないように規制 && 最後の行1冊以上の場合
-            if (scaleUpRatio < 2 && items.length > 1) {
-                items.some((item, index) => {
+            if (scaleUpRatio < 2 && rowItems.length > 1) {
+                rowItems.some((item, index) => {
                     item.width = Math.floor(item.width * scaleUpRatio)
                     item.height = Math.floor(item.height * scaleUpRatio)
                 })
             } else {
                 if (prevRowItems.length > 0) {
                     // 前の行をrowTotalWidth分詰めて、今の行を押し込む
-                    items = this.pushPreviousRow(items, prevRowItems, rowTotalWidth)
+                    rowItems = this.pushPreviousRow(rowItems, prevRowItems, rowTotalWidth)
                     rows.pop()
                 }
             }
 
             // sortKeyでソートして、中央から並べ直す
-            if (this.props.sortKey) items = this.sortCenter(items)
+            if (this.props.sortKey) rowItems = this.sortCenter(rowItems)
 
-            rows.push(items)
-            prevRowItems = items
+            rows.push(rowItems)
+            prevRowItems = rowItems
 
-            currentItemIndex += items.length
-            currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
+            itemIndex += rowItems.length
+            items = this.state.items.slice(itemIndex, itemIndex+100)
 
         }
         
