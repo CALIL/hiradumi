@@ -78,7 +78,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     // 行の幅の範囲内にアイテムを入れる
-    putItem(currentItems, rowRatio) {
+    putItem(currentItems, rowWidth, rowRatio) {
         const items = []
         let rowTotalWidth = 0
         
@@ -88,7 +88,7 @@ class Hiradumi extends React.Component<Props, State> {
             const aspect: number = hasAspect ? item.properties.aspect : 0.666666
             const width = Math.floor(height * aspect)
             // 行よりも大きくなるなら終了
-            if (rowTotalWidth + width > this.props.width) return true
+            if (rowTotalWidth + width > rowWidth) return true
             item.height = height
             item.width = width
             items.push(item)
@@ -100,6 +100,7 @@ class Hiradumi extends React.Component<Props, State> {
 
     // 前の行をrowTotalWidth分詰めて、今の行を押し込む
     pushPreviousRow(items, prevItems, rowTotalWidth) {
+        if (prevItems.length === 0) return items
         const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
         const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
         prevItems.some((item) => {
@@ -149,21 +150,19 @@ class Hiradumi extends React.Component<Props, State> {
 
     setRowData() {
         let rows = []
-        let prevRowItems
+        let prevRowItems = []
 
         // 計算しているitemのindex
         let currentItemIndex = 0
         let currentItems = this.state.items.slice(currentItemIndex, currentItemIndex+100)
 
-        // スクロールバーを大きめにしておく
-        const scrollBarWidth = getScrollbarWidth() > 0 ? 100 : 0
-        const rowWidth = this.props.width - scrollBarWidth
+        const rowWidth = this.props.width - getScrollbarWidth()
 
         for (let index = 0; currentItems.length > 0; index++) {
 
             const rowRatio = this.props.rowRatios[index % this.props.rowRatios.length]
             // 行の幅の範囲内にアイテムを入れる
-            let items = this.putItem(currentItems, rowRatio)
+            let items = this.putItem(currentItems, rowWidth, rowRatio)
 
             const rowTotalWidth = items.reduce((size, item) => size + item.width, 0)
 
