@@ -49,6 +49,7 @@ class App extends Component<Props, State> {
     this.hiradumiDiv = null
 
     this.setHiradumi = element => {
+      console.log(element)
       this.hiradumiDiv = element
     }
   }
@@ -64,7 +65,7 @@ class App extends Component<Props, State> {
         newItems.push(Object.assign({}, item))
       })
 
-      // Array.from({length: 1000}).map(() => {
+      // Array.from({length: 100}).map(() => {
       //   ([].concat(items)).map((item) => {
       //     newItems.push(Object.assign({}, item))
       //   })
@@ -79,9 +80,16 @@ class App extends Component<Props, State> {
       this.setState({rowRatios: [0.97, 0.75, 0.65, 0.55]})
     }
 
-    const uiHeight = 92
-    this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
+    this.setState({width: document.body.clientWidth, height: window.innerHeight})
+    const timer = setInterval(() => {
+      if (document.getElementById('settingsUI')) {
+        const uiHeight = document.getElementById('settingsUI').clientHeight + 1
+        this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
+        clearInterval(timer)
+      }
+    }, 100)
     window.addEventListener('resize', () => {
+      const uiHeight = document.getElementById('settingsUI').clientHeight + 1
       this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
     })
 

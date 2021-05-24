@@ -43,7 +43,6 @@ interface Props {
     efficientRendering: boolean
 }
 interface State {
-    width: number
     items: any[]
     rows: any[]
     rowsHeight: number
@@ -59,7 +58,6 @@ class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
-            width: this.props.width -  getScrollbarWidth(),
             items: props.items.map( item => ({...item})),
             rows: [],
             rowsHeight: 0
@@ -69,7 +67,7 @@ class Hiradumi extends React.Component<Props, State> {
     componentDidMount() {
         this.setRowData()
         window.addEventListener('resize', () => {
-            this.setState({width: this.props.width -  getScrollbarWidth()}, this.setRowData)
+            this.setRowData()
         })
     }
 
