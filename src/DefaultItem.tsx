@@ -35,7 +35,10 @@ export default class Item extends Component<Props, State> {
                 height: item.height - this.props.margin + 'px',
                 margin: this.props.margin / 2 + 'px',
             }}>
-                <a href={'https://calil.jp/book/' + this.props.item.isbn} target="_blank">
+                <a href={'https://calil.jp/book/' + this.props.item.isbn} target="_blank" style={{
+                    width: item.width - this.props.margin + 'px',
+                    height: item.height - this.props.margin + 'px'
+                }}>
                 {this.props.item.cover ? (
                     <React.Fragment>
                         <img src={item.cover}
