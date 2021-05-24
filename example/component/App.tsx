@@ -50,7 +50,6 @@ class App extends Component<Props, State> {
     this.hiradumiDiv = null
 
     this.setHiradumi = element => {
-      console.log(element)
       this.hiradumiDiv = element
     }
   }

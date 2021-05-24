@@ -195,8 +195,6 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     Row = ({ index, style }) => {
-        console.log(index)
-        console.log(style)
         const rows = this.state.rows[index]
         return (<div style={style}>
             {rows.map((row) => this.renderRow(row))}
