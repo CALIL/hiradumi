@@ -19,6 +19,7 @@ interface App {
   factors: number[]
   hiradumiDiv: any
   setHiradumi: (element: any) => void
+  settingUI: any
 }
 interface Props {
 }
@@ -80,20 +81,15 @@ class App extends Component<Props, State> {
       this.setState({rowRatios: [0.97, 0.75, 0.65, 0.55]})
     }
 
-    this.setState({width: document.body.clientWidth, height: window.innerHeight})
-    const timer = setInterval(() => {
-      if (document.getElementById('settingsUI')) {
-        const uiHeight = document.getElementById('settingsUI').clientHeight + 1
-        this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
-        clearInterval(timer)
-      }
+    this.setState({width: window.innerWidth, height: window.innerHeight})
+    setTimeout(() => {
+      this.setState({width: window.innerWidth, height: window.innerHeight - this.settingUI.clientHeight-1})
     }, 100)
     window.addEventListener('resize', () => {
-      const uiHeight = document.getElementById('settingsUI').clientHeight + 1
-      this.setState({width: document.body.clientWidth, height: window.innerHeight - uiHeight})
+      this.setState({width: window.innerWidth, height: window.innerHeight - this.settingUI.clientHeight-1})
     })
 
-  }
+  } 
 
   onChange(state) {
     this.setState(state, () => {
@@ -109,15 +105,17 @@ class App extends Component<Props, State> {
       <div>
           {this.state.rowRatios ? (
             <React.Fragment>
-              <SettingUI
-                itemHeight={this.state.itemHeight}
-                width={this.state.width}
-                margin={this.state.margin}
-                rowCount={this.state.rowCount}
-                rowRatios={this.state.rowRatios}
-                sortKey={this.state.sortKey}
-                onChange={this.onChange.bind(this)}
-              />
+              <div ref={(element) => this.settingUI = element}>
+                <SettingUI
+                  itemHeight={this.state.itemHeight}
+                  width={this.state.width}
+                  margin={this.state.margin}
+                  rowCount={this.state.rowCount}
+                  rowRatios={this.state.rowRatios}
+                  sortKey={this.state.sortKey}
+                  onChange={this.onChange.bind(this)}
+                />
+              </div>
               <div style={{width: '100%', margin: '0 auto'}}>
                 <Hiradumi
                   ref={this.setHiradumi}
