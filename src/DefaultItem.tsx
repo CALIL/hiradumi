@@ -28,6 +28,7 @@ export default class Item extends Component<Props, State> {
     render() {
         const item = this.props.item
         const fontSize = (this.props.item.width - this.props.margin) / 14
+        const sortKeySize = this.props.item.height / 7
         return (
             <div className={'hiradumiBook' + (!this.props.item.cover ? ' nocover' : '')} id={item.id} style={{
                 width: item.width - this.props.margin + 'px',
@@ -48,7 +49,12 @@ export default class Item extends Component<Props, State> {
                         />
                         {this.props.sortKey ? (
                             <span className="sortKey" style={{
-                                opacity: item[this.props.sortKey] / 4
+                                opacity: item[this.props.sortKey] / 4 + 0.1,
+                                fontSize: fontSize + 'px',
+                                width: sortKeySize + 'px',
+                                height: sortKeySize + 'px',
+                                right: sortKeySize / 4,
+                                bottom: sortKeySize / 4,
                             }}>{item[this.props.sortKey]}</span>
                         ) : null}
                     </React.Fragment>
@@ -61,7 +67,12 @@ export default class Item extends Component<Props, State> {
                         </div>
                         {this.props.sortKey ? (
                             <span className="sortKey" style={{
-                                opacity: item[this.props.sortKey] / 4 + 0.1
+                                opacity: item[this.props.sortKey] / 4 + 0.1,
+                                fontSize: fontSize + 'px',
+                                width: sortKeySize + 'px',
+                                height: sortKeySize + 'px',
+                                right: sortKeySize / 4,
+                                bottom: sortKeySize / 4,
                             }}>{item[this.props.sortKey]}</span>
                         ) : null}
                     </React.Fragment>
