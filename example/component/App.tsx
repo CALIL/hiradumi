@@ -17,8 +17,7 @@ function getQueryString() {
 
 interface App {
   factors: number[]
-  hiradumiDiv: any
-  setHiradumi: (element: any) => void
+  hiradumi: any
   settingUI: any
 }
 interface Props {
@@ -47,11 +46,7 @@ class App extends Component<Props, State> {
       sortKey: 'term_popular_count',
       rowRatios: null
     }
-    this.hiradumiDiv = null
-
-    this.setHiradumi = element => {
-      this.hiradumiDiv = element
-    }
+    this.hiradumi = null
   }
   componentDidMount() {
     const params = getQueryString()
@@ -92,7 +87,7 @@ class App extends Component<Props, State> {
 
   onChange(state) {
     this.setState(state, () => {
-      this.hiradumiDiv.setRowData()
+      this.hiradumi.setRowData()
     })
   }
 
@@ -117,7 +112,7 @@ class App extends Component<Props, State> {
               </div>
               <div style={{width: '100%', margin: '0 auto'}}>
                 <Hiradumi
-                  ref={this.setHiradumi}
+                   ref={(element) => this.hiradumi = element}
                   width={this.state.width}
                   height={this.state.height}
                   items={this.state.items}
