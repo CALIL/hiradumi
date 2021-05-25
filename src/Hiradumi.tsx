@@ -208,7 +208,7 @@ class Hiradumi extends React.Component<Props, State> {
                 justifyContent: 'space-between',
             }}>
                 {row.map((item) => {
-                    return (<div className={'hiradumiBook'} id={item.id} style={{
+                    return (<div className="hiradumiBook" id={item.id} style={{
                         display: 'inline-block',
                         width: item.width + 'px',
                         height: item.height + 'px',
