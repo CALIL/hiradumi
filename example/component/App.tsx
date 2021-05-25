@@ -76,9 +76,12 @@ class App extends Component<Props, State> {
     }
 
     this.setState({width: window.innerWidth, height: window.innerHeight})
-    setTimeout(() => {
-      this.setState({width: window.innerWidth, height: window.innerHeight - this.settingUI.clientHeight - 1})
-    }, 300)
+    const timer = setInterval(() => {
+      if (this.settingUI) {
+        this.setState({width: window.innerWidth, height: window.innerHeight - this.settingUI.clientHeight - 1})
+        clearInterval(timer)
+      }
+    }, 100)
     window.addEventListener('resize', () => {
       this.setState({width: window.innerWidth, height: window.innerHeight - this.settingUI.clientHeight - 1})
     })
