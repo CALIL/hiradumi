@@ -80,7 +80,7 @@ class Hiradumi extends React.Component<Props, State> {
         currentItems.some((item) => {
             const hasAspect = item.properties && item.properties.aspect
             const aspect: number = hasAspect ? item.properties.aspect : 0.666666
-            const width = Math.floor(height * aspect)
+            const width = Math.floor(height * aspect) + this.props.margin
             // 行よりも大きくなるなら終了
             if (rowTotalWidth + width > rowWidth) return true
             item.height = height
@@ -204,15 +204,24 @@ class Hiradumi extends React.Component<Props, State> {
     renderRow(row) {
         return (
             <div className="row" style={{
-                // display: 'flex',
-                // justifyContent: 'space-between',
+                display: 'flex',
+                justifyContent: 'space-between',
             }}>
                 {row.map((item) => {
-                    if (this.props.itemComponent) {
-                        return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                    } else {
-                        return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
-                    }
+                    return (<div className={'hiradumiBook'} id={item.id} style={{
+                        display: 'inline-block',
+                        width: item.width + 'px',
+                        height: item.height + 'px',
+                        margin: this.props.margin / 2 + 'px'
+                    }}>
+                    {(() => {
+                        if (this.props.itemComponent) {
+                            return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                        } else {
+                            return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                        }
+                    })()}
+                    </div>)
                 })}
             </div>
         )

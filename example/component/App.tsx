@@ -38,7 +38,7 @@ class App extends Component<Props, State> {
     super(props)
     this.state = {
       items: null,
-      itemHeight: 200,
+      itemHeight: 100,
       width: 100,
       height: 0,
       margin: 30,

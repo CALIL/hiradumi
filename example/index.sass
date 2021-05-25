@@ -7,23 +7,32 @@ body
 
 .row
   .hiradumiBook
-    position: relative
     box-sizing: border-box
     animation: fadeIn 1s ease 0s 1 normal
     overflow: hidden
     cursor: pointer
-    a
-      text-decoration: none
-    .sortKey
-      color: #fff
-      display: flex
-      justify-content: center
-      align-items: center
-      position: absolute
-      background-color: #999
-      border-radius: 50px
+    // a
+    //   text-decoration: none
+    // .sortKey
+    //   color: #fff
+    //   display: flex
+    //   justify-content: center
+    //   align-items: center
+    //   position: absolute
+    //   background-color: #999
+    //   border-radius: 50px
+    img
+      width: 100%
+      hegith: 100%
     // coverなしの表示
-    &.nocover
+    .nocover
+      box-sizing: border-box
+      animation: fadeIn 1s ease 0s 1 normal
+      overflow: hidden
+      cursor: pointer
+      position: relative
+      width: 100%
+      height: 100%
       border: 1px solid #eeeeee
       .bg
         position: absolute
