@@ -123,7 +123,7 @@ class App extends Component<Props, State> {
                   itemComponent={DefaultItem}
                   className={'hiradumi'}
                   sortKey={this.state.sortKey}
-                  efficientRendering={true}
+                  efficientRendering={false}
                 />
               </div>
             </React.Fragment>

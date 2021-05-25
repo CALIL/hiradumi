@@ -206,7 +206,6 @@ class Hiradumi extends React.Component<Props, State> {
             <div className="row" style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                flexWrap: 'wrap'
             }}>
                 {row.map((item) => {
                     if (this.props.itemComponent) {
