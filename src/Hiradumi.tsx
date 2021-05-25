@@ -204,8 +204,8 @@ class Hiradumi extends React.Component<Props, State> {
     renderRow(row) {
         return (
             <div className="row" style={{
-                display: 'flex',
-                justifyContent: 'space-between',
+                // display: 'flex',
+                // justifyContent: 'space-between',
             }}>
                 {row.map((item) => {
                     if (this.props.itemComponent) {
