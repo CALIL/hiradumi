@@ -80,7 +80,7 @@ class Hiradumi extends React.Component<Props, State> {
         currentItems.some((item) => {
             const hasAspect = item.properties && item.properties.aspect
             const aspect: number = hasAspect ? item.properties.aspect : 0.666666
-            const width = Math.ceil(height * aspect)
+            const width = Math.floor(height * aspect)
             // 行よりも大きくなるなら終了
             if (rowTotalWidth + width > rowWidth) return true
             item.height = height
@@ -97,14 +97,14 @@ class Hiradumi extends React.Component<Props, State> {
         const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
         const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
         prevItems.some((item) => {
-            item.width = Math.ceil(item.width * scaleDownRatio)
-            item.height = Math.ceil(item.height * scaleDownRatio)
+            item.width = Math.floor(item.width * scaleDownRatio)
+            item.height = Math.floor(item.height * scaleDownRatio)
         })
         // 今の行のサイズを調整
         const scaleRatio = prevItems[0].height / items[0].height
         items.some((item) => {
-            item.width = Math.ceil(item.width * scaleRatio)
-            item.height = Math.ceil(item.height * scaleRatio)
+            item.width = Math.floor(item.width * scaleRatio)
+            item.height = Math.floor(item.height * scaleRatio)
         })
         return prevItems.concat(items)
     }
@@ -167,8 +167,8 @@ class Hiradumi extends React.Component<Props, State> {
             // 縦が大きすぎないように規制 && 最後の行が1冊以上の場合
             if (scaleUpRatio < 2 && rowItems.length > 1) {
                 rowItems.some((item) => {
-                    item.width = Math.ceil(item.width * scaleUpRatio)
-                    item.height = Math.ceil(item.height * scaleUpRatio)
+                    item.width = Math.floor(item.width * scaleUpRatio)
+                    item.height = Math.floor(item.height * scaleUpRatio)
                 })
             } else {
                 if (prevRowItems.length > 0) {
