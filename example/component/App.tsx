@@ -54,7 +54,7 @@ class App extends Component<Props, State> {
     fetch(`https://storage.googleapis.com/pickup-books/${system_id}.json`).then((r)=>r.json()).then((items) => {
       const newItems = []
       items.map((item) => {
-        if (item.cover==='') {
+        if (item.cover==='' || item.cover===null) {
           item.term_popular_count = 0
         }
         newItems.push(Object.assign({}, item))
