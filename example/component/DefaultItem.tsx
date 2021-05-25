@@ -1,3 +1,4 @@
+import {Decimal} from 'decimal.js';
 import React, {Component} from 'react'
 
 
@@ -40,8 +41,8 @@ export default class Item extends Component<Props, State> {
             }}>
                 <a href={'https://calil.jp/book/' + this.props.item.isbn} target="_blank" style={{
                     display: 'inline-block',
-                    width: width + 'px',
-                    height: height + 'px',
+                    width: '100%',
+                    height: '100%',
                     }}>
                 {this.props.item.cover ? (
                     <React.Fragment>
@@ -50,8 +51,8 @@ export default class Item extends Component<Props, State> {
                             data-aspect={item.properties.aspect}
                             ref="cover"
                             style={{
-                                width: width + 'px',
-                                height: height + 'px',
+                                width: '100%',
+                                height: '100%',
                             }}
                         />
                         {this.props.sortKey && height > 100 ? (
