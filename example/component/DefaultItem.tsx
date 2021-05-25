@@ -31,6 +31,7 @@ export default class Item extends Component<Props, State> {
         const sortKeySize = this.props.item.height / 7
         return (
             <div className={'hiradumiBook' + (!this.props.item.cover ? ' nocover' : '')} id={item.id} style={{
+                display: 'inline-block',
                 width: item.width - this.props.margin + 'px',
                 height: item.height - this.props.margin + 'px',
                 margin: this.props.margin / 2 + 'px',

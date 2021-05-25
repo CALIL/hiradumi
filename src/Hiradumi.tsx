@@ -159,7 +159,7 @@ class Hiradumi extends React.Component<Props, State> {
             // 行の幅の範囲内にアイテムを入れる
             let rowItems = this.putItem(items, rowMaxWidth, rowRatio)
 
-            const rowWidth = rowItems.reduce((size, item) => size + item.width + this.props.margin, 0)
+            const rowWidth = rowItems.reduce((size, item) => size + item.width, 0)
 
             // 残りの横幅分、サイズを調整
             const scaleUpRatio = rowMaxWidth / rowWidth
