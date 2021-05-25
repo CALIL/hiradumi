@@ -36,6 +36,7 @@ export default class Item extends Component<Props, State> {
                 margin: this.props.margin / 2 + 'px',
             }}>
                 <a href={'https://calil.jp/book/' + this.props.item.isbn} target="_blank" style={{
+                    display: 'inline-block',
                     width: item.width - this.props.margin + 'px',
                     height: item.height - this.props.margin + 'px'
                 }}>
