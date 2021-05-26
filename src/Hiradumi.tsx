@@ -37,10 +37,9 @@ interface Props {
     margin: number
     rowCount: number
     rowRatios: number[]
-    itemComponent: Element
+    itemComponent: any
     className: string
     sortKey: string | null
-    efficientRendering: boolean
 }
 interface State {
     items: any[]
@@ -49,6 +48,7 @@ interface State {
 }
 
 interface Hiradumi {
+    hiradumi: any
     Row: any
     rowCount: number
     factors: number[]
@@ -62,6 +62,7 @@ class Hiradumi extends React.Component<Props, State> {
             rows: [],
             rowsHeight: 0
         }
+        this.hiradumi = null
     }
 
     componentDidMount() {
@@ -150,9 +151,10 @@ class Hiradumi extends React.Component<Props, State> {
         let items = this.state.items.slice(itemIndex, itemIndex+100)
 
         const rowMaxWidth = this.props.width - getScrollbarWidth()
+        let lastIndex = 0
 
         for (let i = 0; items.length > 0 && rows.length < this.props.rowCount; i++) {
-
+            lastIndex = i
             const rowRatioIndex = i % this.props.rowRatios.length
             const rowRatio = this.props.rowRatios[rowRatioIndex]
 
@@ -188,9 +190,18 @@ class Hiradumi extends React.Component<Props, State> {
             items = this.state.items.slice(itemIndex, itemIndex+100)
 
         }
-        
+
         const rowsByRowRatio = splitByNumber(rows, this.props.rowRatios.length)
-        this.setState({ rows: rowsByRowRatio, rowsHeight: this.getRowsHeight(rowsByRowRatio) })
+        this.setState({ rows: rowsByRowRatio, rowsHeight: this.getRowsHeight(rowsByRowRatio) }, () => {
+            // react-windowを使った時、一番下に余った行分の余白ができる問題対策
+            if (this.props.items.length > 5000) {
+                const positionWrapDiv = this.hiradumi.childNodes[0].childNodes[0]
+                const positionDivs = this.hiradumi.childNodes[0].childNodes[0].childNodes
+                const positionDiv = positionDivs[positionDivs.length - 1]
+                positionWrapDiv.style.height = parseInt(positionWrapDiv.style.height) - parseInt(positionDiv.style.height) + 'px'
+                positionDiv.style.height = '0px'
+            }
+        })
 
     }
 
@@ -228,8 +239,10 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.props.efficientRendering) {
-            return (<div className={this.props.className ? this.props.className : 'hiradumi'}>
+        if (this.props.items.length > 5000) {
+            return (<div className={this.props.className ? this.props.className : 'hiradumi'}
+                ref={(element) => this.hiradumi = element}
+            >
                 <List
                     width={this.props.width}
                     height={this.props.height}
@@ -241,8 +254,15 @@ class Hiradumi extends React.Component<Props, State> {
             </div>)
         } else {
             return (<div
-                style={{ width: this.props.width, height: this.props.height, overflow: 'auto' }}
+                style={{ 
+                    width: this.props.width, 
+                    height: this.props.height, 
+                    overflow: 'auto',
+                    willChange: 'transform, opacity',
+                    direction: 'ltr'
+                }}
                 className={this.props.className ? this.props.className : 'hiradumi'}
+                ref={(element) => this.hiradumi = element}
             >
                 {this.state.rows.map((rows) => {
                     return rows.map((row) => this.renderRow(row))
