@@ -192,16 +192,7 @@ class Hiradumi extends React.Component<Props, State> {
         }
 
         const rowsByRowRatio = splitByNumber(rows, this.props.rowRatios.length)
-        this.setState({ rows: rowsByRowRatio, rowsHeight: this.getRowsHeight(rowsByRowRatio) }, () => {
-            // react-windowを使った時、一番下に余った行分の余白ができる問題対策
-            if (this.props.items.length > 5000) {
-                const positionWrapDiv = this.hiradumi.childNodes[0].childNodes[0]
-                const positionDivs = this.hiradumi.childNodes[0].childNodes[0].childNodes
-                const positionDiv = positionDivs[positionDivs.length - 1]
-                positionWrapDiv.style.height = parseInt(positionWrapDiv.style.height) - parseInt(positionDiv.style.height) + 'px'
-                positionDiv.style.height = '0px'
-            }
-        })
+        this.setState({ rows: rowsByRowRatio, rowsHeight: this.getRowsHeight(rowsByRowRatio) })
 
     }
 
@@ -239,7 +230,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.props.items.length > 5000) {
+        if (this.props.items.length >= 5000) {
             return (<div className={this.props.className ? this.props.className : 'hiradumi'}
                 ref={(element) => this.hiradumi = element}
             >
