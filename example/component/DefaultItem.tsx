@@ -1,6 +1,4 @@
-import { Decimal } from 'decimal.js';
 import React, { Component } from 'react'
-
 
 interface Book {
     id: string
