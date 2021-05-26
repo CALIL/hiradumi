@@ -57,14 +57,14 @@ class App extends Component<Props, State> {
         if (item.cover==='' || item.cover===null) {
           item.term_popular_count = 0
         }
-        newItems.push(Object.assign({}, item))
+        // newItems.push(Object.assign({}, item))
       })
 
-      // Array.from({length: 100}).map(() => {
-      //   ([].concat(items)).map((item) => {
-      //     newItems.push(Object.assign({}, item))
-      //   })
-      // })
+      Array.from({length: 100}).map(() => {
+        ([].concat(items)).map((item) => {
+          newItems.push(Object.assign({}, item))
+        })
+      })
 
       this.setState({items: newItems})
     })
@@ -126,7 +126,7 @@ class App extends Component<Props, State> {
                   itemComponent={DefaultItem}
                   className={'hiradumi'}
                   sortKey={this.state.sortKey}
-                  efficientRendering={false}
+                  efficientRendering={true}
                 />
               </div>
             </React.Fragment>

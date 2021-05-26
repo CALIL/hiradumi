@@ -133,12 +133,12 @@ class Hiradumi extends React.Component<Props, State> {
         let heights = []
         rowsByRowRatios[0].map((items) => {
             items.map((row) => {
-                heights.push(row.height)
+                heights.push(row.height + this.props.margin)
             })
             rowHeights.push(Math.max(...heights))
             heights = []
         })
-        return rowHeights.reduce((size, height) => size + height, 0) + this.props.margin / 2
+        return rowHeights.reduce((size, height) => size + height, 0)
     }
 
     setRowData() {
