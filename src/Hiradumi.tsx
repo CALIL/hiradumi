@@ -67,6 +67,7 @@ class Hiradumi extends React.Component<Props, State> {
 
 
     shouldComponentUpdate() {
+        this.state.items = this.props.items.map( item => ({...item}))
         this.setRowData()
         return true
     }
@@ -143,7 +144,6 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     setRowData() {
-        this.state.items = this.props.items.map( item => ({...item}))
         let rows = []
         let prevRowItems = []
 
