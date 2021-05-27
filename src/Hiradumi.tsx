@@ -65,12 +65,12 @@ class Hiradumi extends React.Component<Props, State> {
         this.hiradumi = null
     }
 
-    componentDidMount() {
+
+    shouldComponentUpdate() {
         this.setRowData()
-        window.addEventListener('resize', () => {
-            this.setRowData()
-        })
+        return true
     }
+    
 
     // 行の幅の範囲内にアイテムを入れる
     putItem(currentItems, rowWidth, rowRatio) {
@@ -192,8 +192,9 @@ class Hiradumi extends React.Component<Props, State> {
         }
 
         const rowsByRowRatio = splitByNumber(rows, this.props.rowRatios.length)
-        this.setState({ rows: rowsByRowRatio, rowsHeight: this.getRowsHeight(rowsByRowRatio) })
-
+        // this.setState({ rows: rowsByRowRatio, rowsHeight: this.getRowsHeight(rowsByRowRatio) })
+        this.state.rows = rowsByRowRatio
+        this.state.rowsHeight = this.getRowsHeight(rowsByRowRatio)
     }
 
     Row = ({ index, style }) => {
