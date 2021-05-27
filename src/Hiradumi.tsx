@@ -143,6 +143,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     setRowData() {
+        this.state.items = this.props.items.map( item => ({...item}))
         let rows = []
         let prevRowItems = []
 
