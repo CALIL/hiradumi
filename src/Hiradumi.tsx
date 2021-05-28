@@ -65,6 +65,9 @@ class Hiradumi extends React.Component<Props, State> {
         this.hiradumi = null
     }
 
+    componentDidMount() {
+        this.setRowData()
+    }
 
     shouldComponentUpdate() {
         this.state.items = this.props.items.map( item => ({...item}))
