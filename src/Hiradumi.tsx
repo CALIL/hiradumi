@@ -34,7 +34,7 @@ interface Props {
     width: number
     height: number
     itemHeight: number
-    margin: number
+    itemMargin: number
     rowCount: number
     rowRatios: number[]
     itemComponent: any
@@ -85,7 +85,7 @@ class Hiradumi extends React.Component<Props, State> {
         currentItems.some((item) => {
             const hasAspect = item.properties && item.properties.aspect
             const aspect: number = hasAspect ? item.properties.aspect : 0.666666
-            const width = Math.floor(height * aspect) + this.props.margin
+            const width = Math.floor(height * aspect) + this.props.itemMargin
             // 行よりも大きくなるなら終了
             if (rowTotalWidth + width > rowWidth) return true
             item.height = height
@@ -138,7 +138,7 @@ class Hiradumi extends React.Component<Props, State> {
         let heights = []
         rowsByRowRatios[0].map((items) => {
             items.map((row) => {
-                heights.push(row.height + this.props.margin)
+                heights.push(row.height + this.props.itemMargin)
             })
             rowHeights.push(Math.max(...heights))
             heights = []
@@ -219,13 +219,13 @@ class Hiradumi extends React.Component<Props, State> {
                         display: 'inline-block',
                         width: item.width + 'px',
                         height: item.height + 'px',
-                        margin: this.props.margin / 2 + 'px'
+                        margin: this.props.itemMargin / 2 + 'px'
                     }}>
                     {(() => {
                         if (this.props.itemComponent) {
-                            return <this.props.itemComponent item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                            return <this.props.itemComponent item={item} margin={this.props.itemMargin} sortKey={this.props.sortKey} />
                         } else {
-                            return <DefaultItem item={item} margin={this.props.margin} sortKey={this.props.sortKey} />
+                            return <DefaultItem item={item} margin={this.props.itemMargin} sortKey={this.props.sortKey} />
                         }
                     })()}
                     </div>)

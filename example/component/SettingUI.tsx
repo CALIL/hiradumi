@@ -19,7 +19,7 @@ function execCopy(string){
 interface Props {
   itemHeight: number,
   width: number,
-  margin: number,
+  itemMargin: number,
   rowCount: number,
   rowRatios: number[] | null,
   sortKey: string | null
@@ -78,15 +78,15 @@ class SettingUI extends Component<Props, State> {
                 <input type="range" id="width" name="width" min="10" max="100" step="10" defaultValue="100" onChange={(e) => this.props.onChange({width: e.target.value})} />
                 {this.props.width}px
                 &nbsp; */}
-                <label htmlFor="margin">itemHeight:</label>
+                <label htmlFor="itemHeight">itemHeight:</label>
                 <input type="range" id="itemHeight" name="width" min="10" max="600" value={this.props.itemHeight} onChange={(e) => this.props.onChange({itemHeight: parseInt(e.target.value)})} />
                 {this.props.itemHeight}
                 &nbsp;
-                <label htmlFor="margin">margin:</label>
-                <input type="range" id="margin" name="width" min="0" max="50" value={this.props.margin} onChange={(e) => this.props.onChange({margin: parseInt(e.target.value)})} />
-                {this.props.margin}
+                <label htmlFor="itemMargin">itemMargin:</label>
+                <input type="range" id="itemMargin" name="width" min="0" max="50" value={this.props.itemMargin} onChange={(e) => this.props.onChange({itemMargin: parseInt(e.target.value)})} />
+                {this.props.itemMargin}
                 &nbsp;
-                <label htmlFor="margin">rowCount:</label>
+                <label htmlFor="rowCount">rowCount:</label>
                 <input type="range" id="rowCount" name="width" min="1" max="30" value={this.props.rowCount} onChange={(e) => this.props.onChange({rowCount: parseInt(e.target.value)})} />
                 {this.props.rowCount}
                 &nbsp;&nbsp;
