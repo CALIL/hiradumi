@@ -25,6 +25,7 @@ interface State {
   items: any[]
   width: number
   height: number
+  padding: number
   itemHeight: number
   itemMargin: number
   rowCount: number
@@ -40,6 +41,7 @@ class App extends Component<Props, State> {
       itemHeight: 200,
       width: 100,
       height: 0,
+      padding: 10,
       itemMargin: 10,
       rowCount: Infinity,
       sortKey: 'term_popular_count',
@@ -102,6 +104,7 @@ class App extends Component<Props, State> {
                 <SettingUI
                   itemHeight={this.state.itemHeight}
                   width={this.state.width}
+                  padding={this.state.padding}
                   itemMargin={this.state.itemMargin}
                   rowCount={this.state.rowCount}
                   rowRatios={this.state.rowRatios}
@@ -114,7 +117,7 @@ class App extends Component<Props, State> {
                   width={this.state.width}
                   height={this.state.height}
                   items={this.state.items}
-                  padding={50}
+                  padding={this.state.padding}
                   itemHeight={this.state.itemHeight}
                   itemMargin={this.state.itemMargin}
                   rowCount={this.state.rowCount}

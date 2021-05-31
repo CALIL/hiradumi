@@ -19,6 +19,7 @@ function execCopy(string){
 interface Props {
   itemHeight: number,
   width: number,
+  padding: number,
   itemMargin: number,
   rowCount: number,
   rowRatios: number[] | null,
@@ -78,6 +79,10 @@ class SettingUI extends Component<Props, State> {
                 <input type="range" id="width" name="width" min="10" max="100" step="10" defaultValue="100" onChange={(e) => this.props.onChange({width: e.target.value})} />
                 {this.props.width}px
                 &nbsp; */}
+                <label htmlFor="padding">padding:</label>
+                <input type="range" id="padding" name="width" min="10" max="100" value={this.props.padding} onChange={(e) => this.props.onChange({padding: parseInt(e.target.value)})} />
+                {this.props.padding}
+                &nbsp;
                 <label htmlFor="itemHeight">itemHeight:</label>
                 <input type="range" id="itemHeight" name="width" min="10" max="600" value={this.props.itemHeight} onChange={(e) => this.props.onChange({itemHeight: parseInt(e.target.value)})} />
                 {this.props.itemHeight}
