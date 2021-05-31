@@ -253,6 +253,8 @@ class Hiradumi extends React.Component<Props, State> {
                 style={{ 
                     width: this.props.width, 
                     height: this.props.height, 
+                    boxSizing: 'border-box',
+                    padding: this.props.padding + 'px',
                     overflow: 'auto',
                     willChange: 'transform, opacity',
                     direction: 'ltr'
