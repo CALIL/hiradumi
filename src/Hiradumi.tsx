@@ -184,8 +184,8 @@ class Hiradumi extends React.Component<Props, State> {
                 }
             }
 
-            // // sortKeyでソートして、中央から並べ直す
-            // if (this.props.sortKey) rowItems = this.sortCenter(rowItems)
+            // sortKeyでソートして、中央から並べ直す
+            if (this.props.sortKey) rowItems = this.sortCenter(rowItems)
 
             rows.push(rowItems)
             prevRowItems = rowItems
@@ -253,7 +253,6 @@ class Hiradumi extends React.Component<Props, State> {
                 style={{ 
                     width: this.props.width, 
                     height: this.props.height, 
-                    padding: this.props.padding + 'px',
                     overflow: 'auto',
                     willChange: 'transform, opacity',
                     direction: 'ltr'
