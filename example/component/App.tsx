@@ -55,14 +55,14 @@ class App extends Component<Props, State> {
         if (item.cover==='' || item.cover===null) {
           item.term_popular_count = 0
         }
-        newItems.push(Object.assign({}, item))
+        // newItems.push(Object.assign({}, item))
       })
 
-      // Array.from({length: 1000}).map(() => {
-      //   ([].concat(items)).map((item) => {
-      //     newItems.push(Object.assign({}, item))
-      //   })
-      // })
+      Array.from({length: 1000}).map(() => {
+        ([].concat(items)).map((item) => {
+          newItems.push(Object.assign({}, item))
+        })
+      })
 
       this.setState({items: newItems})
     })
@@ -114,6 +114,7 @@ class App extends Component<Props, State> {
                   width={this.state.width}
                   height={this.state.height}
                   items={this.state.items}
+                  padding={50}
                   itemHeight={this.state.itemHeight}
                   itemMargin={this.state.itemMargin}
                   rowCount={this.state.rowCount}

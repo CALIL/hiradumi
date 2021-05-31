@@ -33,6 +33,7 @@ interface Props {
     items: any[]
     width: number
     height: number
+    padding: number
     itemHeight: number
     itemMargin: number
     rowCount: number
@@ -153,9 +154,8 @@ class Hiradumi extends React.Component<Props, State> {
         // 計算しているitemのindex
         let itemIndex = 0
         let items = this.state.items.slice(itemIndex, itemIndex+100)
-
-        const rowMaxWidth = this.props.width - getScrollbarWidth()
-        let lastIndex = 0
+        const rowMaxWidth = this.props.width - this.props.padding * 2 - getScrollbarWidth()
+        let lastIndex
 
         for (let i = 0; items.length > 0 && rows.length < this.props.rowCount; i++) {
             lastIndex = i
@@ -184,8 +184,8 @@ class Hiradumi extends React.Component<Props, State> {
                 }
             }
 
-            // sortKeyでソートして、中央から並べ直す
-            if (this.props.sortKey) rowItems = this.sortCenter(rowItems)
+            // // sortKeyでソートして、中央から並べ直す
+            // if (this.props.sortKey) rowItems = this.sortCenter(rowItems)
 
             rows.push(rowItems)
             prevRowItems = rowItems
@@ -199,13 +199,6 @@ class Hiradumi extends React.Component<Props, State> {
         // this.setState({ rows: rowsByRowRatio, rowsHeight: this.getRowsHeight(rowsByRowRatio) })
         this.state.rows = rowsByRowRatio
         this.state.rowsHeight = this.getRowsHeight(rowsByRowRatio)
-    }
-
-    Row = ({ index, style }) => {
-        const rows = this.state.rows[index]
-        return (<div style={style}>
-            {rows.map((row) => this.renderRow(row))}
-        </div>)
     }
 
     renderRow(row) {
@@ -245,7 +238,14 @@ class Hiradumi extends React.Component<Props, State> {
                     itemCount={this.state.rows.length}
                     itemSize={this.state.rowsHeight}
                 >
-                    {this.Row}
+                    {({ index, style }) => {
+                        const rows = this.state.rows[index]
+                        style.left = this.props.padding + 'px'
+                        style.width = `calc(100% - ${this.props.padding * 2}px)`
+                        return (<div style={style}>
+                            {rows.map((row) => this.renderRow(row))}
+                        </div>)
+                    }}
                 </List>
             </div>)
         } else {
@@ -253,6 +253,7 @@ class Hiradumi extends React.Component<Props, State> {
                 style={{ 
                     width: this.props.width, 
                     height: this.props.height, 
+                    padding: this.props.padding + 'px',
                     overflow: 'auto',
                     willChange: 'transform, opacity',
                     direction: 'ltr'
