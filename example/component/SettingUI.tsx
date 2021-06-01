@@ -79,10 +79,6 @@ class SettingUI extends Component<Props, State> {
                 <input type="range" id="width" name="width" min="10" max="100" step="10" defaultValue="100" onChange={(e) => this.props.onChange({width: e.target.value})} />
                 {this.props.width}px
                 &nbsp; */}
-                <label htmlFor="padding">padding:</label>
-                <input type="range" id="padding" name="width" min="10" max="100" value={this.props.padding} onChange={(e) => this.props.onChange({padding: parseInt(e.target.value)})} />
-                {this.props.padding}
-                &nbsp;
                 <label htmlFor="itemHeight">itemHeight:</label>
                 <input type="range" id="itemHeight" name="width" min="10" max="600" value={this.props.itemHeight} onChange={(e) => this.props.onChange({itemHeight: parseInt(e.target.value)})} />
                 {this.props.itemHeight}
@@ -95,6 +91,10 @@ class SettingUI extends Component<Props, State> {
                 <input type="range" id="rowCount" name="width" min="1" max="30" value={this.props.rowCount} onChange={(e) => this.props.onChange({rowCount: parseInt(e.target.value)})} />
                 {this.props.rowCount}
                 &nbsp;&nbsp;
+                <label htmlFor="padding">padding:</label>
+                <input type="range" id="padding" name="width" min="10" max="100" value={this.props.padding} onChange={(e) => this.props.onChange({padding: parseInt(e.target.value)})} />
+                {this.props.padding}
+                &nbsp;
                 <label htmlFor="sortKey">sortKey:</label>
                 <input type="checkbox" id="sortKey" name="sortKey" value={this.props.sortKey} defaultChecked={true} onChange={(e) => this.setSortKey(e.target)} />
               </div>
