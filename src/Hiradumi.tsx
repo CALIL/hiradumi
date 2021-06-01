@@ -41,6 +41,7 @@ interface Props {
     itemComponent: any
     className: string
     sortKey: string | null
+    onScroll: () => void
 }
 interface State {
     items: any[]
@@ -237,6 +238,7 @@ class Hiradumi extends React.Component<Props, State> {
                     height={this.props.height}
                     itemCount={this.state.rows.length}
                     itemSize={this.state.rowsHeight}
+                    onScroll={this.props.onScroll}
                 >
                     {({ index, style }) => {
                         const rows = this.state.rows[index]
@@ -261,6 +263,7 @@ class Hiradumi extends React.Component<Props, State> {
                 }}
                 className={this.props.className ? this.props.className : 'hiradumi'}
                 ref={(element) => this.hiradumi = element}
+                onScroll={this.props.onScroll}
             >
                 {this.state.rows.map((rows) => {
                     return rows.map((row) => this.renderRow(row))
