@@ -29,13 +29,13 @@ interface Props {
     items: any[]
     width: number
     height: number
-    padding: number
     itemHeight: number
     itemMargin: number
     rowCount: number
     rowRatios: number[]
     itemComponent: any
     className: string
+    padding: number
     sortKey: string | null
 }
 ```
@@ -55,7 +55,6 @@ interface Props {
 | ------------- | ------------- | ------------- |
 | width | number | Hiradumiの横幅(px) |
 | height | number | Hiradumiの縦幅(px) |
-| padding | number | Hiradumiの余白(px) |
 | items | Item[] | 画像のアスペクト比が入ったItemの配列 |
 | itemHeight | number | Itemの高さの基準 |
 | itemMargin | number | Itemのマージン |
@@ -63,23 +62,8 @@ interface Props {
 | rowRatios | number[] | 行ごとの比率 |
 | itemComponent | ReactComponent | Itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |
 | className | string | Hiradumiの領域につけるクラス名<br />デフォルトはhiradumi |
+| padding | number | Hiradumiの余白(px) |
 | sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
-
-```
-<Hiradumi
-    width={}
-    height={}
-    padding={}
-    items={}
-    itemHeight={}
-    itemMargin={}
-    rowCount={}
-    rowRatios={}
-    sortKey={}
-    className
-    itemComponent={}
-/>
-```
 
 ## 実装コンセプト
 
