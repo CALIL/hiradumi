@@ -41,7 +41,7 @@ interface Props {
     itemComponent: any
     className: string
     sortKey: string | null
-    onScroll: () => void
+    onScroll: (event:any) => void
 }
 interface State {
     items: any[]

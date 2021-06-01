@@ -37,7 +37,7 @@ interface Props {
     className: string
     padding: number
     sortKey: string | null
-    onScroll: () => void
+    onScroll: (event) => void
 }
 ```
 
@@ -65,7 +65,7 @@ interface Props {
 | className | string | Hiradumiの領域につけるクラス名<br />デフォルトはhiradumi |
 | padding | number | Hiradumiの余白(px) |
 | sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
-| onScroll | () => void | スクロール時に呼び出される関数 |
+| onScroll | (event) => void | スクロール時に呼び出される関数 |
 
 ## 実装コンセプト
 
