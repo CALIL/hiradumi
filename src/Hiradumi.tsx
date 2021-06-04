@@ -42,6 +42,7 @@ interface Props {
     className: string
     sortKey: string | null
     onScroll: (event:any) => void
+    style: any
 }
 interface State {
     items: any[]
@@ -139,8 +140,8 @@ class Hiradumi extends React.Component<Props, State> {
         const rowHeights = []
         let heights = []
         rowsByRowRatios[0].map((items) => {
-            items.map((row) => {
-                heights.push(row.height + this.props.itemMargin)
+            items.map((item) => {
+                heights.push(item.height + this.props.itemMargin)
             })
             rowHeights.push(Math.max(...heights))
             heights = []
@@ -239,11 +240,14 @@ class Hiradumi extends React.Component<Props, State> {
                     itemCount={this.state.rows.length}
                     itemSize={this.state.rowsHeight}
                     onScroll={this.props.onScroll}
+                    style={this.props.style}
                 >
                     {({ index, style }) => {
                         const rows = this.state.rows[index]
+                        style.top = parseInt(style.top) + this.props.padding + 'px'
                         style.left = this.props.padding + 'px'
                         style.width = `calc(100% - ${this.props.padding * 2}px)`
+                        style.boxSizing = 'border-box'
                         return (<div style={style}>
                             {rows.map((row) => this.renderRow(row))}
                         </div>)
@@ -252,7 +256,7 @@ class Hiradumi extends React.Component<Props, State> {
             </div>)
         } else {
             return (<div
-                style={{ 
+                style={Object.assign({ 
                     width: this.props.width, 
                     height: this.props.height, 
                     boxSizing: 'border-box',
@@ -260,7 +264,7 @@ class Hiradumi extends React.Component<Props, State> {
                     overflow: 'auto',
                     willChange: 'transform, opacity',
                     direction: 'ltr'
-                }}
+                }, this.props.style)}
                 className={this.props.className ? this.props.className : 'hiradumi'}
                 ref={(element) => this.hiradumi = element}
                 onScroll={this.props.onScroll}

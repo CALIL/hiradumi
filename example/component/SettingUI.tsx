@@ -92,7 +92,7 @@ class SettingUI extends Component<Props, State> {
                 {this.props.rowCount}
                 &nbsp;&nbsp;
                 <label htmlFor="padding">padding:</label>
-                <input type="range" id="padding" name="width" min="10" max="100" value={this.props.padding} onChange={(e) => this.props.onChange({padding: parseInt(e.target.value)})} />
+                <input type="range" id="padding" name="width" min="10" max="50" value={this.props.padding} onChange={(e) => this.props.onChange({padding: parseInt(e.target.value)})} />
                 {this.props.padding}
                 &nbsp;
                 <label htmlFor="sortKey">sortKey:</label>

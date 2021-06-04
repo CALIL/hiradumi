@@ -126,6 +126,9 @@ class App extends Component<Props, State> {
                   className={'hiradumi'}
                   sortKey={this.state.sortKey}
                   onScroll={(e) => {console.log(e)}}
+                  style={{
+                    backgroundColor: 'red' 
+                  }}
                 />
               </div>
             </React.Fragment>
