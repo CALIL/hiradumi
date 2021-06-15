@@ -1,5 +1,5 @@
 import React from 'react'
-import { FixedSizeList as List } from "react-window";
+import { VariableSizeList as List } from "react-window";
 
 import DefaultItem from './DefaultItem'
 
@@ -229,6 +229,19 @@ class Hiradumi extends React.Component<Props, State> {
         )
     }
 
+    getItemSize(index): number {
+        const rowHeights = []
+        let heights = []
+        this.state.rows[index].map((row) => {
+            row.map((item) => {
+                heights.push(item.height + this.props.itemMargin)
+            })
+            rowHeights.push(Math.max(...heights))
+            heights = []
+        })
+        return rowHeights.reduce((size, height) => size + height, 0)
+    }
+
     render() {
         if (this.props.items.length >= 1000) {
             return (<div className={this.props.className ? this.props.className : 'hiradumi'}
@@ -238,7 +251,7 @@ class Hiradumi extends React.Component<Props, State> {
                     width={this.props.width}
                     height={this.props.height}
                     itemCount={this.state.rows.length}
-                    itemSize={this.state.rowsHeight}
+                    itemSize={this.getItemSize.bind(this)}
                     onScroll={this.props.onScroll}
                     style={this.props.style}
                 >
