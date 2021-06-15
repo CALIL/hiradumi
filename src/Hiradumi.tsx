@@ -230,7 +230,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.props.items.length >= 5000) {
+        if (this.props.items.length >= 1000) {
             return (<div className={this.props.className ? this.props.className : 'hiradumi'}
                 ref={(element) => this.hiradumi = element}
             >
