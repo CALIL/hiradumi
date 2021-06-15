@@ -47,7 +47,6 @@ interface Props {
 interface State {
     items: any[]
     rows: any[]
-    rowsHeight: number
 }
 
 interface Hiradumi {
@@ -63,7 +62,6 @@ class Hiradumi extends React.Component<Props, State> {
         this.state = {
             items: props.items.map( item => ({...item})),
             rows: [],
-            rowsHeight: 0
         }
         this.hiradumi = null
     }
@@ -135,20 +133,6 @@ class Hiradumi extends React.Component<Props, State> {
         return Object.values(newRowData)
     }
 
-    // 最初のセットで高さを割り出す
-    getRowsHeight(rowsByRowRatios) {
-        const rowHeights = []
-        let heights = []
-        rowsByRowRatios[0].map((items) => {
-            items.map((item) => {
-                heights.push(item.height + this.props.itemMargin)
-            })
-            rowHeights.push(Math.max(...heights))
-            heights = []
-        })
-        return rowHeights.reduce((size, height) => size + height, 0)
-    }
-
     setRowData() {
         let rows = []
         let prevRowItems = []
@@ -198,9 +182,7 @@ class Hiradumi extends React.Component<Props, State> {
         }
 
         const rowsByRowRatio = splitByNumber(rows, this.props.rowRatios.length)
-        // this.setState({ rows: rowsByRowRatio, rowsHeight: this.getRowsHeight(rowsByRowRatio) })
         this.state.rows = rowsByRowRatio
-        this.state.rowsHeight = this.getRowsHeight(rowsByRowRatio)
     }
 
     renderRow(row) {
@@ -243,50 +225,29 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.props.items.length >= 1000) {
-            return (<div className={this.props.className ? this.props.className : 'hiradumi'}
-                ref={(element) => this.hiradumi = element}
-            >
-                <List
-                    width={this.props.width}
-                    height={this.props.height}
-                    itemCount={this.state.rows.length}
-                    itemSize={this.getItemSize.bind(this)}
-                    onScroll={this.props.onScroll}
-                    style={this.props.style}
-                >
-                    {({ index, style }) => {
-                        const rows = this.state.rows[index]
-                        style.top = parseInt(style.top) + this.props.padding + 'px'
-                        style.left = this.props.padding + 'px'
-                        style.width = `calc(100% - ${this.props.padding * 2}px)`
-                        style.boxSizing = 'border-box'
-                        return (<div style={style}>
-                            {rows.map((row) => this.renderRow(row))}
-                        </div>)
-                    }}
-                </List>
-            </div>)
-        } else {
-            return (<div
-                style={Object.assign({ 
-                    width: this.props.width, 
-                    height: this.props.height, 
-                    boxSizing: 'border-box',
-                    padding: this.props.padding + 'px',
-                    overflow: 'auto',
-                    willChange: 'transform, opacity',
-                    direction: 'ltr'
-                }, this.props.style)}
-                className={this.props.className ? this.props.className : 'hiradumi'}
-                ref={(element) => this.hiradumi = element}
+        return (<div className={this.props.className ? this.props.className : 'hiradumi'}
+            ref={(element) => this.hiradumi = element}
+        >
+            <List
+                width={this.props.width}
+                height={this.props.height}
+                itemCount={this.state.rows.length}
+                itemSize={this.getItemSize.bind(this)}
                 onScroll={this.props.onScroll}
+                style={this.props.style}
             >
-                {this.state.rows.map((rows) => {
-                    return rows.map((row) => this.renderRow(row))
-                })}
-            </div>)
-        }
+                {({ index, style }) => {
+                    const rows = this.state.rows[index]
+                    style.top = parseInt(style.top) + this.props.padding + 'px'
+                    style.left = this.props.padding + 'px'
+                    style.width = `calc(100% - ${this.props.padding * 2}px)`
+                    style.boxSizing = 'border-box'
+                    return (<div style={style}>
+                        {rows.map((row) => this.renderRow(row))}
+                    </div>)
+                }}
+            </List>
+        </div>)
     }
 }
   
