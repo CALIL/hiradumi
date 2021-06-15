@@ -20,6 +20,7 @@ interface App {
   settingUI: any
 }
 interface Props {
+  items: any[]
 }
 interface State {
   items: any[]
@@ -37,7 +38,7 @@ class App extends Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
-      items: null,
+      items: props.items,
       itemHeight: 200,
       width: 100,
       height: 0,
@@ -49,25 +50,25 @@ class App extends Component<Props, State> {
     }
   }
   componentDidMount() {
-    const params = getQueryString()
-    const system_id = params.system_id ? params.system_id : 'Gifu_Nakatsugawa'
-    fetch(`https://storage.googleapis.com/pickup-books/${system_id}.json`).then((r)=>r.json()).then((items) => {
-      const newItems = []
-      items.map((item) => {
-        if (item.cover==='' || item.cover===null) {
-          item.term_popular_count = 0
-        }
-        // newItems.push(Object.assign({}, item))
-      })
+    // const params = getQueryString()
+    // const system_id = params.system_id ? params.system_id : 'Gifu_Nakatsugawa'
+    // fetch(`https://storage.googleapis.com/pickup-books/${system_id}.json`).then((r)=>r.json()).then((items) => {
+    //   const newItems = []
+    //   items.map((item) => {
+    //     if (item.cover==='' || item.cover===null) {
+    //       item.term_popular_count = 0
+    //     }
+    //     // newItems.push(Object.assign({}, item))
+    //   })
 
-      Array.from({length: 1000}).map(() => {
-        ([].concat(items)).map((item) => {
-          newItems.push(Object.assign({}, item))
-        })
-      })
+    //   Array.from({length: 1000}).map(() => {
+    //     ([].concat(items)).map((item) => {
+    //       newItems.push(Object.assign({}, item))
+    //     })
+    //   })
 
-      this.setState({items: newItems})
-    })
+    //   this.setState({items: newItems})
+    // })
 
     if (document.body.clientWidth > 767) {
       this.setState({rowRatios: [1, 0.9, 0.8, 0.7]})
@@ -127,7 +128,7 @@ class App extends Component<Props, State> {
                   sortKey={this.state.sortKey}
                   onScroll={(e) => {console.log(e)}}
                   style={{
-                    backgroundColor: 'red' 
+                    // backgroundColor: 'red' 
                   }}
                 />
               </div>
