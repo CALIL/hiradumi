@@ -31,6 +31,8 @@ interface Props {
     className: string
     sortKey: string | null
     onScroll: (event:any) => void
+    footer: any
+    footerHeight: number
     style: any
 }
 interface State {
@@ -179,6 +181,11 @@ class Hiradumi extends React.Component<Props, State> {
 
         }
 
+        if (this.props.footer) {
+            rows.push({type: 'footer', item: this.props.footer})
+            this.state.rowHeights.push(this.props.footerHeight)
+        }
+
         this.state.rows = rows
     }
 
@@ -221,26 +228,36 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     renderRow(row, style) {
-        return (
-            <div className="row" style={style}>
-                {row.map((item) => {
-                    return (<div className="item" id={item.id} style={{
-                        display: 'inline-block',
-                        width: item.width + 'px',
-                        height: item.height + 'px',
-                        margin: this.props.itemMargin / 2 + 'px'
-                    }}>
-                    {(() => {
-                        if (this.props.itemComponent) {
-                            return <this.props.itemComponent item={item} margin={this.props.itemMargin} sortKey={this.props.sortKey} />
-                        } else {
-                            return <DefaultItem item={item} margin={this.props.itemMargin} sortKey={this.props.sortKey} />
-                        }
-                    })()}
-                    </div>)
-                })}
-            </div>
-        )
+        if (typeof row.type==='undefined') {
+            return (
+                <div className="row" style={style}>
+                    {row.map((item) => {
+                        return (<div className="item" id={item.id} style={{
+                            display: 'inline-block',
+                            width: item.width + 'px',
+                            height: item.height + 'px',
+                            margin: this.props.itemMargin / 2 + 'px'
+                        }}>
+                        {(() => {
+                            if (this.props.itemComponent) {
+                                return <this.props.itemComponent item={item} margin={this.props.itemMargin} sortKey={this.props.sortKey} />
+                            } else {
+                                return <DefaultItem item={item} margin={this.props.itemMargin} sortKey={this.props.sortKey} />
+                            }
+                        })()}
+                        </div>)
+                    })}
+                </div>
+            )
+        } else {
+            if (row.type==='footer') {
+                return (
+                    <div className="row" style={style}>
+                        <row.item />
+                    </div>
+                )
+            }
+        }
     }
 
 }

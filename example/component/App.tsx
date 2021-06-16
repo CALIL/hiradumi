@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Hiradumi from '../../src/Hiradumi'
 import SettingUI from './SettingUI'
 // import items from '../Kochi_Motoyama_plus.json'
-// import items from '../../Gifu_Nakatsugawa_plus.json'
+import items from '../../Gifu_Nakatsugawa_plus.json'
 import DefaultItem from './DefaultItem'
 
 function getQueryString() {
@@ -38,7 +38,8 @@ class App extends Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
-      items: props.items,
+      // items: props.items,
+      items: items,
       itemHeight: 200,
       width: 100,
       height: 0,
@@ -127,6 +128,8 @@ class App extends Component<Props, State> {
                   className={'hiradumi'}
                   sortKey={this.state.sortKey}
                   onScroll={(e) => {}}
+                  footer={Footer}
+                  footerHeight={50}
                   style={{
                     // backgroundColor: 'red' 
                   }}
@@ -137,6 +140,12 @@ class App extends Component<Props, State> {
       </div>
     )
   }
+}
+
+const Footer = () => {
+  return (
+    <footer>footer</footer>
+  )
 }
 
 export default App
