@@ -211,16 +211,6 @@ class Hiradumi extends React.Component<Props, State> {
             >
                 {({ index, style }) => {
                     const row = this.state.rows[index]
-
-                    style.display = 'flex'
-                    style.justifyContent = 'space-between'
-
-                    // paddingを反映
-                    style.top = parseInt(style.top) + this.props.padding + 'px'
-                    style.left = this.props.padding + 'px'
-                    style.width = `calc(100% - ${this.props.padding * 2}px)`
-                    style.boxSizing = 'border-box'
-                    
                     return this.renderRow(row, style)
                 }}
             </List>
@@ -228,7 +218,15 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     renderRow(row, style) {
+        style.display = 'flex'
+        style.justifyContent = 'space-between'
+
         if (typeof row.type==='undefined') {
+            // paddingを反映
+            // style.top = parseInt(style.top) + this.props.padding + 'px'
+            style.left = this.props.padding + 'px'
+            style.width = `calc(100% - ${this.props.padding * 2}px)`
+            style.boxSizing = 'border-box'
             return (
                 <div className="row" style={style}>
                     {row.map((item) => {
@@ -251,6 +249,7 @@ class Hiradumi extends React.Component<Props, State> {
             )
         } else {
             if (row.type==='footer') {
+                style.marginTop = this.props.itemMargin / 2
                 return (
                     <div className="row" style={style}>
                         <row.component />
