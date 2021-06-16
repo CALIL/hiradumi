@@ -31,6 +31,7 @@ interface Props {
     className: string
     sortKey: string | null
     onScroll: (event:any) => void
+    onScrollEnd: (event:any) => void
     style: any
 }
 interface State {
@@ -184,9 +185,12 @@ class Hiradumi extends React.Component<Props, State> {
 
     onScroll(event: any) {
         this.props.onScroll(event)
-        const totalHeight = this.state.rowHeights.reduce((size, height) => size + height, 0)
-        console.log(event)
-        console.log(totalHeight)
+        if (!this.hiradumi) return
+        const scrollArea = this.hiradumi.firstElementChild
+        if (scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop === 0) {
+            // console.log('scroll end')
+            this.props.onScrollEnd(event)
+        }
     }
 
     render() {
