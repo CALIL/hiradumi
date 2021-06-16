@@ -223,7 +223,7 @@ class Hiradumi extends React.Component<Props, State> {
 
         if (typeof row.type==='undefined') {
             // paddingを反映
-            // style.top = parseInt(style.top) + this.props.padding + 'px'
+            style.top = parseInt(style.top) + this.props.padding + 'px'
             style.left = this.props.padding + 'px'
             style.width = `calc(100% - ${this.props.padding * 2}px)`
             style.boxSizing = 'border-box'
@@ -249,6 +249,7 @@ class Hiradumi extends React.Component<Props, State> {
             )
         } else {
             if (row.type==='footer') {
+                style.top = parseInt(style.top) + this.props.padding + 'px'
                 style.marginTop = this.props.itemMargin / 2
                 return (
                     <div className="row" style={style}>
