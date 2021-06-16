@@ -128,7 +128,7 @@ class App extends Component<Props, State> {
                   className={'hiradumi'}
                   sortKey={this.state.sortKey}
                   onScroll={(e) => {}}
-                  footer={Footer}
+                  footerComponent={Footer}
                   footerHeight={50}
                   style={{
                     // backgroundColor: 'red' 

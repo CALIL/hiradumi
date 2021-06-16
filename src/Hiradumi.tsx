@@ -31,7 +31,7 @@ interface Props {
     className: string
     sortKey: string | null
     onScroll: (event:any) => void
-    footer: any
+    footerComponent: any
     footerHeight: number
     style: any
 }
@@ -181,8 +181,8 @@ class Hiradumi extends React.Component<Props, State> {
 
         }
 
-        if (this.props.footer) {
-            rows.push({type: 'footer', item: this.props.footer})
+        if (this.props.footerComponent) {
+            rows.push({type: 'footer', component: this.props.footerComponent})
             this.state.rowHeights.push(this.props.footerHeight)
         }
 
@@ -253,7 +253,7 @@ class Hiradumi extends React.Component<Props, State> {
             if (row.type==='footer') {
                 return (
                     <div className="row" style={style}>
-                        <row.item />
+                        <row.component />
                     </div>
                 )
             }
