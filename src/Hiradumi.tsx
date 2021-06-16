@@ -218,17 +218,18 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     renderRow(row, style) {
-        style.display = 'flex'
-        style.justifyContent = 'space-between'
+        const rowStyle = JSON.parse(JSON.stringify(style))
+        rowStyle.display = 'flex'
+        rowStyle.justifyContent = 'space-between'
 
         if (typeof row.type==='undefined') {
             // paddingを反映
-            style.top = parseInt(style.top) + this.props.padding + 'px'
-            style.left = this.props.padding + 'px'
-            style.width = `calc(100% - ${this.props.padding * 2}px)`
-            style.boxSizing = 'border-box'
+            rowStyle.top = parseInt(style.top) + this.props.padding + 'px'
+            rowStyle.left = this.props.padding + 'px'
+            rowStyle.width = `calc(100% - ${this.props.padding * 2}px)`
+            rowStyle.boxSizing = 'border-box'
             return (
-                <div className="row" style={style}>
+                <div className="row" style={rowStyle}>
                     {row.map((item) => {
                         return (<div className="item" id={item.id} style={{
                             display: 'inline-block',
@@ -249,10 +250,10 @@ class Hiradumi extends React.Component<Props, State> {
             )
         } else {
             if (row.type==='footer') {
-                style.top = parseInt(style.top) + this.props.padding + 'px'
-                style.marginTop = this.props.itemMargin / 2
+                rowStyle.top = parseInt(style.top) + this.props.padding + 'px'
+                rowStyle.marginTop = this.props.itemMargin / 2
                 return (
-                    <div className="row" style={style}>
+                    <div className="row" style={rowStyle}>
                         <row.component />
                     </div>
                 )
