@@ -127,6 +127,7 @@ class App extends Component<Props, State> {
                   className={'hiradumi'}
                   sortKey={this.state.sortKey}
                   onScroll={(e) => {}}
+                  onScrollEnd={(e) => {}}
                   style={{
                     // backgroundColor: 'red' 
                   }}
