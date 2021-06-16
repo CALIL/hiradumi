@@ -18,17 +18,6 @@ function getScrollbarWidth() {
     return scrollBarWidth
 }
 
-// 配列をn個毎の配列に分割して返す関数
-const splitByNumber = (sourceArray, splitNumber) => {
-    const sourceArrayLength  = sourceArray.length
-    var splitArray = []
-    for(var i = 0; i < Math.ceil(sourceArrayLength / splitNumber); i++) {
-        const array = sourceArray.slice(i * splitNumber, i * splitNumber + splitNumber)
-        splitArray.push(array)
-    }
-    return splitArray
-}
-
 interface Props {
     items: any[]
     width: number
@@ -47,6 +36,7 @@ interface Props {
 interface State {
     items: any[]
     rows: any[]
+    rowHeights: number[]
 }
 
 interface Hiradumi {
@@ -62,6 +52,7 @@ class Hiradumi extends React.Component<Props, State> {
         this.state = {
             items: props.items.map( item => ({...item})),
             rows: [],
+            rowHeights: []
         }
         this.hiradumi = null
     }
@@ -134,6 +125,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     setRowData() {
+        this.state.rowHeights = []
         let rows = []
         let prevRowItems = []
 
@@ -141,10 +133,8 @@ class Hiradumi extends React.Component<Props, State> {
         let itemIndex = 0
         let items = this.state.items.slice(itemIndex, itemIndex+100)
         const rowMaxWidth = this.props.width - this.props.padding * 2 - getScrollbarWidth()
-        let lastIndex
 
         for (let i = 0; items.length > 0 && rows.length < this.props.rowCount; i++) {
-            lastIndex = i
             const rowRatioIndex = i % this.props.rowRatios.length
             const rowRatio = this.props.rowRatios[rowRatioIndex]
 
@@ -175,22 +165,59 @@ class Hiradumi extends React.Component<Props, State> {
 
             rows.push(rowItems)
             prevRowItems = rowItems
-
+            
+            // 行の高さを割り出してセット
+            let heights = []
+            rowItems.map((item) => {
+                heights.push(item.height + this.props.itemMargin)
+            })
+            this.state.rowHeights.push(Math.max(...heights))
+    
             itemIndex += rowItems.length
             items = this.state.items.slice(itemIndex, itemIndex+100)
 
         }
 
-        const rowsByRowRatio = splitByNumber(rows, this.props.rowRatios.length)
-        this.state.rows = rowsByRowRatio
+        this.state.rows = rows
     }
 
-    renderRow(row) {
+    onScroll(event: any) {
+        this.props.onScroll(event)
+    }
+
+    render() {
+        return (<div className={this.props.className ? this.props.className : 'hiradumi'}
+            ref={(element) => this.hiradumi = element}
+        >
+            <List
+                width={this.props.width}
+                height={this.props.height}
+                itemCount={this.state.rows.length}
+                itemSize={(index) => this.state.rowHeights[index]}
+                onScroll={this.onScroll.bind(this)}
+                style={this.props.style}
+            >
+                {({ index, style }) => {
+                    const row = this.state.rows[index]
+
+                    style.display = 'flex'
+                    style.justifyContent = 'space-between'
+
+                    // paddingを反映
+                    style.top = parseInt(style.top) + this.props.padding + 'px'
+                    style.left = this.props.padding + 'px'
+                    style.width = `calc(100% - ${this.props.padding * 2}px)`
+                    style.boxSizing = 'border-box'
+                    
+                    return this.renderRow(row, style)
+                }}
+            </List>
+        </div>)
+    }
+
+    renderRow(row, style) {
         return (
-            <div className="row" style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-            }}>
+            <div className="row" style={style}>
                 {row.map((item) => {
                     return (<div className="item" id={item.id} style={{
                         display: 'inline-block',
@@ -211,44 +238,6 @@ class Hiradumi extends React.Component<Props, State> {
         )
     }
 
-    getItemSize(index): number {
-        const rowHeights = []
-        let heights = []
-        this.state.rows[index].map((row) => {
-            row.map((item) => {
-                heights.push(item.height + this.props.itemMargin)
-            })
-            rowHeights.push(Math.max(...heights))
-            heights = []
-        })
-        return rowHeights.reduce((size, height) => size + height, 0)
-    }
-
-    render() {
-        return (<div className={this.props.className ? this.props.className : 'hiradumi'}
-            ref={(element) => this.hiradumi = element}
-        >
-            <List
-                width={this.props.width}
-                height={this.props.height}
-                itemCount={this.state.rows.length}
-                itemSize={this.getItemSize.bind(this)}
-                onScroll={this.props.onScroll}
-                style={this.props.style}
-            >
-                {({ index, style }) => {
-                    const rows = this.state.rows[index]
-                    style.top = parseInt(style.top) + this.props.padding + 'px'
-                    style.left = this.props.padding + 'px'
-                    style.width = `calc(100% - ${this.props.padding * 2}px)`
-                    style.boxSizing = 'border-box'
-                    return (<div style={style}>
-                        {rows.map((row) => this.renderRow(row))}
-                    </div>)
-                }}
-            </List>
-        </div>)
-    }
 }
   
 export default Hiradumi
