@@ -157,6 +157,7 @@ class Hiradumi extends React.Component<Props, State> {
                     // 前の行をrowTotalWidth分詰めて、今の行を押し込む
                     rowItems = this.pushPreviousRow(rowItems, prevRowItems, rowWidth)
                     rows.pop()
+                    this.state.rowHeights.pop()
                 }
             }
 
@@ -183,6 +184,9 @@ class Hiradumi extends React.Component<Props, State> {
 
     onScroll(event: any) {
         this.props.onScroll(event)
+        const totalHeight = this.state.rowHeights.reduce((size, height) => size + height, 0)
+        console.log(event)
+        console.log(totalHeight)
     }
 
     render() {
