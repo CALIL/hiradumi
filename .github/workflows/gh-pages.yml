@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - master
+  with:
+    node-version: 14.17.0
+    always-auth: true
+    registry-url: https://registry.npmjs.org
 jobs:
   build-and-deploy:
     runs-on: [self-hosted, Linux]
