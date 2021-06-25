@@ -68,9 +68,9 @@ class Hiradumi extends React.Component<Props, State> {
         this.setRowData()
         if (this.props.scrollTo) {
             console.log(this.props.scrollTo)
-            const {key, value, behavior} = this.props.scrollTo
+            const {key, value} = this.props.scrollTo
             setTimeout(() => {
-                this.scrollTo(key, value, behavior)
+                this.scrollTo(key, value)
             }, 100)
         }
     }
@@ -81,7 +81,7 @@ class Hiradumi extends React.Component<Props, State> {
         return true
     }
 
-    scrollTo(key, value, behavior='smooth') {
+    scrollTo(key, value) {
         let index
         this.state.rows.map((items, i) => {
             if (typeof items.type==='undefined' && items.filter((item)=> item[key] === value).length > 0) {

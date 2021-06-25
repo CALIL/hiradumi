@@ -93,7 +93,7 @@ class App extends Component<Props, State> {
       const isbn = location.hash.substr(1)
       console.log(isbn)
       this.scrollTo = {
-        key: 'isbn', value: isbn, behavior: 'auto'
+        key: 'isbn', value: isbn
       }
     }
 
