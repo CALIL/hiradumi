@@ -142,7 +142,7 @@ class App extends Component<Props, State> {
                   style={{
                     // backgroundColor: 'red' 
                   }}
-                  scrollTo={this.state.scrollTo}
+                  startScrolledItem={this.state.scrollTo}
                 />
               </div>
             </React.Fragment>

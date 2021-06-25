@@ -34,7 +34,7 @@ interface Props {
     footerComponent: any
     footerHeight: number
     style: any
-    scrollTo: {
+    startScrolledItem: {
         key: string,
         value: any,
         behavior: string
@@ -66,9 +66,8 @@ class Hiradumi extends React.Component<Props, State> {
 
     componentDidMount() {
         this.setRowData()
-        if (this.props.scrollTo) {
-            console.log(this.props.scrollTo)
-            const {key, value} = this.props.scrollTo
+        if (this.props.startScrolledItem) {
+            const {key, value} = this.props.startScrolledItem
             setTimeout(() => {
                 this.scrollTo(key, value)
             }, 100)
@@ -93,15 +92,16 @@ class Hiradumi extends React.Component<Props, State> {
             if (i===index) return true
             height += rowHeight
         })
-        let count = 0
         const timer = setInterval(() => {
-            if (this.hiradumi.firstElementChild.scrollTop >= height - 100 || count > 10) {
+            if (this.hiradumi.firstElementChild.scrollTop >= height) {
                 return clearTimeout(timer)
             }
-            console.log(this.hiradumi.firstElementChild.scrollTop)
+            // console.log(this.hiradumi.firstElementChild.scrollTop)
             this.hiradumi.firstElementChild.scrollTo(0, height)
-            count += 1
-        }, 10)
+        }, 1)
+        setTimeout(() => {
+            clearTimeout(timer)
+        }, 1000)
     }
 
     // 行の幅の範囲内にアイテムを入れる
