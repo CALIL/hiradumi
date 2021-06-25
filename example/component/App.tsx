@@ -18,6 +18,7 @@ function getQueryString() {
 interface App {
   factors: number[]
   settingUI: any
+  scrollTo: any
 }
 interface Props {
   items: any[]
