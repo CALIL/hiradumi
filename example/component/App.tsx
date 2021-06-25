@@ -18,7 +18,6 @@ function getQueryString() {
 interface App {
   factors: number[]
   settingUI: any
-  scrollTo: any
 }
 interface Props {
   items: any[]
@@ -33,6 +32,7 @@ interface State {
   rowCount: number
   sortKey: string | null
   rowRatios: number[] | null
+  scrollTo: any
 }
 
 class App extends Component<Props, State> {
@@ -48,7 +48,8 @@ class App extends Component<Props, State> {
       itemMargin: 10,
       rowCount: Infinity,
       sortKey: 'term_popular_count',
-      rowRatios: null
+      rowRatios: null,
+      scrollTo: null
     }
   }
   componentDidMount() {
@@ -89,16 +90,12 @@ class App extends Component<Props, State> {
       this.setState({width: window.innerWidth, height: window.innerHeight - this.settingUI.clientHeight})
     })
 
-    this.scrollTo = null
     if(location.hash) {
       const isbn = location.hash.substr(1)
-      console.log(isbn)
-      this.scrollTo = {
+      this.setState({scrollTo: {
         key: 'isbn', value: isbn
-      }
+      }})
     }
-
-
   } 
 
   onChange(state) {
@@ -145,7 +142,7 @@ class App extends Component<Props, State> {
                   style={{
                     // backgroundColor: 'red' 
                   }}
-                  scrollTo={this.scrollTo}
+                  scrollTo={this.state.scrollTo}
                 />
               </div>
             </React.Fragment>
