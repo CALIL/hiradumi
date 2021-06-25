@@ -88,6 +88,16 @@ class App extends Component<Props, State> {
       this.setState({width: window.innerWidth, height: window.innerHeight - this.settingUI.clientHeight})
     })
 
+    this.scrollTo = null
+    if(location.hash) {
+      const isbn = location.hash.substr(1)
+      console.log(isbn)
+      this.scrollTo = {
+        key: 'isbn', value: isbn, behavior: 'auto'
+      }
+    }
+
+
   } 
 
   onChange(state) {
@@ -97,6 +107,7 @@ class App extends Component<Props, State> {
   render() {
     
     if (!this.state.items) return null
+
 
     return (
       <div>
@@ -133,6 +144,7 @@ class App extends Component<Props, State> {
                   style={{
                     // backgroundColor: 'red' 
                   }}
+                  scrollTo={this.scrollTo}
                 />
               </div>
             </React.Fragment>

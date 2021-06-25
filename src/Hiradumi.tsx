@@ -34,6 +34,11 @@ interface Props {
     footerComponent: any
     footerHeight: number
     style: any
+    scrollTo: {
+        key: string,
+        value: any,
+        behavior: string
+    }
 }
 interface State {
     items: any[]
@@ -61,6 +66,13 @@ class Hiradumi extends React.Component<Props, State> {
 
     componentDidMount() {
         this.setRowData()
+        if (this.props.scrollTo) {
+            console.log(this.props.scrollTo)
+            const {key, value, behavior} = this.props.scrollTo
+            setTimeout(() => {
+                this.scrollTo(key, value, behavior)
+            }, 100)
+        }
     }
 
     shouldComponentUpdate() {
@@ -68,7 +80,29 @@ class Hiradumi extends React.Component<Props, State> {
         this.setRowData()
         return true
     }
-    
+
+    scrollTo(key, value, behavior='smooth') {
+        let index
+        this.state.rows.map((items, i) => {
+            if (typeof items.type==='undefined' && items.filter((item)=> item[key] === value).length > 0) {
+                index = i
+            }
+        })
+        let height = this.props.padding
+        this.state.rowHeights.some((rowHeight, i) => {
+            if (i===index) return true
+            height += rowHeight
+        })
+        let count = 0
+        const timer = setInterval(() => {
+            if (this.hiradumi.firstElementChild.scrollTop >= height - 100 || count > 10) {
+                return clearTimeout(timer)
+            }
+            console.log(this.hiradumi.firstElementChild.scrollTop)
+            this.hiradumi.firstElementChild.scrollTo(0, height)
+            count += 1
+        }, 10)
+    }
 
     // 行の幅の範囲内にアイテムを入れる
     putItem(currentItems, rowWidth, rowRatio) {
