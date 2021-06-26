@@ -51,9 +51,9 @@ export default class Item extends Component<Props, State> {
                     </div>
                 </div>
             )}
-            {this.props.sortKey && item.height > 100 ? (
+            {this.props.sortKey && item[this.props.sortKey] > 0 && item.height > 100 ? (
                 <span className="sortKey" style={{
-                    opacity: item[this.props.sortKey] / 4 + 0.1,
+                    opacity: item[this.props.sortKey] / 2 + 0.1,
                     fontSize: fontSize + 'px',
                     width: sortKeySize + 'px',
                     height: sortKeySize + 'px',
