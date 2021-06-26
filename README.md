@@ -38,6 +38,10 @@ interface Props {
     padding: number
     sortKey: string | null
     onScroll: (event) => void
+    startScrolledItem: {
+        key: string
+        value: any
+    }
 }
 ```
 
@@ -66,6 +70,7 @@ interface Props {
 | padding | number | Hiradumiの余白(px) |
 | sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
 | onScroll | (event) => void | スクロール時に呼び出される関数 |
+| startScrolledItem | {key: string, value: any} | 最初の表示時にItemのkeyがvalueであるItemまでスクロールする |
 
 ## 実装コンセプト
 
