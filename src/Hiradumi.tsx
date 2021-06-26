@@ -31,6 +31,8 @@ interface Props {
     className: string
     sortKey: string | null
     onScroll: (event:any) => void
+    headerComponent: any
+    headerHeight: number
     footerComponent: any
     footerHeight: number
     style: any
@@ -165,6 +167,12 @@ class Hiradumi extends React.Component<Props, State> {
         let rows = []
         let prevRowItems = []
 
+
+        if (this.props.headerComponent) {
+            rows.push({type: 'header', component: this.props.headerComponent})
+            this.state.rowHeights.push(this.props.headerHeight)
+        }
+
         // 計算しているitemのindex
         let itemIndex = 0
         let items = this.state.items.slice(itemIndex, itemIndex+100)
@@ -283,15 +291,13 @@ class Hiradumi extends React.Component<Props, State> {
                 </div>
             )
         } else {
-            if (row.type==='footer') {
-                rowStyle.top = parseInt(style.top) + this.props.padding + 'px'
-                rowStyle.marginTop = this.props.itemMargin / 2
-                return (
-                    <div className="row" style={rowStyle}>
-                        <row.component />
-                    </div>
-                )
-            }
+            rowStyle.top = parseInt(style.top) + this.props.padding + 'px'
+            rowStyle.marginTop = this.props.itemMargin / 2
+            return (
+                <div className="row" style={rowStyle}>
+                    <row.component />
+                </div>
+            )
         }
     }
 

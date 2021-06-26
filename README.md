@@ -37,6 +37,10 @@ interface Props {
     className: string
     padding: number
     sortKey: string | null
+    headerComponent: React.Component 
+    headerHeight: number
+    footerComponent: React.Component 
+    footerHeight: number
     onScroll: (event) => void
     startScrolledItem: {
         key: string
@@ -71,6 +75,10 @@ interface Props {
 | sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
 | onScroll | (event) => void | スクロール時に呼び出される関数 |
 | startScrolledItem | {key: string, value: any} | 最初の表示時にItemのkeyがvalueであるItemまでスクロールする |
+| headerComponent | React.Component | headerコンポーネント |
+| headerHeight | number | headerコンポーネントの高さ(px) |
+| footerComponent | React.Component | footerコンポーネント |
+| footerComponent | number | footerコンポーネントの高さ(px) |
 
 ## 実装コンセプト
 

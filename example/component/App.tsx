@@ -137,6 +137,8 @@ class App extends Component<Props, State> {
                   className={'hiradumi'}
                   sortKey={this.state.sortKey}
                   onScroll={(e) => {}}
+                  headerComponent={Header}
+                  headerHeight={50}
                   footerComponent={Footer}
                   footerHeight={50}
                   style={{
@@ -152,6 +154,11 @@ class App extends Component<Props, State> {
   }
 }
 
+const Header = () => {
+  return (
+    <header>header</header>
+  )
+}
 const Footer = () => {
   return (
     <footer>footer</footer>
