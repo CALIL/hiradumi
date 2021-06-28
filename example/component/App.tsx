@@ -32,7 +32,10 @@ interface State {
   rowCount: number
   sortKey: string | null
   rowRatios: number[] | null
-  scrollTo: any
+  startScrolledItem: {
+    key: string
+    value: any
+  } | null
 }
 
 class App extends Component<Props, State> {
@@ -49,7 +52,7 @@ class App extends Component<Props, State> {
       rowCount: Infinity,
       sortKey: 'term_popular_count',
       rowRatios: null,
-      scrollTo: null
+      startScrolledItem: null
     }
   }
   componentDidMount() {
@@ -92,7 +95,7 @@ class App extends Component<Props, State> {
 
     if(location.hash) {
       const isbn = location.hash.substr(1)
-      this.setState({scrollTo: {
+      this.setState({startScrolledItem: {
         key: 'isbn', value: isbn
       }})
     }
