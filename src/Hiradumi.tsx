@@ -36,7 +36,7 @@ interface Props {
     footerComponent: any
     footerHeight: number
     style: any
-    startScrolledItem: {
+    scrollTo: {
         key: string,
         value: any,
         behavior: string
@@ -53,6 +53,7 @@ interface Hiradumi {
     Row: any
     rowCount: number
     factors: number[]
+    prevScrollTo: {key: string | null, value: any}
 }
 
 class Hiradumi extends React.Component<Props, State> {
@@ -64,21 +65,23 @@ class Hiradumi extends React.Component<Props, State> {
             rowHeights: []
         }
         this.hiradumi = null
+        this.prevScrollTo = {key: null, value: null}
     }
 
     componentDidMount() {
         this.setRowData()
-        if (this.props.startScrolledItem) {
-            const {key, value} = this.props.startScrolledItem
-            setTimeout(() => {
-                this.scrollTo(key, value)
-            }, 100)
-        }
     }
 
     shouldComponentUpdate() {
         this.state.items = this.props.items.map( item => ({...item}))
         this.setRowData()
+        if (this.props.scrollTo && this.props.scrollTo.value !== this.prevScrollTo.value) {
+            const {key, value} = this.props.scrollTo
+            setTimeout(() => {
+                this.scrollTo(key, value)
+            }, 100)
+            this.prevScrollTo = JSON.parse(JSON.stringify(this.props.scrollTo))
+        }
         return true
     }
 
