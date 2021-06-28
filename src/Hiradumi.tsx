@@ -70,11 +70,17 @@ class Hiradumi extends React.Component<Props, State> {
 
     componentDidMount() {
         this.setRowData()
+        this.checkScrollTo()
     }
 
     shouldComponentUpdate() {
         this.state.items = this.props.items.map( item => ({...item}))
         this.setRowData()
+        this.checkScrollTo()
+        return true
+    }
+
+    checkScrollTo() {
         if (this.props.scrollTo && this.props.scrollTo.value !== this.prevScrollTo.value) {
             const {key, value} = this.props.scrollTo
             setTimeout(() => {
@@ -82,7 +88,6 @@ class Hiradumi extends React.Component<Props, State> {
             }, 100)
             this.prevScrollTo = JSON.parse(JSON.stringify(this.props.scrollTo))
         }
-        return true
     }
 
     scrollTo(key, value) {
