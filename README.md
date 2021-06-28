@@ -42,7 +42,7 @@ interface Props {
     footerComponent: React.Component 
     footerHeight: number
     onScroll: (event) => void
-    startScrolledItem: {
+    scrollTo: {
         key: string
         value: any
     }
@@ -74,7 +74,7 @@ interface Props {
 | padding | number | Hiradumiの余白(px) |
 | sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
 | onScroll | (event) => void | スクロール時に呼び出される関数 |
-| startScrolledItem | {key: string, value: any} | 最初の表示時にItemのkeyがvalueであるItemまでスクロールする |
+| scrollTo | {key: string, value: any} | ItemのkeyがvalueであるItemまでスクロールする |
 | headerComponent | React.Component | headerコンポーネント |
 | headerHeight | number | headerコンポーネントの高さ(px) |
 | footerComponent | React.Component | footerコンポーネント |
