@@ -52,7 +52,7 @@ class App extends Component<Props, State> {
       rowCount: Infinity,
       sortKey: 'term_popular_count',
       rowRatios: null,
-      scrollTo: null
+      scrollTo: null,
     }
   }
   componentDidMount() {

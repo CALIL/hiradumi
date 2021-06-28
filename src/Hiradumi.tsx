@@ -37,9 +37,8 @@ interface Props {
     footerHeight: number
     style: any
     scrollTo: {
-        key: string,
-        value: any,
-        behavior: string
+        key: string
+        value: any
     }
 }
 interface State {
