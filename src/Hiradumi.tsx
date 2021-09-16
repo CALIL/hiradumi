@@ -46,6 +46,7 @@ interface Props {
     footerHeight: number
     style: any
 }
+
 interface State {
     items: any[]
     rows: any[]
@@ -95,29 +96,6 @@ class Hiradumi extends React.Component<Props, State> {
         }
     }
 
-    scrollTo(key: string, value: any) {
-        let index: number
-        this.state.rows.forEach((items, i) => {
-            if (typeof items.type==='undefined' && items.filter((item: any)=> item[key] === value).length > 0) {
-                index = i
-            }
-        })
-        let height = this.props.padding
-        this.state.rowHeights.some((rowHeight, i) => {
-            if (i===index) return true
-            height += rowHeight
-        })
-        const timer = setInterval(() => {
-            if (this.hiradumi.firstElementChild.scrollTop >= height) {
-                return clearTimeout(timer)
-            }
-            // console.log(this.hiradumi.firstElementChild.scrollTop)
-            this.hiradumi.firstElementChild.scrollTo(0, height)
-        }, 1)
-        setTimeout(() => {
-            clearTimeout(timer)
-        }, 1000)
-    }
 
     // 行の幅の範囲内にアイテムを入れる
     putItem(currentItems: any[], rowWidth: number, rowRatio: number) {
@@ -179,14 +157,13 @@ class Hiradumi extends React.Component<Props, State> {
 
     setRowData() {
         // @ts-ignore
-        this.state.rowHeights = []
+        let rowHeights = []
         let rows = []
         let prevRowItems = []
 
-
         if (this.props.headerComponent) {
             rows.push({type: 'header', component: this.props.headerComponent})
-            this.state.rowHeights.push(this.props.headerHeight)
+            rowHeights.push(this.props.headerHeight)
         }
 
         // 計算しているitemのindex
@@ -217,7 +194,7 @@ class Hiradumi extends React.Component<Props, State> {
                     // 前の行をrowTotalWidth分詰めて、今の行を押し込む
                     rowItems = this.pushPreviousRow(rowItems, prevRowItems, rowWidth)
                     rows.pop()
-                    this.state.rowHeights.pop()
+                    rowHeights.pop()
                 }
             }
 
@@ -232,7 +209,7 @@ class Hiradumi extends React.Component<Props, State> {
             rowItems.forEach((item) => {
                 heights.push(item.height + this.props.itemMargin)
             })
-            this.state.rowHeights.push(Math.max(...heights))
+            rowHeights.push(Math.max(...heights))
     
             itemIndex += rowItems.length
             items = this.state.items.slice(itemIndex, itemIndex+100)
@@ -241,11 +218,14 @@ class Hiradumi extends React.Component<Props, State> {
 
         if (this.props.footerComponent) {
             rows.push({type: 'footer', component: this.props.footerComponent})
-            this.state.rowHeights.push(this.props.footerHeight)
+            rowHeights.push(this.props.footerHeight)
         }
 
         // @ts-ignore
         this.state.rows = rows
+        // @ts-ignore
+        this.state.rowHeights = rowHeights
+
     }
 
     onScroll(event: any) {
@@ -254,6 +234,30 @@ class Hiradumi extends React.Component<Props, State> {
         event.scrollTop = scrollArea.scrollTop
         event.scrollBottom = scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop
         this.props.onScroll(event)
+    }
+
+    scrollTo(key: string, value: any) {
+        let index: number
+        this.state.rows.forEach((items, i) => {
+            if (typeof items.type==='undefined' && items.filter((item: any)=> item[key] === value).length > 0) {
+                index = i
+            }
+        })
+        let height = this.props.padding
+        this.state.rowHeights.some((rowHeight, i) => {
+            if (i===index) return true
+            height += rowHeight
+        })
+        const timer = setInterval(() => {
+            if (this.hiradumi.firstElementChild.scrollTop >= height) {
+                return clearTimeout(timer)
+            }
+            // console.log(this.hiradumi.firstElementChild.scrollTop)
+            this.hiradumi.firstElementChild.scrollTo(0, height)
+        }, 1)
+        setTimeout(() => {
+            clearTimeout(timer)
+        }, 1000)
     }
 
     render() {
