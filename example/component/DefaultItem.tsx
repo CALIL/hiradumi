@@ -21,7 +21,7 @@ interface State {
 }
 
 export default class Item extends Component<Props, State> {
-    constructor(props) {
+    constructor(props: Props) {
         super(props)
     }
     render() {
@@ -33,7 +33,7 @@ export default class Item extends Component<Props, State> {
             width: '100%',
             height: '100%',
         }}>
-            {this.props.item.cover ? (
+            {item.cover ? (
                 <img src={item.cover}
                     alt={item.title}
                     data-aspect={item.properties.aspect}
@@ -51,7 +51,7 @@ export default class Item extends Component<Props, State> {
                     </div>
                 </div>
             )}
-            {this.props.sortKey && item[this.props.sortKey] > 0 && item.height > 100 ? (
+            {/* {this.props.sortKey && item[this.props.sortKey] > 0 && item.height > 100 ? (
                 <span className="sortKey" style={{
                     opacity: item[this.props.sortKey] / 2 + 0.1,
                     fontSize: fontSize + 'px',
@@ -60,7 +60,7 @@ export default class Item extends Component<Props, State> {
                     right: sortKeySize / 4,
                     bottom: sortKeySize / 4,
                 }}>{item[this.props.sortKey]}</span>
-            ) : null}
+            ) : null} */}
         </a>)
     }
 }

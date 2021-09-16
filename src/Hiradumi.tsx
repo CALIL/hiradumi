@@ -1,5 +1,6 @@
 import React from 'react'
-import { VariableSizeList as List } from "react-window";
+// @ts-ignore
+import { VariableSizeList as List } from 'react-window'
 
 import DefaultItem from './DefaultItem'
 
@@ -14,7 +15,7 @@ function getScrollbarWidth() {
   
     const scrollBarWidth = (outer.offsetWidth - inner.offsetWidth)
  
-    outer.parentNode.removeChild(outer)
+    if (outer.parentNode) outer.parentNode.removeChild(outer)
     return scrollBarWidth
 }
 
@@ -73,6 +74,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     shouldComponentUpdate() {
+        // @ts-ignore
         this.state.items = this.props.items.map( item => ({...item}))
         this.setRowData()
         this.checkScrollTo()
@@ -89,10 +91,10 @@ class Hiradumi extends React.Component<Props, State> {
         }
     }
 
-    scrollTo(key, value) {
-        let index
-        this.state.rows.map((items, i) => {
-            if (typeof items.type==='undefined' && items.filter((item)=> item[key] === value).length > 0) {
+    scrollTo(key: string, value: any) {
+        let index: number
+        this.state.rows.forEach((items, i) => {
+            if (typeof items.type==='undefined' && items.filter((item: any)=> item[key] === value).length > 0) {
                 index = i
             }
         })
@@ -114,8 +116,8 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     // 行の幅の範囲内にアイテムを入れる
-    putItem(currentItems, rowWidth, rowRatio) {
-        const items = []
+    putItem(currentItems: any[], rowWidth: number, rowRatio: number) {
+        const items:any[] = []
         let rowTotalWidth = 0
         
         const height = this.props.itemHeight * rowRatio
@@ -135,7 +137,7 @@ class Hiradumi extends React.Component<Props, State> {
 
 
     // 前の行をrowTotalWidth分詰めて、今の行を押し込む
-    pushPreviousRow(items, prevItems, rowTotalWidth) {
+    pushPreviousRow(items: any[], prevItems: any[], rowTotalWidth: number) {
         const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
         const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
         prevItems.some((item) => {
@@ -152,17 +154,19 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     // sortKeyでソートして、中央から並べ直す
-    sortCenter(items) {
+    sortCenter(items: any[]) {
         const sortLabel = this.props.sortKey
-        items.sort(function (a, b) {
-            if (a[sortLabel] < b[sortLabel]) return 1
-            if (a[sortLabel] > b[sortLabel]) return -1
-            return 0
-        })
-        const newRowData = {}
+        if (sortLabel) {
+            items.sort(function (a, b) {
+                if (a[sortLabel] < b[sortLabel]) return 1
+                if (a[sortLabel] > b[sortLabel]) return -1
+                return 0
+            })
+        }
+        const newRowData: any = {}
         const centerIndex = Math.floor(items.length / 2)
         newRowData[centerIndex] = items[0]
-        Array.from({ length: centerIndex }).map((item, index) => {
+        Array.from({ length: centerIndex }).forEach((item, index) => {
             if (items[index * 2 + 1]) newRowData[centerIndex - 1 - index] = items[index * 2 + 1]
             if (items[index * 2 + 2]) newRowData[centerIndex + 1 + index] = items[index * 2 + 2]
         })
@@ -170,6 +174,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     setRowData() {
+        // @ts-ignore
         this.state.rowHeights = []
         let rows = []
         let prevRowItems = []
@@ -219,8 +224,8 @@ class Hiradumi extends React.Component<Props, State> {
             prevRowItems = rowItems
             
             // 行の高さを割り出してセット
-            let heights = []
-            rowItems.map((item) => {
+            let heights:number[] = []
+            rowItems.forEach((item) => {
                 heights.push(item.height + this.props.itemMargin)
             })
             this.state.rowHeights.push(Math.max(...heights))
@@ -235,6 +240,7 @@ class Hiradumi extends React.Component<Props, State> {
             this.state.rowHeights.push(this.props.footerHeight)
         }
 
+        // @ts-ignore
         this.state.rows = rows
     }
 
@@ -254,19 +260,19 @@ class Hiradumi extends React.Component<Props, State> {
                 width={this.props.width}
                 height={this.props.height}
                 itemCount={this.state.rows.length}
-                itemSize={(index) => this.state.rowHeights[index]}
+                itemSize={(index: number) => this.state.rowHeights[index]}
                 onScroll={this.onScroll.bind(this)}
                 style={this.props.style}
             >
-                {({ index, style }) => {
-                    const row = this.state.rows[index]
-                    return this.renderRow(row, style)
+                {(item: any) => {
+                    const row = this.state.rows[item.index]
+                    return this.renderRow(row, item.style)
                 }}
             </List>
         </div>)
     }
 
-    renderRow(row, style) {
+    renderRow(row: any, style: any) {
         const rowStyle = JSON.parse(JSON.stringify(style))
         rowStyle.display = 'flex'
         rowStyle.justifyContent = 'space-between'
@@ -279,7 +285,7 @@ class Hiradumi extends React.Component<Props, State> {
             rowStyle.boxSizing = 'border-box'
             return (
                 <div className="row" style={rowStyle}>
-                    {row.map((item) => {
+                    {row.map((item: any) => {
                         return (<div className="item" id={item.id} style={{
                             display: 'inline-block',
                             width: item.width + 'px',

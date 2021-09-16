@@ -8,8 +8,9 @@ import DefaultItem from './DefaultItem'
 
 function getQueryString() {
   var params = {}
-  location.search.substr(1).split('&').map(function(param) {
+  location.search.substr(1).split('&').forEach(function(param) {
       var pairs = param.split('=');
+      // @ts-ignore
       params[pairs[0]] = decodeURIComponent(pairs[1]);
   });
   return params;    
@@ -39,7 +40,7 @@ interface State {
 }
 
 class App extends Component<Props, State> {
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
     this.state = {
       items: props.items,
@@ -101,7 +102,7 @@ class App extends Component<Props, State> {
     }
   } 
 
-  onChange(state) {
+  onChange(state: State) {
     this.setState(state)
   }
 
@@ -147,6 +148,7 @@ class App extends Component<Props, State> {
                   style={{
                     // backgroundColor: 'red' 
                   }}
+                  // @ts-ignore
                   scrollTo={this.state.scrollTo}
                 />
               </div>

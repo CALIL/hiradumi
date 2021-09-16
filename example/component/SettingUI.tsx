@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-function execCopy(string){
+function execCopy(string: string){
   var tmp = document.createElement('div')
   var pre = document.createElement('pre')
   pre.style.webkitUserSelect = 'auto'
@@ -10,6 +10,7 @@ function execCopy(string){
   s.position = 'fixed'
   s.right = '200%'
   document.body.appendChild(tmp)
+  // @ts-ignore
   document.getSelection().selectAllChildren(tmp)
   var result = document.execCommand("copy")
   document.body.removeChild(tmp)
@@ -32,12 +33,12 @@ interface State {
 }
 
 class SettingUI extends Component<Props, State> {
-    constructor(props) {
+    constructor(props: Props) {
       super(props)
     }
     setRowHeight() {
-        let rowHeightList = []
-        Array.prototype.slice.call(document.querySelectorAll('.rowHeight')).map((rowHeight) => {
+        let rowHeightList: number[] = []
+        Array.prototype.slice.call(document.querySelectorAll('.rowHeight')).forEach((rowHeight) => {
           if(rowHeight.value!=='') {
             rowHeightList.push(parseInt(rowHeight.value))
           } else {
@@ -47,8 +48,8 @@ class SettingUI extends Component<Props, State> {
         this.props.onChange({rowHeightList: rowHeightList})
     }
     copy() {
-        let rowHeightList = []
-        Array.prototype.slice.call(document.querySelectorAll('.rowHeight')).map((rowHeight) => {
+        let rowHeightList: number[] = []
+        Array.prototype.slice.call(document.querySelectorAll('.rowHeight')).forEach((rowHeight) => {
           if(rowHeight.value!=='') {
             rowHeightList.push(rowHeight.value)
           } else {
@@ -57,7 +58,7 @@ class SettingUI extends Component<Props, State> {
         })
         execCopy(rowHeightList.toString())
     }
-    setSortKey(sortKeyCheckBox) {
+    setSortKey(sortKeyCheckBox: any) {
       if (sortKeyCheckBox.checked) {
         this.props.onChange({sortKey: 'term_popular_count'})
       } else {
@@ -65,8 +66,8 @@ class SettingUI extends Component<Props, State> {
       }
     }
     setRowFactors() {
-      const rowRatios = []
-      Array.prototype.slice.call(document.querySelectorAll('input[type="number"]')).map((input) => {
+      const rowRatios: number[] = []
+      Array.prototype.slice.call(document.querySelectorAll('input[type="number"]')).forEach((input) => {
         rowRatios.push(input.value)
       })
       this.props.onChange({rowRatios: rowRatios})
@@ -96,12 +97,12 @@ class SettingUI extends Component<Props, State> {
                 {this.props.padding}
                 &nbsp;
                 <label htmlFor="sortKey">sortKey:</label>
-                <input type="checkbox" id="sortKey" name="sortKey" value={this.props.sortKey} defaultChecked={true} onChange={(e) => this.setSortKey(e.target)} />
+                <input type="checkbox" id="sortKey" name="sortKey" defaultChecked={true} onChange={(e) => this.setSortKey(e.target)} />
               </div>
               <br />
               <div>
                 <label>rowRatios:</label>
-                {this.props.rowRatios.map((rowHeight, i) => {
+                {this.props.rowRatios && this.props.rowRatios.map((rowHeight, i) => {
                   return <input type="number" placeholder={String(rowHeight)} value={String(rowHeight)} step="0.1" className="rowHeight" key={i} onChange={this.setRowFactors.bind(this)} style={{width: '3rem'}} />
                 })}
                 <button onClick={this.copy.bind(this)}>Copy</button>

@@ -3,24 +3,6 @@
     "version": "2.0.0",
     "description": "アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント",
     "main": "lib/Hiradumi.js",
-    "scripts": {
-        "start": "npm-run-all clean build:** watch -s",
-        "clean": "rimraf docs",
-        "watch": "concurrently \"npm run watch:pug\" \"npm run watch:sass\" \"npm run watch:ts\" \"npm run watch:browser-sync\"",
-        "watch:browser-sync": "browser-sync start --config ./bs-config.js",
-        "watch:pug": "npm run build:pug -- --watch --pretty",
-        "watch:sass": "chokidar \"./example/**/*.sass\" --command \"npm run build:sass && npm run build:autoprefixer\"",
-        "watch:ts": "chokidar \"./**/*.tsx\" --command \"npm run build:ts\"",
-        "build": "npm-run-all clean build:** -s",
-        "build:ts": "esbuild ./example/index.tsx --outfile=./docs/index.js --bundle --minify --sourcemap --define:process.env.NODE_ENV='\"production\"'",
-        "build:sass": "sass ./example/index.sass ./docs/index.css --style compressed --no-source-map",
-        "build:autoprefixer": "postcss ./docs/index.css -o ./docs/index.css --config ./postcss.config.js",
-        "build:pug": "pug -O pug_env.js example/ --out ./docs/",
-        "build:copy:assets": "cpx \"src/assets/**/*\" docs/assets/",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "prepare": "babel src/ -d lib/ --extensions '.ts,.tsx'",
-        "//preinstall": "npx npm-force-resolutions"
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/CALIL/hiradumi.git"
@@ -31,6 +13,11 @@
         "url": "https://github.com/CALIL/hiradumi/issues"
     },
     "homepage": "https://github.com/CALIL/hiradumi#readme",
+    "scripts": {
+        "start": "vite --open",
+        "build": "tsc && vite build",
+        "serve": "vite preview"
+    },
     "dependencies": {
         "@types/react": "^17.0.0",
         "@types/react-dom": "^17.0.0",
@@ -42,35 +29,13 @@
         "whatwg-fetch": "^3.6.2"
     },
     "devDependencies": {
-        "@babel/cli": "^7.8.4",
-        "@babel/core": "^7.8.7",
-        "@babel/preset-env": "^7.8.7",
-        "@babel/preset-react": "^7.8.3",
-        "@babel/preset-typescript": "^7.13.0",
-        "@types/node": "^14.10.2",
-        "@typescript-eslint/eslint-plugin": "^4.1.1",
-        "@typescript-eslint/parser": "^4.1.1",
-        "autoprefixer": "^9.7.5",
-        "babelify": "^10.0.0",
-        "browser-sync": "^2.26.12",
-        "chokidar-cli": "^2.1.0",
-        "concurrently": "^5.1.0",
-        "cpx": "^1.5.0",
-        "esbuild": "^0.8.57",
-        "eslint": "^7.9.0",
-        "esmify": "^2.1.1",
-        "npm-force-resolutions": "^0.0.3",
-        "npm-run-all": "^4.1.5",
-        "postcss": "^7.0.27",
-        "postcss-cli": "^6.1.3",
-        "postcss-scss": "^2.0.0",
-        "pug": "^3.0.1",
-        "pug-cli": "github:pugjs/pug-cli#master",
-        "rimraf": "^3.0.2",
-        "sass": "^1.26.3",
-        "typescript": "^4.0.2"
-    },
-    "resolutions": {
-        "minimist": ">=1.2.5"
+        "@types/react": "^17.0.0",
+        "@types/react-dom": "^17.0.0",
+        "@vitejs/plugin-react-refresh": "^1.3.1",
+        "pug": "^3.0.2",
+        "sass": "^1.35.1",
+        "typescript": "^4.3.2",
+        "vite": "^2.3.7",
+        "vite-plugin-pug": "^0.3.0"
     }
 }
