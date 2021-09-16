@@ -72,13 +72,14 @@ interface Props {
 | itemComponent | ReactComponent | Itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |
 | className | string | Hiradumiの領域につけるクラス名<br />デフォルトはhiradumi |
 | padding | number | Hiradumiの余白(px) |
-| sortKey | string \| null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
+| sortKey | string | null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
 | onScroll | (event) => void | スクロール時に呼び出される関数 |
 | scrollTo | {key: string, value: any} | ItemのkeyがvalueであるItemまでスクロールする |
 | headerComponent | React.Component | headerコンポーネント |
 | headerHeight | number | headerコンポーネントの高さ(px) |
 | footerComponent | React.Component | footerコンポーネント |
 | footerComponent | number | footerコンポーネントの高さ(px) |
+| style | css | Hiradumi内のreact-windowに追加するCSS |
 
 ## 実装コンセプト
 
