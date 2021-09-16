@@ -47,23 +47,12 @@ interface Props {
     style: any
 }
 
-interface Hiradumi {
-
-    items: any[]
-    rows: any[]
-    rowHeights: number[]
-
-    hiradumi: any
-    prevScrollTo: {key: string | null, value: any}
-}
-
-
 const Hiradumi = (props: Props) => {
 
     let Items = props.items.map( item => ({...item}))
     let Rows: any[] = []
     let RowHeights: number[] = []
-    let hiradumiDiv: any = null
+    let HiradumiDiv: any = null
     let PrevScrollTo = {key: null, value: null}
 
     // 行の幅の範囲内にアイテムを入れる
@@ -198,8 +187,8 @@ const Hiradumi = (props: Props) => {
     }
 
     const onScroll = (event: any) => {
-        if (!hiradumiDiv) return
-        const scrollArea = hiradumiDiv.firstElementChild
+        if (!HiradumiDiv) return
+        const scrollArea = HiradumiDiv.firstElementChild
         event.scrollTop = scrollArea.scrollTop
         event.scrollBottom = scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop
         props.onScroll(event)
@@ -218,11 +207,11 @@ const Hiradumi = (props: Props) => {
             height += rowHeight
         })
         const timer = setInterval(() => {
-            if (hiradumiDiv.firstElementChild.scrollTop >= height) {
+            if (HiradumiDiv.firstElementChild.scrollTop >= height) {
                 return clearTimeout(timer)
             }
-            // console.log(hiradumiDiv.firstElementChild.scrollTop)
-            hiradumiDiv.firstElementChild.scrollTo(0, height)
+            // console.log(HiradumiDiv.firstElementChild.scrollTop)
+            HiradumiDiv.firstElementChild.scrollTo(0, height)
         }, 1)
         setTimeout(() => {
             clearTimeout(timer)
@@ -284,7 +273,7 @@ const Hiradumi = (props: Props) => {
     setRowData()
     checkScrollTo()
 
-    return (<div className={props.className ? props.className : 'hiradumi'} ref={(element) => hiradumiDiv = element}>
+    return (<div className={props.className ? props.className : 'hiradumi'} ref={(element) => HiradumiDiv = element}>
         <List
             width={props.width}
             height={props.height}
