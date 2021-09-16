@@ -59,27 +59,24 @@ interface Props {
 }
 
 interface State {
-    items: any[]
-    rows: any[]
-    rowHeights: number[]
 }
 
 interface Hiradumi {
+
+    items: any[]
+    rows: any[]
+    rowHeights: number[]
+
     hiradumi: any
-    Row: any
-    rowCount: number
-    factors: number[]
     prevScrollTo: {key: string | null, value: any}
 }
 
 class Hiradumi extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
-        this.state = {
-            items: props.items.map( item => ({...item})),
-            rows: [],
-            rowHeights: []
-        }
+        this.items = props.items.map( item => ({...item}))
+        this.rows = []
+        this.rowHeights = []
         this.hiradumi = null
         this.prevScrollTo = {key: null, value: null}
     }
@@ -90,8 +87,7 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     shouldComponentUpdate() {
-        // @ts-ignore
-        this.state.items = this.props.items.map( item => ({...item}))
+        this.items = this.props.items.map( item => ({...item}))
         this.setRowData()
         this.checkScrollTo()
         return true
@@ -178,8 +174,11 @@ class Hiradumi extends React.Component<Props, State> {
 
         const rowMaxWidth = this.props.width - this.props.padding * 2 - getScrollbarWidth()
 
-        splitByNumber(this.state.items, 100).forEach((items, i) => {
-            const rowRatioIndex = i % this.props.rowRatios.length
+        splitByNumber(this.items, 100).some((items, index) => {
+            // 行数制限
+            if (this.props.rowCount === rows.length) return true
+
+            const rowRatioIndex = index % this.props.rowRatios.length
             const rowRatio = this.props.rowRatios[rowRatioIndex]
 
             // 行の幅の範囲内にアイテムを入れる
@@ -225,10 +224,8 @@ class Hiradumi extends React.Component<Props, State> {
             rowHeights.push(this.props.footerHeight)
         }
 
-        // @ts-ignore
-        this.state.rows = rows
-        // @ts-ignore
-        this.state.rowHeights = rowHeights
+        this.rows = rows
+        this.rowHeights = rowHeights
 
     }
 
@@ -242,13 +239,13 @@ class Hiradumi extends React.Component<Props, State> {
 
     scrollTo(key: string, value: any) {
         let index: number
-        this.state.rows.forEach((items, i) => {
+        this.rows.forEach((items, i) => {
             if (typeof items.type==='undefined' && items.filter((item: any)=> item[key] === value).length > 0) {
                 index = i
             }
         })
         let height = this.props.padding
-        this.state.rowHeights.some((rowHeight, i) => {
+        this.rowHeights.some((rowHeight, i) => {
             if (i===index) return true
             height += rowHeight
         })
@@ -271,13 +268,13 @@ class Hiradumi extends React.Component<Props, State> {
             <List
                 width={this.props.width}
                 height={this.props.height}
-                itemCount={this.state.rows.length}
-                itemSize={(index: number) => this.state.rowHeights[index]}
+                itemCount={this.rows.length}
+                itemSize={(index: number) => this.rowHeights[index]}
                 onScroll={this.onScroll.bind(this)}
                 style={this.props.style}
             >
                 {(item: any) => {
-                    const row = this.state.rows[item.index]
+                    const row = this.rows[item.index]
                     return this.renderRow(row, item.style)
                 }}
             </List>
