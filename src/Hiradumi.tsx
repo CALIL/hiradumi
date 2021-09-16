@@ -272,16 +272,9 @@ const Hiradumi = (props: Props) => {
                         </div>
                     )
                 }
-        
             }}
         </List>
     </div>)
-
 }
-  
+
 export default Hiradumi
-
-
-
-
-
