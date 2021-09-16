@@ -257,8 +257,8 @@ const Hiradumi = (props: Props) => {
             rowStyle.boxSizing = 'border-box'
             return (
                 <div className="row" style={rowStyle} key={'row'}>
-                    {row.map((item: any) => {
-                        return (<div className="item" id={item.id} style={{
+                    {row.map((item: any, index: number) => {
+                        return (<div key={'item' + index} className="item" id={item.id} style={{
                             display: 'inline-block',
                             width: item.width + 'px',
                             height: item.height + 'px',
