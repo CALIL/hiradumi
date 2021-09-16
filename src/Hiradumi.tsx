@@ -32,15 +32,16 @@ interface Props {
     className: string
     sortKey: string | null
     onScroll: (event:any) => void
+    scrollTo: {
+        key: string
+        value: any
+    }
+
     headerComponent: any
     headerHeight: number
     footerComponent: any
     footerHeight: number
     style: any
-    scrollTo: {
-        key: string
-        value: any
-    }
 }
 interface State {
     items: any[]
