@@ -58,9 +58,6 @@ interface Props {
     style: any
 }
 
-interface State {
-}
-
 interface Hiradumi {
 
     items: any[]
@@ -71,7 +68,7 @@ interface Hiradumi {
     prevScrollTo: {key: string | null, value: any}
 }
 
-class Hiradumi extends React.Component<Props, State> {
+class Hiradumi extends React.Component<Props> {
     constructor(props: Props) {
         super(props)
         this.items = props.items.map( item => ({...item}))
