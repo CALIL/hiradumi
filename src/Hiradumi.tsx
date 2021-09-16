@@ -4,17 +4,6 @@ import { VariableSizeList as List } from 'react-window'
 
 import DefaultItem from './DefaultItem'
 
-
-// 配列をn個毎の配列に分割して返す関数
-const splitByNumber = (sourceArray: any[], splitNumber: number) => {
-    const result = []
-    for (let i = 0; i < sourceArray.length; i += splitNumber) {
-        const subArray = sourceArray.slice(i, i + splitNumber)
-        result.push(subArray)
-    }
-    return result
-}
-
 function getScrollbarWidth() {
     const outer = document.createElement('div')
     outer.style.visibility = 'hidden'
@@ -145,13 +134,16 @@ const Hiradumi = (props: Props) => {
             rowHeights.push(props.headerHeight)
         }
 
-        const rowMaxWidth = props.width - props.padding * 2 - getScrollbarWidth()
+        // 計算しているitemのindex
+        let itemIndex = 0
+        let items = Items.slice(itemIndex, itemIndex+100)
 
-        splitByNumber(Items, 100).some((items, index) => {
+        const rowMaxWidth = props.width - props.padding * 2 - getScrollbarWidth()
+        for (let i = 0; items.length > 0 && rows.length < props.rowCount; i++) {
             // 行数制限
             if (props.rowCount === rows.length - 1) return true
 
-            const rowRatioIndex = index % props.rowRatios.length
+            const rowRatioIndex = i % props.rowRatios.length
             const rowRatio = props.rowRatios[rowRatioIndex]
 
             // 行の幅の範囲内にアイテムを入れる
@@ -190,7 +182,10 @@ const Hiradumi = (props: Props) => {
             })
             rowHeights.push(Math.max(...heights))
     
-        })
+            itemIndex += rowItems.length
+            items = Items.slice(itemIndex, itemIndex+100)
+
+        }
 
         if (props.footerComponent) {
             rows.push({type: 'footer', component: props.footerComponent})
