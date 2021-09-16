@@ -2,19 +2,7 @@ import 'whatwg-fetch'
 import React, { Component } from 'react'
 import Hiradumi from '../../src/Hiradumi'
 import SettingUI from './SettingUI'
-// import items from '../Kochi_Motoyama_plus.json'
-// import items from '../../Gifu_Nakatsugawa_plus.json'
 import DefaultItem from './DefaultItem'
-
-function getQueryString() {
-  var params = {}
-  location.search.substr(1).split('&').forEach(function(param) {
-      var pairs = param.split('=');
-      // @ts-ignore
-      params[pairs[0]] = decodeURIComponent(pairs[1]);
-  });
-  return params;    
-}
 
 interface App {
   factors: number[]
@@ -57,25 +45,6 @@ class App extends Component<Props, State> {
     }
   }
   componentDidMount() {
-    // const params = getQueryString()
-    // const system_id = params.system_id ? params.system_id : 'Gifu_Nakatsugawa'
-    // fetch(`https://storage.googleapis.com/pickup-books/${system_id}.json`).then((r)=>r.json()).then((items) => {
-    //   const newItems = []
-    //   items.map((item) => {
-    //     if (item.cover==='' || item.cover===null) {
-    //       item.term_popular_count = 0
-    //     }
-    //     // newItems.push(Object.assign({}, item))
-    //   })
-
-    //   Array.from({length: 1000}).map(() => {
-    //     ([].concat(items)).map((item) => {
-    //       newItems.push(Object.assign({}, item))
-    //     })
-    //   })
-
-    //   this.setState({items: newItems})
-    // })
 
     if (document.body.clientWidth > 767) {
       this.setState({rowRatios: [1, 0.9, 0.8, 0.7]})
