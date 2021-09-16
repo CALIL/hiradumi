@@ -111,81 +111,6 @@ const Hiradumi = (props: Props) => {
     let HiradumiDiv: any = null
     let PrevScrollTo = {key: null, value: null}
 
-    const onScroll = (event: any) => {
-        if (!HiradumiDiv) return
-        const scrollArea = HiradumiDiv.firstElementChild
-        event.scrollTop = scrollArea.scrollTop
-        event.scrollBottom = scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop
-        props.onScroll(event)
-    }
-
-    const hiradumiScrollTo = (key: string, value: any) => {
-        let index: number
-        // 対象となあるitemを探す
-        Rows.some((items, i) => {
-            if (typeof items.type==='undefined' && items.filter((item: any)=> item[key] === value).length > 0) {
-                index = i
-                return true
-            }
-        })
-        // スクロール量を計算
-        let scrollHeight = props.padding
-        RowHeights.some((rowHeight, i) => {
-            if (i===index) return true
-            scrollHeight += rowHeight
-        })
-        // 表示item数が多い場合のためにスクロールを何度か行う
-        const timer = setInterval(() => {
-            if (HiradumiDiv.firstElementChild.scrollTop >= scrollHeight) return clearTimeout(timer)
-            // console.log(HiradumiDiv.firstElementChild.scrollTop)
-            HiradumiDiv.firstElementChild.scrollTo(0, scrollHeight)
-        }, 1)
-        setTimeout(() => clearTimeout(timer), 1000)
-    }
-
-
-    const renderRow = (row: any, style: any) => {
-        const rowStyle = JSON.parse(JSON.stringify(style))
-        rowStyle.display = 'flex'
-        rowStyle.justifyContent = 'space-between'
-
-        if (typeof row.type==='undefined') {
-            // paddingを反映
-            rowStyle.top = parseInt(style.top) + props.padding + 'px'
-            rowStyle.left = props.padding + 'px'
-            rowStyle.width = `calc(100% - ${props.padding * 2}px)`
-            rowStyle.boxSizing = 'border-box'
-            return (
-                <div className="row" style={rowStyle} key={'row'}>
-                    {row.map((item: any, index: number) => {
-                        return (<div key={'item' + index} className="item" id={item.id} style={{
-                            display: 'inline-block',
-                            width: item.width + 'px',
-                            height: item.height + 'px',
-                            margin: props.itemMargin / 2 + 'px'
-                        }}>
-                        {(() => {
-                            if (props.itemComponent) {
-                                return <props.itemComponent item={item} margin={props.itemMargin} sortKey={props.sortKey} />
-                            } else {
-                                return <DefaultItem item={item} margin={props.itemMargin} sortKey={props.sortKey} />
-                            }
-                        })()}
-                        </div>)
-                    })}
-                </div>
-            )
-        } else {
-            rowStyle.top = parseInt(style.top) + props.padding + 'px'
-            rowStyle.marginTop = props.itemMargin / 2
-            return (
-                <div className="row" style={rowStyle}>
-                    <row.component />
-                </div>
-            )
-        }
-    }
-
     let rowHeights: number[] = []
     let rows: any[] = []
     let prevRowItems: any[] = []
@@ -195,12 +120,12 @@ const Hiradumi = (props: Props) => {
         rowHeights.push(props.headerHeight)
     }
 
-    // 計算しているitemのindex
-    let itemIndex = 0
-    let items = Items.slice(itemIndex, itemIndex+100)
+    // rowに入れる処理済みのItemのindex
+    let putInRowIndex = 0
+    let itemsInProcess = Items.slice(putInRowIndex, putInRowIndex+100)
 
     const rowMaxWidth = props.width - props.padding * 2 - getScrollbarWidth()
-    for (let i = 0; items.length > 0 && rows.length < props.rowCount; i++) {
+    for (let i = 0; itemsInProcess.length > 0 && rows.length < props.rowCount; i++) {
         // 行数制限
         if (props.rowCount === rows.length - 1) return true
 
@@ -208,7 +133,7 @@ const Hiradumi = (props: Props) => {
         const rowRatio = props.rowRatios[rowRatioIndex]
 
         // 行の幅の範囲内にアイテムを入れる
-        let rowItems = putItem(items, rowMaxWidth, rowRatio, props.itemHeight, props.itemMargin)
+        let rowItems = putItem(itemsInProcess, rowMaxWidth, rowRatio, props.itemHeight, props.itemMargin)
 
         const rowWidth = rowItems.reduce((size, item) => size + item.width, 0)
 
@@ -243,8 +168,8 @@ const Hiradumi = (props: Props) => {
         })
         rowHeights.push(Math.max(...heights))
 
-        itemIndex += rowItems.length
-        items = Items.slice(itemIndex, itemIndex+100)
+        putInRowIndex += rowItems.length
+        itemsInProcess = Items.slice(putInRowIndex, putInRowIndex+100)
 
     }
 
@@ -256,11 +181,35 @@ const Hiradumi = (props: Props) => {
     Rows = rows
     RowHeights = rowHeights
 
+    const ScrollTo = (key: string, value: any) => {
+        let index: number
+        // 対象となあるitemを探す
+        Rows.some((items, i) => {
+            if (typeof items.type==='undefined' && items.filter((item: any)=> item[key] === value).length > 0) {
+                index = i
+                return true
+            }
+        })
+        // スクロール量を計算
+        let scrollHeight = props.padding
+        RowHeights.some((rowHeight, i) => {
+            if (i===index) return true
+            scrollHeight += rowHeight
+        })
+        // 表示item数が多い場合のためにスクロールを何度か行う
+        const timer = setInterval(() => {
+            if (HiradumiDiv.firstElementChild.scrollTop >= scrollHeight) return clearTimeout(timer)
+            // console.log(HiradumiDiv.firstElementChild.scrollTop)
+            HiradumiDiv.firstElementChild.scrollTo(0, scrollHeight)
+        }, 1)
+        setTimeout(() => clearTimeout(timer), 1000)
+    }
+
     // スクロールするか判定
     if (props.scrollTo && props.scrollTo.value !== PrevScrollTo.value) {
         const {key, value} = props.scrollTo
         setTimeout(() => {
-            hiradumiScrollTo(key, value)
+            ScrollTo(key, value)
         }, 100)
         PrevScrollTo = JSON.parse(JSON.stringify(props.scrollTo))
     }
@@ -271,16 +220,62 @@ const Hiradumi = (props: Props) => {
             height={props.height}
             itemCount={Rows.length}
             itemSize={(index: number) => RowHeights[index]}
-            onScroll={onScroll.bind(this)}
+            onScroll={(event: any) => {
+                if (!HiradumiDiv) return
+                const scrollArea = HiradumiDiv.firstElementChild
+                event.scrollTop = scrollArea.scrollTop
+                event.scrollBottom = scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop
+                props.onScroll(event)
+            }}
             style={props.style}
         >
             {(item: any) => {
+
                 const row = Rows[item.index]
-                return renderRow(row, item.style)
+                const rowStyle = JSON.parse(JSON.stringify(item.style))
+                rowStyle.display = 'flex'
+                rowStyle.justifyContent = 'space-between'
+        
+                if (typeof row.type==='undefined') {
+                    // paddingを反映
+                    rowStyle.top = parseInt(item.style.top) + props.padding + 'px'
+                    rowStyle.left = props.padding + 'px'
+                    rowStyle.width = `calc(100% - ${props.padding * 2}px)`
+                    rowStyle.boxSizing = 'border-box'
+                    return (
+                        <div className="row" style={rowStyle} key={'row'}>
+                            {row.map((item: any, index: number) => {
+                                return (<div key={'item' + index} className="item" id={item.id} style={{
+                                    display: 'inline-block',
+                                    width: item.width + 'px',
+                                    height: item.height + 'px',
+                                    margin: props.itemMargin / 2 + 'px'
+                                }}>
+                                {(() => {
+                                    if (props.itemComponent) {
+                                        return <props.itemComponent item={item} margin={props.itemMargin} sortKey={props.sortKey} />
+                                    } else {
+                                        return <DefaultItem item={item} margin={props.itemMargin} sortKey={props.sortKey} />
+                                    }
+                                })()}
+                                </div>)
+                            })}
+                        </div>
+                    )
+                // ヘッダー・フッター
+                } else {
+                    rowStyle.top = parseInt(item.style.top) + props.padding + 'px'
+                    rowStyle.marginTop = props.itemMargin / 2
+                    return (
+                        <div className="row" style={rowStyle}>
+                            <row.component />
+                        </div>
+                    )
+                }
+        
             }}
         </List>
     </div>)
-
 
 }
   
