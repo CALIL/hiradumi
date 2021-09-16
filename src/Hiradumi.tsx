@@ -125,9 +125,7 @@ const Hiradumi = (props: Props) => {
     let itemsInProcess = Items.slice(putInRowIndex, putInRowIndex+100)
 
     const rowMaxWidth = props.width - props.padding * 2 - getScrollbarWidth()
-    for (let i = 0; itemsInProcess.length > 0 && rows.length < props.rowCount; i++) {
-        // 行数制限
-        if (props.rowCount === rows.length - 1) return true
+    for (let i = 0; itemsInProcess.length > 0 && rows.length <= props.rowCount; i++) {
 
         const rowRatioIndex = i % props.rowRatios.length
         const rowRatio = props.rowRatios[rowRatioIndex]
