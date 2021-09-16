@@ -25,27 +25,33 @@ npm install github:CALIL/hiradumi#master
 [Hiradumi.tsx](./src/Hiradumi.tsx)
 
 ```
+
 interface Props {
-    items: any[]
     width: number
     height: number
+    padding: number
+    className: string
+
+    items: any[]
     itemHeight: number
     itemMargin: number
+    itemComponent: any
+
     rowCount: number
     rowRatios: number[]
-    itemComponent: any
-    className: string
-    padding: number
+
     sortKey: string | null
-    headerComponent: React.Component 
-    headerHeight: number
-    footerComponent: React.Component 
-    footerHeight: number
-    onScroll: (event) => void
+    onScroll: (event:any) => void
     scrollTo: {
         key: string
         value: any
     }
+
+    headerComponent: any
+    headerHeight: number
+    footerComponent: any
+    footerHeight: number
+    style: any
 }
 ```
 
@@ -64,14 +70,14 @@ interface Props {
 | ------------- | ------------- | ------------- |
 | width | number | Hiradumiの横幅(px) |
 | height | number | Hiradumiの縦幅(px) |
+| padding | number | Hiradumiの余白(px) |
+| className | string | Hiradumiの領域につけるクラス名<br />デフォルトはhiradumi |
 | items | Item[] | 画像のアスペクト比が入ったItemの配列 |
 | itemHeight | number | Itemの高さの基準 |
 | itemMargin | number | Itemのマージン |
+| itemComponent | ReactComponent | Itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |
 | rowCount | number | 最大行数 上限を不明な場合、Infinityを指定 |
 | rowRatios | number[] | 行ごとの比率 |
-| itemComponent | ReactComponent | Itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |
-| className | string | Hiradumiの領域につけるクラス名<br />デフォルトはhiradumi |
-| padding | number | Hiradumiの余白(px) |
 | sortKey | string | null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
 | onScroll | (event) => void | スクロール時に呼び出される関数 |
 | scrollTo | {key: string, value: any} | ItemのkeyがvalueであるItemまでスクロールする |

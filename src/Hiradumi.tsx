@@ -20,16 +20,19 @@ function getScrollbarWidth() {
 }
 
 interface Props {
-    items: any[]
     width: number
     height: number
     padding: number
+    className: string
+
+    items: any[]
     itemHeight: number
     itemMargin: number
+    itemComponent: any
+
     rowCount: number
     rowRatios: number[]
-    itemComponent: any
-    className: string
+
     sortKey: string | null
     onScroll: (event:any) => void
     scrollTo: {
