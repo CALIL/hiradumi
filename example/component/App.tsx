@@ -25,6 +25,7 @@ interface State {
     key: string
     value: any
   } | null
+  showHiradumi: boolean
 }
 
 class App extends Component<Props, State> {
@@ -41,6 +42,7 @@ class App extends Component<Props, State> {
       sortKey: 'term_popular_count',
       rowRatios: null,
       scrollTo: null,
+      showHiradumi: true
     }
   }
   componentDidMount() {
@@ -71,7 +73,11 @@ class App extends Component<Props, State> {
   } 
 
   onChange(state: State) {
+    this.setState({showHiradumi: false})
     this.setState(state)
+    setTimeout(() => {
+      this.setState({showHiradumi: true})
+    }, 100)
   }
 
   render() {
@@ -96,29 +102,31 @@ class App extends Component<Props, State> {
                 />
               </div>
               <div style={{width: '100%', margin: '0 auto'}}>
-                <Hiradumi
-                  width={this.state.width}
-                  height={this.state.height}
-                  items={this.state.items}
-                  padding={this.state.padding}
-                  itemHeight={this.state.itemHeight}
-                  itemMargin={this.state.itemMargin}
-                  rowCount={this.state.rowCount}
-                  rowRatios={this.state.rowRatios}
-                  itemComponent={DefaultItem}
-                  className={'hiradumi'}
-                  sortKey={this.state.sortKey}
-                  onScroll={(e) => {}}
-                  headerComponent={Header}
-                  headerHeight={50}
-                  footerComponent={Footer}
-                  footerHeight={50}
-                  style={{
-                    // backgroundColor: 'red' 
-                  }}
-                  // @ts-ignore
-                  scrollTo={this.state.scrollTo}
-                />
+                {this.state.showHiradumi ? (
+                  <Hiradumi
+                    width={this.state.width}
+                    height={this.state.height}
+                    items={this.state.items}
+                    padding={this.state.padding}
+                    itemHeight={this.state.itemHeight}
+                    itemMargin={this.state.itemMargin}
+                    rowCount={this.state.rowCount}
+                    rowRatios={this.state.rowRatios}
+                    itemComponent={DefaultItem}
+                    className={'hiradumi'}
+                    sortKey={this.state.sortKey}
+                    onScroll={(e) => {}}
+                    headerComponent={Header}
+                    headerHeight={50}
+                    footerComponent={Footer}
+                    footerHeight={50}
+                    style={{
+                      // backgroundColor: 'red' 
+                    }}
+                    // @ts-ignore
+                    scrollTo={this.state.scrollTo}
+                  />
+                ) : null}
               </div>
             </React.Fragment>
           ) : null}
