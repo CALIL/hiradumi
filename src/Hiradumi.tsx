@@ -4,6 +4,17 @@ import { VariableSizeList as List } from 'react-window'
 
 import DefaultItem from './DefaultItem'
 
+
+// 配列をn個毎の配列に分割して返す関数
+const splitByNumber = (sourceArray: any[], splitNumber: number) => {
+    const result = []
+    for (let i = 0; i < sourceArray.length; i += splitNumber) {
+        const subArray = sourceArray.slice(i, i + splitNumber)
+        result.push(subArray)
+    }
+    return result
+}
+
 function getScrollbarWidth() {
     const outer = document.createElement('div')
     outer.style.visibility = 'hidden'
@@ -156,22 +167,18 @@ class Hiradumi extends React.Component<Props, State> {
     }
 
     setRowData() {
-        // @ts-ignore
-        let rowHeights = []
-        let rows = []
-        let prevRowItems = []
+        let rowHeights: number[] = []
+        let rows: any[] = []
+        let prevRowItems: any[] = []
 
         if (this.props.headerComponent) {
             rows.push({type: 'header', component: this.props.headerComponent})
             rowHeights.push(this.props.headerHeight)
         }
 
-        // 計算しているitemのindex
-        let itemIndex = 0
-        let items = this.state.items.slice(itemIndex, itemIndex+100)
         const rowMaxWidth = this.props.width - this.props.padding * 2 - getScrollbarWidth()
 
-        for (let i = 0; items.length > 0 && rows.length < this.props.rowCount; i++) {
+        splitByNumber(this.state.items, 100).forEach((items, i) => {
             const rowRatioIndex = i % this.props.rowRatios.length
             const rowRatio = this.props.rowRatios[rowRatioIndex]
 
@@ -211,10 +218,7 @@ class Hiradumi extends React.Component<Props, State> {
             })
             rowHeights.push(Math.max(...heights))
     
-            itemIndex += rowItems.length
-            items = this.state.items.slice(itemIndex, itemIndex+100)
-
-        }
+        })
 
         if (this.props.footerComponent) {
             rows.push({type: 'footer', component: this.props.footerComponent})

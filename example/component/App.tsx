@@ -32,7 +32,6 @@ class App extends Component<Props, State> {
     super(props)
     this.state = {
       items: props.items,
-      // items: items,
       itemHeight: 200,
       width: 100,
       height: 0,
