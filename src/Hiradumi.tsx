@@ -1,5 +1,4 @@
 import React from 'react'
-import setPrototypeOf from 'setprototypeof'
 // @ts-ignore
 import { VariableSizeList as List } from 'react-window'
 

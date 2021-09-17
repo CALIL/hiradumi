@@ -30,7 +30,6 @@
         "react-dom": "^17.0.1",
         "react-virtualized-auto-sizer": "^1.0.5",
         "react-window": "^1.8.6",
-        "setprototypeof": "^1.2.0",
         "whatwg-fetch": "^3.6.2"
     },
     "devDependencies": {
