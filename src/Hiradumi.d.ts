@@ -1,4 +1,3 @@
-/// <reference types="react" />
 interface Props {
     width: number;
     height: number;

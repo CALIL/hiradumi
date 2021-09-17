@@ -1,45 +1,25 @@
 const path = require('path');
 
 module.exports = {
-    context: path.resolve(__dirname, 'src'),
-    // devtool: 'inline-source-map',
-    entry: './Hiradumi.tsx',
-    mode: 'development',
-    module: {
-        rules: [{
-            test: /\.tsx?$/,
-            use: 'ts-loader',
-            exclude: /node_modules/
-        }]
-    },
-    output: {
-        filename: './Hiradumi.js',
-        path: path.resolve(__dirname, 'lib'),
-        libraryTarget: 'commonjs2',
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.jsx', '.js']
-    },
-}
-
-module.exports = {
-    context: path.resolve(__dirname, 'src'),
-    // devtool: 'inline-source-map',
-    entry: './DefaultItem.tsx',
-    mode: 'development',
-    module: {
-        rules: [{
-            test: /\.tsx?$/,
-            use: 'ts-loader',
-            exclude: /node_modules/
-        }]
-    },
-    output: {
-        filename: './DefaultItem.js',
-        path: path.resolve(__dirname, 'lib'),
-        libraryTarget: 'commonjs2',
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.jsx', '.js']
-    },
+  mode: 'development',
+  entry: './src/index.ts',
+  output: {
+    filename: 'index.js',
+    path: path.join(__dirname, 'lib'),
+    libraryTarget: 'commonjs2',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modeules/,
+        use: [
+          'ts-loader',
+        ],
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
 }
