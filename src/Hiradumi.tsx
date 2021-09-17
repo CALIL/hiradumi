@@ -195,7 +195,7 @@ const Hiradumi = (props: Props) => {
             scrollHeight += rowHeight
         })
         // 表示item数が多い場合のためにスクロールを何度か行う
-        const timer = setInterval(() => {
+        const timer: any = setInterval(() => {
             if (HiradumiDiv.firstElementChild.scrollTop >= scrollHeight) return clearTimeout(timer)
             // console.log(HiradumiDiv.firstElementChild.scrollTop)
             HiradumiDiv.firstElementChild.scrollTo(0, scrollHeight)
