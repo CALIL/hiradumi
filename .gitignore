@@ -17,6 +17,5 @@ yarn-error.log*
 .cache
 build/
 dist/
-lib/
 docs/
 tmp/
