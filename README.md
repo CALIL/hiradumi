@@ -100,6 +100,9 @@ interface Props {
 
 [App.tsx](./src/component/App.tsx)
 
+## サンプルデータ
+
+[岐阜県中津川市で人気の本](https://storage.googleapis.com/pickup-books/Gifu_Nakatsugawa.json)
 
 # 開発
 
