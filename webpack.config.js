@@ -6,7 +6,7 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: path.join(__dirname, 'lib'),
-    libraryTarget: 'umd',
+    libraryTarget: 'commonjs2',
   },
   module: {
     rules: [
