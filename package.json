@@ -3,6 +3,7 @@
     "version": "2.0.0",
     "description": "アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント",
     "main": "lib/Hiradumi.js",
+    "types": "lib/index.d.ts",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/CALIL/hiradumi.git"
@@ -17,10 +18,12 @@
         "start": "vite --open",
         "build": "tsc && vite build",
         "serve": "vite preview",
-        "compile": "npm run compile:tsc && npm run compile:Hiradumi && npm run compile:DefaultItem",
+        "compile": "gulp",
+        "prepublish": "tsc",
+        "//compile": "npm run compile:tsc && npm run compile:Hiradumi && npm run compile:DefaultItem",
         "compile:tsc": "tsc --project ./ --outDir ./tmp/",
-        "compile:Hiradumi": "browserify -p esmify ./tmp/Hiradumi.js -o ./lib/Hiradumi.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ",
-        "compile:DefaultItem": "browserify -p esmify ./tmp/DefaultItem.js -o ./lib/DefaultItem.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ]"
+        "compile:Hiradumi": "browserify -p esmify ./tmp/Hiradumi.js -o ./lib/Hiradumi.js --transform babelify",
+        "compile:DefaultItem": "browserify -p esmify ./tmp/DefaultItem.js -o ./lib/DefaultItem.js --transform babelify"
     },
     "dependencies": {
         "@types/react": "^17.0.0",
@@ -44,9 +47,16 @@
         "babelify": "^10.0.0",
         "browserify": "^17.0.0",
         "esmify": "^2.1.1",
+        "gulp": "^4.0.2",
+        "gulp-plumber": "^1.2.1",
+        "gulp-rename": "^2.0.0",
         "pug": "^3.0.2",
+        "realpathify": "^1.0.1",
         "sass": "^1.35.1",
+        "tsify": "^5.0.4",
         "typescript": "^4.3.2",
+        "vinyl-buffer": "^1.0.1",
+        "vinyl-source-stream": "^2.0.0",
         "vite": "^2.3.7",
         "vite-plugin-pug": "^0.3.0"
     }
