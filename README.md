@@ -56,7 +56,7 @@ interface Props {
 ```
 
 - items　Itemの配列データ  
-　　　　　画像のアスペクト比が必須
+　　　　　画像のアスペクト比(width/height)が必須
 
     ```
     interface Item {
