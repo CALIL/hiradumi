@@ -100,7 +100,7 @@ interface Props {
     headerHeight: number
     footerComponent: any
     footerHeight: number
-    style: any
+    innerStyle: any
 }
 
 const Hiradumi = (props: Props) => {
@@ -225,7 +225,7 @@ const Hiradumi = (props: Props) => {
                 event.scrollBottom = scrollArea.scrollHeight - scrollArea.clientHeight - scrollArea.scrollTop
                 props.onScroll(event)
             }}
-            style={props.style}
+            style={props.innerStyle}
         >
             {(item: any) => {
 

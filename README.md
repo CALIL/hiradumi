@@ -85,7 +85,7 @@ interface Props {
 | headerHeight | number | headerコンポーネントの高さ(px) |
 | footerComponent | React.Component | footerコンポーネント |
 | footerComponent | number | footerコンポーネントの高さ(px) |
-| style | css | Hiradumi内のreact-windowに追加するCSS |
+| innerStyle | css | Hiradumi内のreact-windowに追加するCSS |
 
 ## 実装コンセプト
 

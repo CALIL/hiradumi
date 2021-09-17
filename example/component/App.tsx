@@ -122,7 +122,7 @@ class App extends Component<Props, State> {
                     headerHeight={50}
                     footerComponent={Footer}
                     footerHeight={50}
-                    style={{
+                    innerStyle={{
                       // backgroundColor: 'red' 
                     }}
                     // @ts-ignore
