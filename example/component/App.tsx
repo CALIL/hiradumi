@@ -2,7 +2,7 @@ import 'whatwg-fetch'
 import React, { Component } from 'react'
 import Hiradumi from '../../src/Hiradumi'
 import SettingUI from './SettingUI'
-import DefaultItem from './DefaultItem'
+import Item from './Item'
 
 interface App {
   factors: number[]
@@ -73,11 +73,13 @@ class App extends Component<Props, State> {
   } 
 
   onChange(state: State) {
-    this.setState({showHiradumi: false})
+    if ('itemHeight' in state) this.setState({showHiradumi: false})
     this.setState(state)
-    setTimeout(() => {
-      this.setState({showHiradumi: true})
-    }, 100)
+    if ('itemHeight' in state) {
+      setTimeout(() => {
+        this.setState({showHiradumi: true})
+      }, 100)
+    }
   }
 
   render() {
@@ -112,7 +114,7 @@ class App extends Component<Props, State> {
                     itemMargin={this.state.itemMargin}
                     rowCount={this.state.rowCount}
                     rowRatios={this.state.rowRatios}
-                    itemComponent={DefaultItem}
+                    itemComponent={Item}
                     className={'hiradumi'}
                     sortKey={this.state.sortKey}
                     onScroll={(e) => {}}
