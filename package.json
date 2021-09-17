@@ -3,7 +3,7 @@
     "version": "2.0.0",
     "description": "アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント",
     "main": "lib/Hiradumi.js",
-    "types": "lib/index.d.ts",
+    "types": "src/index.d.ts",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/CALIL/hiradumi.git"
@@ -19,11 +19,8 @@
         "build": "tsc && vite build",
         "serve": "vite preview",
         "compile": "gulp",
-        "prepublish": "tsc",
-        "//compile": "npm run compile:tsc && npm run compile:Hiradumi && npm run compile:DefaultItem",
-        "compile:tsc": "tsc --project ./ --outDir ./tmp/",
-        "compile:Hiradumi": "browserify -p esmify ./tmp/Hiradumi.js -o ./lib/Hiradumi.js --transform babelify",
-        "compile:DefaultItem": "browserify -p esmify ./tmp/DefaultItem.js -o ./lib/DefaultItem.js --transform babelify"
+        "transpile": "webpack",
+        "prepublishOnly": "npm run transpile"
     },
     "dependencies": {
         "@types/react": "^17.0.0",

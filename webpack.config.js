@@ -14,7 +14,8 @@ module.exports = {
     },
     output: {
         filename: './Hiradumi.js',
-        path: path.resolve(__dirname, 'lib')
+        path: path.resolve(__dirname, 'lib'),
+        libraryTarget: 'commonjs2',
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js']
@@ -35,7 +36,8 @@ module.exports = {
     },
     output: {
         filename: './DefaultItem.js',
-        path: path.resolve(__dirname, 'lib')
+        path: path.resolve(__dirname, 'lib'),
+        libraryTarget: 'commonjs2',
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js']
