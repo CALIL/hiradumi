@@ -118,6 +118,14 @@ npm install @babel/cli @babel/core -g
 npm run build
 ```
 
+## npm compile
+
+lib/以下にブラウザで読めるJavascriptファイルをコンパイルして出力する
+
+```
+npm run compile
+```
+
 ## ライセンスについて
 The MIT License (MIT)
 

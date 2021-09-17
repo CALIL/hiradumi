@@ -17,10 +17,10 @@
         "start": "vite --open",
         "build": "tsc && vite build",
         "serve": "vite preview",
-        "deploy": "npm run deploy:tsc && npm run deploy:Hiradumi && npm run deploy:DefaultItem",
-        "deploy:tsc": "tsc --project ./ --outDir ./tmp/",
-        "deploy:Hiradumi": "browserify -p esmify ./tmp/Hiradumi.js -o ./lib/Hiradumi.js",
-        "deploy:DefaultItem": "browserify -p esmify ./tmp/DefaultItem.js -o ./lib/DefaultItem.js"
+        "compile": "npm run compile:tsc && npm run compile:Hiradumi && npm run compile:DefaultItem",
+        "compile:tsc": "tsc --project ./ --outDir ./tmp/",
+        "compile:Hiradumi": "browserify -p esmify ./tmp/Hiradumi.js -o ./lib/Hiradumi.js",
+        "compile:DefaultItem": "browserify -p esmify ./tmp/DefaultItem.js -o ./lib/DefaultItem.js"
     },
     "dependencies": {
         "@types/react": "^17.0.0",
