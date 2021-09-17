@@ -100,9 +100,6 @@ interface Props {
 
 [App.tsx](./src/component/App.tsx)
 
-## サンプルデータ
-
-[Gifu_Nakatsugawa_plus.json](./Gifu_Nakatsugawa_plus.json)
 
 # 開発
 
