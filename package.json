@@ -18,7 +18,7 @@
         "build": "tsc && vite build",
         "serve": "vite preview",
         "prepare": "npm run prepare:tsc && npm run prepare:tsc && npm run prepare:DefaultItem",
-        "prepare:tsc": "tsc --outDir ./tmp/ --project ./",
+        "prepare:tsc": "tsc --project ./ --outDir ./tmp/",
         "prepare:Hiradumi": "browserify -p esmify ./tmp/Hiradumi.js -o ./lib/Hiradumi.js",
         "prepare:DefaultItem": "browserify -p esmify ./tmp/DefaultItem.js -o ./lib/DefaultItem.js"
     },
