@@ -19,7 +19,7 @@
         "build": "tsc && vite build",
         "serve": "vite preview",
         "compile": "webpack",
-        "prepublishOnly": "npm run transpile"
+        "prepublishOnly": "npm run compile"
     },
     "dependencies": {
         "@types/react": "^17.0.39",
