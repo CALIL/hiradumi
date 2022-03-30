@@ -39,7 +39,7 @@ const putItem = (currentItems: any[], rowWidth: number, rowRatio: number, itemHe
     return items
 }
 
-// 前の行をrowTotalWidth分詰めて、今の行を押し込む
+// 前の行をrowTotalWidth分詰めて、今の行を押し込む
 const pushPreviousRow = (items: any[], prevItems: any[], rowTotalWidth: number) => {
     const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
     const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
@@ -146,7 +146,7 @@ const Hiradumi = (props: Props) => {
             })
         } else {
             if (prevRowItems.length > 0) {
-                // 前の行をrowTotalWidth分詰めて、今の行を押し込む
+                // 前の行をrowTotalWidth分詰めて、今の行を押し込む
                 rowItems = pushPreviousRow(rowItems, prevRowItems, rowWidth)
                 rows.pop()
                 rowHeights.pop()
@@ -212,12 +212,18 @@ const Hiradumi = (props: Props) => {
         PrevScrollTo = JSON.parse(JSON.stringify(props.scrollTo))
     }
 
+    let totalHeight = 0
+    RowHeights.some((rowHeight, i) => {
+        totalHeight += rowHeight
+    })
+
     return (<div className={props.className ? props.className : 'hiradumi'} ref={(element) => HiradumiDiv = element}>
         <List
             width={props.width}
             height={props.height}
             itemCount={Rows.length}
             itemSize={(index: number) => RowHeights[index]}
+            estimatedItemSize={totalHeight/Rows.length}
             onScroll={(event: any) => {
                 if (!HiradumiDiv) return
                 const scrollArea = HiradumiDiv.firstElementChild
