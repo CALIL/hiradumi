@@ -107,7 +107,6 @@ const Hiradumi = (props: Props) => {
 
     let Items = props.items.map( item => ({...item}))
     let Rows: any[] = []
-    let RowHeights: number[] = []
     let HiradumiDiv: any = null
     let PrevScrollTo = {key: null, value: null}
 
@@ -177,7 +176,6 @@ const Hiradumi = (props: Props) => {
     }
 
     Rows = rows
-    RowHeights = rowHeights
 
     const ScrollTo = (key: string, value: any) => {
         let index: number
@@ -190,7 +188,7 @@ const Hiradumi = (props: Props) => {
         })
         // スクロール量を計算
         let scrollHeight = props.padding
-        RowHeights.some((rowHeight, i) => {
+        rowHeights.some((rowHeight, i) => {
             if (i===index) return true
             scrollHeight += rowHeight
         })
@@ -213,9 +211,11 @@ const Hiradumi = (props: Props) => {
     }
 
     let totalHeight = 0
-    RowHeights.some((rowHeight, i) => {
+    rowHeights.some((rowHeight, i) => {
         totalHeight += rowHeight
     })
+    console.log('totalHeight:' + totalHeight)
+    console.log('Rows.length:' + Rows.length)
     console.log('estimatedItemSize:' + totalHeight/Rows.length)
 
     return (<div className={props.className ? props.className : 'hiradumi'} ref={(element) => HiradumiDiv = element}>
@@ -223,7 +223,7 @@ const Hiradumi = (props: Props) => {
             width={props.width}
             height={props.height}
             itemCount={Rows.length}
-            itemSize={(index: number) => RowHeights[index]}
+            itemSize={(index: number) => rowHeights[index]}
             estimatedItemSize={totalHeight/Rows.length}
             onScroll={(event: any) => {
                 if (!HiradumiDiv) return
