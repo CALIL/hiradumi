@@ -216,7 +216,8 @@ const Hiradumi = (props: Props) => {
     })
     console.log('totalHeight:' + totalHeight)
     console.log('Rows.length:' + Rows.length)
-    console.log('estimatedItemSize:' + totalHeight/Rows.length)
+    const estimatedItemSize = totalHeight/Rows.length
+    console.log('estimatedItemSize:' + estimatedItemSize)
 
     return (<div className={props.className ? props.className : 'hiradumi'} ref={(element) => HiradumiDiv = element}>
         <List
@@ -224,7 +225,7 @@ const Hiradumi = (props: Props) => {
             height={props.height}
             itemCount={Rows.length}
             itemSize={(index: number) => rowHeights[index]}
-            estimatedItemSize={totalHeight/Rows.length}
+            estimatedItemSize={estimatedItemSize}
             onScroll={(event: any) => {
                 if (!HiradumiDiv) return
                 const scrollArea = HiradumiDiv.firstElementChild
