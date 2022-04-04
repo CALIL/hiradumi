@@ -216,6 +216,7 @@ const Hiradumi = (props: Props) => {
     RowHeights.some((rowHeight, i) => {
         totalHeight += rowHeight
     })
+    console.log('estimatedItemSize:' + totalHeight/Rows.length)
 
     return (<div className={props.className ? props.className : 'hiradumi'} ref={(element) => HiradumiDiv = element}>
         <List
