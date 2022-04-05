@@ -21,5 +21,5 @@ interface Props {
     footerHeight: number;
     innerStyle: any;
 }
-declare const Hiradumi: (props: Props) => JSX.Element;
+declare const Hiradumi: (props: Props) => JSX.Element | null;
 export default Hiradumi;

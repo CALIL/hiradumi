@@ -9,7 +9,6 @@ interface App {
   settingUI: any
 }
 interface Props {
-  items: any[]
 }
 interface State {
   items: any[]

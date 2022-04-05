@@ -5,7 +5,6 @@ interface App {
     settingUI: any;
 }
 interface Props {
-    items: any[];
 }
 interface State {
     items: any[];
@@ -27,6 +26,6 @@ declare class App extends Component<Props, State> {
     constructor(props: Props);
     componentDidMount(): void;
     onChange(state: State): void;
-    render(): JSX.Element | null;
+    render(): JSX.Element;
 }
 export default App;
