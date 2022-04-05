@@ -105,6 +105,10 @@ interface Props {
 
 const Hiradumi = (props: Props) => {
 
+    // itemsがない場合は、estimatedItemSizeが出せないので、なにも処理しない
+    // VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
+    if (props.items===undefined || props.items===null || props.items.length===0) return null
+
     let Items = props.items.map( item => ({...item}))
     let Rows: any[] = []
     let HiradumiDiv: any = null

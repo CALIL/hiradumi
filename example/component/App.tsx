@@ -32,7 +32,7 @@ class App extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      items: props.items,
+      items: [],
       itemHeight: 200,
       width: 100,
       height: 0,
@@ -70,6 +70,10 @@ class App extends Component<Props, State> {
         key: 'isbn', value: isbn
       }})
     }
+
+    fetch('https://bookdata-fair.calil.dev/all.json').then((r) => r.json()).then((r) => {
+      this.setState({items: r})
+    })
   } 
 
   onChange(state: State) {
@@ -83,11 +87,8 @@ class App extends Component<Props, State> {
   }
 
   render() {
-    
-    if (!this.state.items) return null
-
-
-    return (
+    console.log(this.state.items)
+        return (
       <div>
           {this.state.rowRatios ? (
             <React.Fragment>
