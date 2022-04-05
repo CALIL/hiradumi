@@ -107,6 +107,7 @@ const Hiradumi = (props: Props) => {
 
     // itemsがない場合は、estimatedItemSizeが出せないので、なにも処理しない
     // VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
+    // https://github.com/bvaughn/react-window/blob/d80bef25fe706d0c73fc801674c086f681811190/src/VariableSizeList.js#L274
     if (props.items===undefined || props.items===null || props.items.length===0) return null
 
     let Items = props.items.map( item => ({...item}))
@@ -218,10 +219,10 @@ const Hiradumi = (props: Props) => {
     rowHeights.some((rowHeight, i) => {
         totalHeight += rowHeight
     })
-    console.log('totalHeight:' + totalHeight)
-    console.log('Rows.length:' + Rows.length)
+    // console.log('totalHeight:' + totalHeight)
+    // console.log('Rows.length:' + Rows.length)
     const estimatedItemSize = totalHeight/Rows.length
-    console.log('estimatedItemSize:' + estimatedItemSize)
+    // console.log('estimatedItemSize:' + estimatedItemSize)
 
     return (<div className={props.className ? props.className : 'hiradumi'} ref={(element) => HiradumiDiv = element}>
         <List
