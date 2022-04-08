@@ -24,6 +24,16 @@ https://github.com/CALIL/hiradumi/tree/master/example
 npm install github:CALIL/hiradumi#master
 ```
 
+### 概念
+
+- Hiradumi　領域全体
+    - Row　1行
+        - Item　表示するアイテム
+
+### 利用ライブラリ
+
+大量のデータ表示のために[react-window](https://github.com/bvaughn/react-window)の[VariableSizeList](https://react-window.vercel.app/#/api/VariableSizeList)を利用
+
 ### プロパティ
 
 | プロパティ | 型 | 説明 |
@@ -47,8 +57,9 @@ npm install github:CALIL/hiradumi#master
 | footerComponent | number | footerコンポーネントの高さ(px) |
 | innerStyle | css | Hiradumi内のreact-windowに追加するCSS |
 
-- items　Itemの配列データ  
-　　　　　画像のアスペクト比(width/height)が必須
+- items  
+    Itemの配列データ  
+　　画像のアスペクト比(aspect=width/height)が必須
 
 ```
 interface Item {
