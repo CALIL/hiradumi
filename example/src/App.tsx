@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Hiradumi from 'hiradumi';
+import Item from './Item'
 
 const HiradumiView = (props) => {
     const [items, setItems] = useState([])
@@ -61,7 +62,7 @@ const HiradumiView = (props) => {
             itemMargin={10}
             rowCount={Infinity}
             rowRatios={rowRatios}
-            // itemComponent={Item}
+            itemComponent={Item}
             className={'hiradumi'}
             sortKey={null}
             onScroll={(e) => {}}
