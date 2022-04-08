@@ -24,51 +24,8 @@ https://github.com/CALIL/hiradumi/tree/master/example
 npm install github:CALIL/hiradumi#master
 ```
 
+### プロパティ
 
-[Hiradumi.tsx](./src/Hiradumi.tsx)
-
-```
-
-interface Props {
-    width: number
-    height: number
-    padding: number
-    className: string
-
-    items: any[]
-    itemHeight: number
-    itemMargin: number
-    itemComponent: any
-
-    rowCount: number
-    rowRatios: number[]
-
-    sortKey: string | null
-    onScroll: (event:any) => void
-    scrollTo: {
-        key: string
-        value: any
-    }
-
-    headerComponent: any
-    headerHeight: number
-    footerComponent: any
-    footerHeight: number
-    style: any
-}
-```
-
-- items　Itemの配列データ  
-　　　　　画像のアスペクト比(width/height)が必須
-
-    ```
-    interface Item {
-        ...
-        properties: {
-            aspect: number
-        }
-    }
-    ```
 | プロパティ | 型 | 説明 |
 | ------------- | ------------- | ------------- |
 | width | number | Hiradumiの横幅(px) |
@@ -89,6 +46,18 @@ interface Props {
 | footerComponent | React.Component | footerコンポーネント |
 | footerComponent | number | footerコンポーネントの高さ(px) |
 | innerStyle | css | Hiradumi内のreact-windowに追加するCSS |
+
+- items　Itemの配列データ  
+　　　　　画像のアスペクト比(width/height)が必須
+
+```
+interface Item {
+    ...
+    properties: {
+        aspect: number
+    }
+}
+```
 
 ## 実装コンセプト
 
