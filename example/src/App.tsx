@@ -1,34 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import ReactDom from 'react-dom';
-
-
 import Hiradumi from 'hiradumi';
-
-
-const getElementMarginHeight = (element) => {
-const styles = window.getComputedStyle(element);
-return parseInt(styles.marginTop || 0) + parseInt(styles.marginBottom || 0);
-}
-
-const getElementHeight = (element) => {
-return getElementMarginHeight(element) + element.offsetHeight;
-}
-
-// setSizeの中で、高さを計算する要素のリスト CSSのセレクタ記法で指定
-const calcHeightObjects = ['header', '.head', '.emtop']
 
 const HiradumiView = (props) => {
     const [items, setItems] = useState([])
     const [height, setHeight] = useState(window.innerHeight)
     const [width, setWidth] = useState(window.innerWidth)
     const setSize = () => {
-        const app = document.querySelector('#app')
-        const heights = calcHeightObjects.reduce((previousValue, currentValue) => {
-        const element = document.querySelector(currentValue)
-        return previousValue + getElementHeight(element)
-        }, 0)
-        // Hiradumiの高さ・横幅の計算
-        setHeight(window.innerHeight - getElementMarginHeight(app) - heights)
+        setHeight(window.innerHeight)
         setWidth(window.innerWidth)
     }
     useEffect(() => {
