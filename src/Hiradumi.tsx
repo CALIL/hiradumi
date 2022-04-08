@@ -177,30 +177,16 @@ const Hiradumi = (props: Props) => {
         
                 if (typeof row.type==='undefined') {
                     // paddingを反映
-                    rowStyle.top = parseInt(rowItem.style.top) + props.padding + 'px'
+                    rowStyle.top = rowItem.style.top + 'px'
                     rowStyle.left = props.padding + 'px'
                     rowStyle.width = `calc(100% - ${props.padding * 2}px)`
                     rowStyle.boxSizing = 'border-box'
-                    const itemHeights: number[] = []
-                    row.map((item: any, index: number) => {
-                        itemHeights.push(item.height)
-                    })
-                    const maxItemHeight = Math.max(...itemHeights)
-                    if (rowStyle.height > maxItemHeight) {
-                        rowStyle.height = maxItemHeight + props.itemMargin
-                    }
+                    rowStyle.overflow = 'hidden'
                     return (
                         <div className="row" style={rowStyle} key={'row'}>
                             {row.map((item: any, index: number) => {
                                 let width = item.width
                                 let height = item.height
-                                // 行の高さよりItemの高さが高かった場合の対策
-                                // 行の高さはVariableSizeListから与えられる
-                                if (item.height > rowStyle.height) {
-                                    const resizeRatio = rowStyle.height / item.height
-                                    width = item.width * resizeRatio
-                                    height = rowStyle.height - props.itemMargin
-                                }
                                 return (<div key={'item' + index} className="item" id={item.id} style={{
                                     display: 'inline-block',
                                     width: width + 'px',
@@ -220,7 +206,7 @@ const Hiradumi = (props: Props) => {
                     )
                 // ヘッダー・フッター
                 } else {
-                    rowStyle.top = parseInt(rowItem.style.top) + props.padding + 'px'
+                    rowStyle.top = rowItem.style.top + 'px'
                     rowStyle.marginTop = props.itemMargin / 2
                     return (
                         <div className="row" style={rowStyle}>
