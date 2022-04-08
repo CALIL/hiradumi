@@ -181,6 +181,14 @@ const Hiradumi = (props: Props) => {
                     rowStyle.left = props.padding + 'px'
                     rowStyle.width = `calc(100% - ${props.padding * 2}px)`
                     rowStyle.boxSizing = 'border-box'
+                    const itemHeights: number[] = []
+                    row.map((item: any, index: number) => {
+                        itemHeights.push(item.height)
+                    })
+                    const maxItemHeight = Math.max(...itemHeights)
+                    if (rowStyle.height > maxItemHeight) {
+                        rowStyle.height = maxItemHeight + props.itemMargin
+                    }
                     return (
                         <div className="row" style={rowStyle} key={'row'}>
                             {row.map((item: any, index: number) => {
@@ -191,7 +199,7 @@ const Hiradumi = (props: Props) => {
                                 if (item.height > rowStyle.height) {
                                     const resizeRatio = rowStyle.height / item.height
                                     width = item.width * resizeRatio
-                                    height = rowStyle.height                                    
+                                    height = rowStyle.height - props.itemMargin
                                 }
                                 return (<div key={'item' + index} className="item" id={item.id} style={{
                                     display: 'inline-block',
