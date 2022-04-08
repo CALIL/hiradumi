@@ -12,6 +12,9 @@
 ## デモ
 [https://calil.github.io/hiradumi/](https://calil.github.io/hiradumi/)
 
+## 実装サンプル
+
+https://github.com/CALIL/hiradumi/tree/master/example
 
 ## 利用方法
 
@@ -95,14 +98,6 @@ interface Props {
 - この繰り返しで、行を表示する
 - 各Itemのaspect比は違うので、行の高さのパターンは繰り返しでも違って見える
 - これによって、一定の見た目のランダム性、平積み感を出す
-
-## サンプルコード
-
-[App.tsx](./src/component/App.tsx)
-
-## サンプルデータ
-
-[岐阜県中津川市で人気の本](https://storage.googleapis.com/pickup-books/Gifu_Nakatsugawa.json)
 
 # 開発
 

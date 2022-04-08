@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "hiradumi": "github:CALIL/hiradumi",
+    "hiradumi": "github:CALIL/hiradumi#master",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "vite": "^2.9.1"

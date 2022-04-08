@@ -53,29 +53,29 @@ const HiradumiView = (props) => {
 
     return (
         <Hiradumi
-        width={width}
-        height={height}
-        items={items}
-        padding={10}
-        itemHeight={200}
-        itemMargin={10}
-        rowCount={Infinity}
-        rowRatios={rowRatios}
-        // itemComponent={Item}
-        className={'hiradumi'}
-        sortKey={null}
-        onScroll={(e) => {}}
-        // headerComponent={null}
-        // headerHeight={50}
-        // footerComponent={null}
-        // footerHeight={50}
-        innerStyle={
-            {
-            // backgroundColor: 'red'
+            width={width}
+            height={height}
+            items={items}
+            padding={10}
+            itemHeight={200}
+            itemMargin={10}
+            rowCount={Infinity}
+            rowRatios={rowRatios}
+            // itemComponent={Item}
+            className={'hiradumi'}
+            sortKey={null}
+            onScroll={(e) => {}}
+            // headerComponent={null}
+            // headerHeight={50}
+            // footerComponent={null}
+            // footerHeight={50}
+            innerStyle={
+                {
+                // backgroundColor: 'red'
+                }
             }
-        }
-        // @ts-ignore
-        // scrollTo={}
+            // @ts-ignore
+            // scrollTo={}
         />
     )
 }
