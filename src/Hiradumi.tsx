@@ -4,77 +4,6 @@ import { VariableSizeList as List } from 'react-window'
 
 import DefaultItem from './DefaultItem'
 
-function getScrollbarWidth() {
-    const outer = document.createElement('div')
-    outer.style.visibility = 'hidden'
-    outer.style.overflow = 'scroll'
-    document.body.appendChild(outer)
-  
-    const inner = document.createElement('div')
-    outer.appendChild(inner)
-  
-    const scrollBarWidth = (outer.offsetWidth - inner.offsetWidth)
- 
-    if (outer.parentNode) outer.parentNode.removeChild(outer)
-    return scrollBarWidth
-}
-
-// 行の幅の範囲内にアイテムを入れる
-const putItem = (currentItems: any[], rowWidth: number, rowRatio: number, itemHeight: number, itemMargin: number) => {
-    const items:any[] = []
-    let rowTotalWidth = 0
-    
-    const height = itemHeight * rowRatio
-    currentItems.some((item) => {
-        const hasAspect = item.properties && item.properties.aspect
-        const aspect: number = hasAspect ? item.properties.aspect : 0.666666
-        const width = Math.floor(height * aspect) + itemMargin
-        // 行よりも大きくなるなら終了
-        if (rowTotalWidth + width > rowWidth) return true
-        item.height = height
-        item.width = width
-        items.push(item)
-        rowTotalWidth += width
-    })
-    return items
-}
-
-// 前の行をrowTotalWidth分詰めて、今の行を押し込む
-const pushPreviousRow = (items: any[], prevItems: any[], rowTotalWidth: number) => {
-    const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
-    const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
-    prevItems.some((item) => {
-        item.width = Math.floor(item.width * scaleDownRatio)
-        item.height = Math.floor(item.height * scaleDownRatio)
-    })
-    // 今の行のサイズを調整
-    const scaleRatio = prevItems[0].height / items[0].height
-    items.some((item) => {
-        item.width = Math.floor(item.width * scaleRatio)
-        item.height = Math.floor(item.height * scaleRatio)
-    })
-    return prevItems.concat(items)
-}
-
-// sortKeyでソートして、中央から並べ直す
-const sortCenter = (items: any[], sortLabel: string) => {
-    if (sortLabel) {
-        items.sort(function (a, b) {
-            if (a[sortLabel] < b[sortLabel]) return 1
-            if (a[sortLabel] > b[sortLabel]) return -1
-            return 0
-        })
-    }
-    const newRowData: any = {}
-    const centerIndex = Math.floor(items.length / 2)
-    newRowData[centerIndex] = items[0]
-    Array.from({ length: centerIndex }).forEach((item, index) => {
-        if (items[index * 2 + 1]) newRowData[centerIndex - 1 - index] = items[index * 2 + 1]
-        if (items[index * 2 + 2]) newRowData[centerIndex + 1 + index] = items[index * 2 + 2]
-    })
-    return Object.values(newRowData)
-}
-
 interface Props {
     width: number
     height: number
@@ -289,3 +218,75 @@ const Hiradumi = (props: Props) => {
 }
 
 export default Hiradumi
+
+
+function getScrollbarWidth() {
+    const outer = document.createElement('div')
+    outer.style.visibility = 'hidden'
+    outer.style.overflow = 'scroll'
+    document.body.appendChild(outer)
+  
+    const inner = document.createElement('div')
+    outer.appendChild(inner)
+  
+    const scrollBarWidth = (outer.offsetWidth - inner.offsetWidth)
+ 
+    if (outer.parentNode) outer.parentNode.removeChild(outer)
+    return scrollBarWidth
+}
+
+// 行の幅の範囲内にアイテムを入れる
+const putItem = (currentItems: any[], rowWidth: number, rowRatio: number, itemHeight: number, itemMargin: number) => {
+    const items:any[] = []
+    let rowTotalWidth = 0
+    
+    const height = itemHeight * rowRatio
+    currentItems.some((item) => {
+        const hasAspect = item.properties && item.properties.aspect
+        const aspect: number = hasAspect ? item.properties.aspect : 0.666666
+        const width = Math.floor(height * aspect) + itemMargin
+        // 行よりも大きくなるなら終了
+        if (rowTotalWidth + width > rowWidth) return true
+        item.height = height
+        item.width = width
+        items.push(item)
+        rowTotalWidth += width
+    })
+    return items
+}
+
+// 前の行をrowTotalWidth分詰めて、今の行を押し込む
+const pushPreviousRow = (items: any[], prevItems: any[], rowTotalWidth: number) => {
+    const prevRowTotalWidth = prevItems.reduce((size, item) => size + item.width, 0)
+    const scaleDownRatio = prevRowTotalWidth / (prevRowTotalWidth + rowTotalWidth)
+    prevItems.some((item) => {
+        item.width = Math.floor(item.width * scaleDownRatio)
+        item.height = Math.floor(item.height * scaleDownRatio)
+    })
+    // 今の行のサイズを調整
+    const scaleRatio = prevItems[0].height / items[0].height
+    items.some((item) => {
+        item.width = Math.floor(item.width * scaleRatio)
+        item.height = Math.floor(item.height * scaleRatio)
+    })
+    return prevItems.concat(items)
+}
+
+// sortKeyでソートして、中央から並べ直す
+const sortCenter = (items: any[], sortLabel: string) => {
+    if (sortLabel) {
+        items.sort(function (a, b) {
+            if (a[sortLabel] < b[sortLabel]) return 1
+            if (a[sortLabel] > b[sortLabel]) return -1
+            return 0
+        })
+    }
+    const newRowData: any = {}
+    const centerIndex = Math.floor(items.length / 2)
+    newRowData[centerIndex] = items[0]
+    Array.from({ length: centerIndex }).forEach((item, index) => {
+        if (items[index * 2 + 1]) newRowData[centerIndex - 1 - index] = items[index * 2 + 1]
+        if (items[index * 2 + 2]) newRowData[centerIndex + 1 + index] = items[index * 2 + 2]
+    })
+    return Object.values(newRowData)
+}
