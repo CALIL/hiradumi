@@ -113,7 +113,7 @@ const Hiradumi = (props: Props) => {
 
     const ScrollTo = (key: string, value: any) => {
         let index: number
-        // 対象となあるitemを探す
+        // 対象となるitemを探す
         Rows.some((items, i) => {
             if (typeof items.type==='undefined' && items.filter((item: any)=> item[key] === value).length > 0) {
                 index = i

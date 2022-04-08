@@ -42,20 +42,20 @@ npm install github:CALIL/hiradumi#master
 | height | number | Hiradumiの縦幅(px) |
 | padding | number | Hiradumiの余白(px) |
 | className | string | Hiradumiの領域につけるクラス名<br />デフォルトはhiradumi |
+| rowCount | number | 最大行数 上限を不明な場合、Infinityを指定 |
+| rowRatios | number[] | 行ごとのItemの比率 |
+| innerStyle | css | Hiradumi内のreact-windowに追加するCSS |
 | items | Item[] | 画像のアスペクト比が入ったItemの配列 |
 | itemHeight | number | Itemの高さの基準 |
 | itemMargin | number | Itemのマージン |
 | itemComponent | ReactComponent | Itemを表示するコンポーネント<br />デフォルトは[DefaultItem.tsx](./src/DefaultItem.tsx) |
-| rowCount | number | 最大行数 上限を不明な場合、Infinityを指定 |
-| rowRatios | number[] | 行ごとの比率 |
-| sortKey | string | null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
-| onScroll | (event) => void | スクロール時に呼び出される関数 |
-| scrollTo | {key: string, value: any} | ItemのkeyがvalueであるItemまでスクロールする |
 | headerComponent | React.Component | headerコンポーネント |
 | headerHeight | number | headerコンポーネントの高さ(px) |
 | footerComponent | React.Component | footerコンポーネント |
 | footerComponent | number | footerコンポーネントの高さ(px) |
-| innerStyle | css | Hiradumi内のreact-windowに追加するCSS |
+| onScroll | (event) => void | スクロール時に呼び出される関数 |
+| scrollTo | {key: string, value: any} | ItemのkeyがvalueであるItemまでスクロールする |
+| sortKey | string | null | １行毎のデータの並び替えに使うキーを指定。数値が高いものほど中央に表示する。 |
 
 - items  
     Itemの配列データ  
