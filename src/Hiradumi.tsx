@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 // @ts-ignore
 import { VariableSizeList as List } from 'react-window'
 
@@ -32,12 +32,26 @@ interface Props {
     innerStyle: any
 }
 
-const Hiradumi = (props: Props) => {
+// VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
+// propsの変更の際、一度消してから表示する
+const HiradumiWrapper = (props: Props) => {
+    const [show, setShow] = useState(false)
+    useEffect(() => {
+        setShow(false)
+        setTimeout(() => setShow(true), 10)
+    }, [props]);
 
     // itemsがない場合は、estimatedItemSizeが出せないので、なにも処理しない
     // VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
     // https://github.com/bvaughn/react-window/blob/d80bef25fe706d0c73fc801674c086f681811190/src/VariableSizeList.js#L274
     if (props.items===undefined || props.items===null || props.items.length===0) return null
+
+    if (show===false) return null
+    return <Hiradumi {...props} />
+}
+export default HiradumiWrapper
+
+const Hiradumi = (props: Props) => {
 
     let Items = props.items.map( item => ({...item}))
     let Rows: any[] = []
@@ -218,8 +232,6 @@ const Hiradumi = (props: Props) => {
         </List>
     </div>)
 }
-
-export default Hiradumi
 
 
 function getScrollbarWidth() {

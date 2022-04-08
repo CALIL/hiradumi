@@ -76,13 +76,7 @@ class App extends Component<Props, State> {
   } 
 
   onChange(state: State) {
-    if ('itemHeight' in state) this.setState({showHiradumi: false})
     this.setState(state)
-    if ('itemHeight' in state) {
-      setTimeout(() => {
-        this.setState({showHiradumi: true})
-      }, 100)
-    }
   }
 
   render() {
