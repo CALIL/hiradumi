@@ -33,7 +33,6 @@ const HiradumiView = (props) => {
             setTimeout(() => {
                 if (width !== window.innerHeight) setSize()
             }, 500)
-
         })
         window.addEventListener('orientationchange', () => {
             setTimeout(setSize.bind(this), 100)

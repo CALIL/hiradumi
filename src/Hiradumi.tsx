@@ -51,6 +51,7 @@ const HiradumiWrapper = (props: Props) => {
 }
 export default HiradumiWrapper
 
+
 const Hiradumi = (props: Props) => {
 
     let Items = props.items.map( item => ({...item}))
