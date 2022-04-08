@@ -169,26 +169,35 @@ const Hiradumi = (props: Props) => {
             }}
             style={props.innerStyle}
         >
-            {(item: any) => {
+            {(rowItem: any) => {
 
-                const row = Rows[item.index]
-                const rowStyle = JSON.parse(JSON.stringify(item.style))
+                const row = Rows[rowItem.index]
+                const rowStyle = JSON.parse(JSON.stringify(rowItem.style))
                 rowStyle.display = 'flex'
                 rowStyle.justifyContent = 'space-between'
         
                 if (typeof row.type==='undefined') {
                     // paddingを反映
-                    rowStyle.top = parseInt(item.style.top) + props.padding + 'px'
+                    rowStyle.top = parseInt(rowItem.style.top) + props.padding + 'px'
                     rowStyle.left = props.padding + 'px'
                     rowStyle.width = `calc(100% - ${props.padding * 2}px)`
                     rowStyle.boxSizing = 'border-box'
                     return (
                         <div className="row" style={rowStyle} key={'row'}>
                             {row.map((item: any, index: number) => {
+                                let width = item.width
+                                let height = item.height
+                                // 行の高さよりItemの高さが高かった場合の対策
+                                // 行の高さはVariableSizeListから与えられる
+                                if (item.height > rowStyle.height) {
+                                    const resizeRatio = rowStyle.height / item.height
+                                    width = item.width * resizeRatio
+                                    height = rowStyle.height                                    
+                                }
                                 return (<div key={'item' + index} className="item" id={item.id} style={{
                                     display: 'inline-block',
-                                    width: item.width + 'px',
-                                    height: item.height + 'px',
+                                    width: width + 'px',
+                                    height: height + 'px',
                                     margin: props.itemMargin / 2 + 'px'
                                 }}>
                                 {(() => {
@@ -204,7 +213,7 @@ const Hiradumi = (props: Props) => {
                     )
                 // ヘッダー・フッター
                 } else {
-                    rowStyle.top = parseInt(item.style.top) + props.padding + 'px'
+                    rowStyle.top = parseInt(rowItem.style.top) + props.padding + 'px'
                     rowStyle.marginTop = props.itemMargin / 2
                     return (
                         <div className="row" style={rowStyle}>

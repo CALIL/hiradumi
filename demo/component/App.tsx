@@ -86,8 +86,8 @@ class App extends Component<Props, State> {
   }
 
   render() {
-    console.log(this.state.items)
-        return (
+    // console.log(this.state.items)
+    return (
       <div>
           {this.state.rowRatios ? (
             <React.Fragment>
