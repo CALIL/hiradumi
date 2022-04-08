@@ -34,11 +34,14 @@ interface Props {
 
 // VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
 // propsの変更の際、一度消してから表示する
+let prevProps: any = null
 const HiradumiWrapper = (props: Props) => {
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(true)
+    const [lock, setLock] = useState(false)
+    let timer: any
     useEffect(() => {
         setShow(false)
-        setTimeout(() => setShow(true), 10)
+        timer = setTimeout(() => setShow(true), 100)
     }, [props]);
 
     // itemsがない場合は、estimatedItemSizeが出せないので、なにも処理しない
@@ -196,7 +199,6 @@ const Hiradumi = (props: Props) => {
                     rowStyle.left = props.padding + 'px'
                     rowStyle.width = `calc(100% - ${props.padding * 2}px)`
                     rowStyle.boxSizing = 'border-box'
-                    rowStyle.overflow = 'hidden'
                     return (
                         <div className="row" style={rowStyle} key={'row'}>
                             {row.map((item: any, index: number) => {
