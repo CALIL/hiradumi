@@ -59,7 +59,6 @@ const Hiradumi = (props: Props) => {
 
     const rowMaxWidth = props.width - props.padding * 2 - getScrollbarWidth()
     for (let i = 0; itemsInProcess.length > 0 && rows.length <= props.rowCount; i++) {
-
         const rowRatioIndex = i % props.rowRatios.length
         const rowRatio = props.rowRatios[rowRatioIndex]
 
@@ -255,7 +254,9 @@ const putItem = (currentItems: any[], rowWidth: number, rowRatio: number, itemHe
         const aspect: number = hasAspect ? item.properties.aspect : 0.666666
         const width = Math.floor(height * aspect) + itemMargin
         // 行よりも大きくなるなら終了
-        if (rowTotalWidth + width > rowWidth) return true
+        if (rowTotalWidth + width > rowWidth) {
+            if (items.length > 0) return true
+        }
         item.height = height
         item.width = width
         items.push(item)
