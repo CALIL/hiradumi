@@ -20,4 +20,3 @@ build/
 dist/
 docs/
 tmp/
-*.d.ts

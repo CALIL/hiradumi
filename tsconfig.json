@@ -15,7 +15,7 @@
       "noEmit": false,
       "noImplicitAny": true,
       "jsx": "react",
-      "declaration": true
+      "declaration": false
     },
     "include": ["./src", "./example"]
 }
