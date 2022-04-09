@@ -34,10 +34,8 @@ interface Props {
 
 // VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
 // propsの変更の際、一度消してから表示する
-let prevProps: any = null
 const HiradumiWrapper = (props: Props) => {
     const [show, setShow] = useState(true)
-    const [lock, setLock] = useState(false)
     let timer: any
     useEffect(() => {
         setShow(false)
