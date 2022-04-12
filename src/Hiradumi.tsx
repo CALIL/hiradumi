@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 // @ts-ignore
 import { VariableSizeList as List } from 'react-window'
 
@@ -32,24 +32,57 @@ interface Props {
     innerStyle: any
 }
 
+interface State {
+    show: boolean
+}
+
 // VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
 // propsの変更の際、一度消してから表示する
-const HiradumiWrapper = (props: Props) => {
-    const [show, setShow] = useState(true)
-    let timer: any
-    useEffect(() => {
-        setShow(false)
-        timer = setTimeout(() => setShow(true), 100)
-    }, [props]);
+let timer: any = null
+class HiradumiWrapper extends React.Component<Props, State> {
+    constructor(props: Props) {
+      super(props);
+      this.state = {
+          show: true
+      }
+    }
+    componentDidUpdate(prevProps: Props) {
+        const propsJSON = JSON.stringify(Object.entries(this.props).sort());
+        const prevPropsJSON = JSON.stringify(Object.entries(prevProps).sort());
+        if (propsJSON!==prevPropsJSON) {
+            this.setState({show: false})
+            timer = setTimeout(() => this.setState({show: true}), 100)
+        }
+    }
+ 
+    render() {
+        // itemsがない場合は、estimatedItemSizeが出せないので、なにも処理しない
+        // VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
+        // https://github.com/bvaughn/react-window/blob/d80bef25fe706d0c73fc801674c086f681811190/src/VariableSizeList.js#L274
+        if (this.props.items===undefined || this.props.items===null || this.props.items.length===0) return null
 
-    // itemsがない場合は、estimatedItemSizeが出せないので、なにも処理しない
-    // VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
-    // https://github.com/bvaughn/react-window/blob/d80bef25fe706d0c73fc801674c086f681811190/src/VariableSizeList.js#L274
-    if (props.items===undefined || props.items===null || props.items.length===0) return null
-
-    if (show===false) return null
-    return <Hiradumi {...props} />
+        if (this.state.show===false) return null
+        return <Hiradumi {...this.props} />
+    }
 }
+
+// useState, useEffectを使うと、利用先でエラーになるため書き換え
+// const HiradumiWrapper = (props: Props) => {
+//     const [show, setShow] = useState(true)
+//     let timer: any
+//     useEffect(() => {
+//         setShow(false)
+//         timer = setTimeout(() => setShow(true), 100)
+//     }, [props]);
+
+//     // itemsがない場合は、estimatedItemSizeが出せないので、なにも処理しない
+//     // VariableSizeListのestimatedItemSizeは、最初の1回しか処理されないため
+//     // https://github.com/bvaughn/react-window/blob/d80bef25fe706d0c73fc801674c086f681811190/src/VariableSizeList.js#L274
+//     if (props.items===undefined || props.items===null || props.items.length===0) return null
+
+//     if (show===false) return null
+//     return <Hiradumi {...props} />
+// }
 export default HiradumiWrapper
 
 
