@@ -19,6 +19,16 @@ module.exports = {
       },
     ],
   },
+  externals: [
+    {
+      react: {
+        root: 'React',
+        amd: 'react',
+        commonjs: 'react',
+        commonjs2: 'react',
+      },
+    },
+  ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
