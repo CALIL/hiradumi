@@ -51,7 +51,7 @@ class HiradumiWrapper extends React.Component<Props, State> {
         const prevPropsJSON = JSON.stringify(Object.entries(prevProps).sort());
         if (propsJSON!==prevPropsJSON) {
             this.setState({show: false})
-            timer = setTimeout(() => this.setState({show: true}), 100)
+            timer = setTimeout(() => this.setState({show: true}), 1)
         }
     }
  
