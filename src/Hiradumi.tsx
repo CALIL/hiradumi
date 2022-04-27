@@ -290,7 +290,7 @@ const putItem = (currentItems: any[], rowWidth: number, rowRatio: number, itemHe
     
     const height = itemHeight * rowRatio
     currentItems.some((item) => {
-        const hasAspect = item.properties && item.properties.aspect
+        let hasAspect = item.properties?.aspect
         const aspect: number = hasAspect ? item.properties.aspect : 0.666666
         const width = Math.floor(height * aspect) + itemMargin
         // 行よりも大きくなるなら終了
