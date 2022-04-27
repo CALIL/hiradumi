@@ -1,6 +1,6 @@
 {
     "name": "hiradumi",
-    "version": "2.0.0",
+    "version": "1.6.6",
     "description": "アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント",
     "main": "lib/index.js",
     "types": "src/index.d.ts",
