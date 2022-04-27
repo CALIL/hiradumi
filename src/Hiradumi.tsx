@@ -103,13 +103,13 @@ const Hiradumi = (props: Props) => {
     }
 
     // rowに入れる処理済みのItemのindex
-    let putInRowIndex = 0
-    let itemsInProcess = Items.slice(putInRowIndex, putInRowIndex+100)
+    let rowIndex = 0
+    const processThroughput = 100
+    let itemsInProcess = Items.slice(rowIndex, rowIndex+processThroughput)
 
     const rowMaxWidth = props.width - props.padding * 2 - getScrollbarWidth()
     for (let i = 0; itemsInProcess.length > 0 && rows.length <= props.rowCount; i++) {
-        const rowRatioIndex = i % props.rowRatios.length
-        const rowRatio = props.rowRatios[rowRatioIndex]
+        const rowRatio = props.rowRatios[i % props.rowRatios.length]
 
         // 行の幅の範囲内にアイテムを入れる
         let rowItems = putItem(itemsInProcess, rowMaxWidth, rowRatio, props.itemHeight, props.itemMargin)
@@ -147,8 +147,8 @@ const Hiradumi = (props: Props) => {
         })
         rowHeights.push(Math.max(...heights))
 
-        putInRowIndex += rowItems.length
-        itemsInProcess = Items.slice(putInRowIndex, putInRowIndex+100)
+        rowIndex += rowItems.length
+        itemsInProcess = Items.slice(rowIndex, rowIndex+processThroughput)
 
     }
 
@@ -222,7 +222,7 @@ const Hiradumi = (props: Props) => {
                 const row = Rows[rowItem.index]
                 const rowStyle = JSON.parse(JSON.stringify(rowItem.style))
                 rowStyle.display = 'flex'
-                rowStyle.justifyContent = 'space-between'
+                // rowStyle.justifyContent = 'space-between'
         
                 if (typeof row.type==='undefined') {
                     // paddingを反映
