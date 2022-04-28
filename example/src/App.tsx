@@ -63,8 +63,8 @@ const HiradumiView = (props) => {
             rowRatios={rowRatios}
             itemComponent={Item}
             className={'hiradumi'}
-            sortKey={null}
-            onScroll={(e) => {}}
+            // sortKey={null}
+            // onScroll={(e) => {}}
             // headerComponent={null}
             // headerHeight={50}
             // footerComponent={null}
