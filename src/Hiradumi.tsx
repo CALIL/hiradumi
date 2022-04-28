@@ -209,6 +209,7 @@ const Hiradumi = (props: Props) => {
             itemSize={(index: number) => rowHeights[index]}
             estimatedItemSize={estimatedItemSize}
             onScroll={(event: any) => {
+                if (typeof props.onScroll!=='function') return
                 if (!HiradumiDiv) return
                 const scrollArea = HiradumiDiv.firstElementChild
                 event.scrollTop = scrollArea.scrollTop
