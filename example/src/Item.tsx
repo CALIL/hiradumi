@@ -17,7 +17,7 @@ const Item = (props: Props) => {
         height: '100%',
     }}>
         {item.cover ? (
-            <img src={item.cover}
+            <img src={`https://iss.ndl.go.jp/thumbnail/${item.isbn}`}
                 alt={item.title}
                 data-aspect={item.properties.aspect}
                 style={{
