@@ -27,7 +27,6 @@ import Hiradumi from '@calil/hiradumi'
 const Component = () => {
     return (<Hidarumi></Hidarumi>)
 }
-
 ```
 
 
