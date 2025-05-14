@@ -10,14 +10,20 @@ type Props = {
   data: string
 }
 
+const itemHeightDefault = 100;
+const itemSizes = [0.6, 0.8, 1, 1.2];
+const defaultRatio = 2/3;
+
 const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const [rowCount, setRowCount] = useState(0);
 
+  let itemHeights: any[] = []
+
   const rowVirtualizer = useVirtualizer({
     count: rowCount,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 100,
+    estimateSize: (index: number) => itemHeights[index] || itemHeightDefault,
     overscan: 5,
   });
 
@@ -26,27 +32,22 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
   useEffect(() => {
     if (!data) return;
     const parsedData = JSON.parse(data);
-    console.log(parsedData);
+    itemHeights = [];
     // 横幅に対して、itemの幅を計算し、あふれたら次の行に移動する
-    const itemHeightDefault = 100;
-    const itemSizes = [0.6, 0.8, 1, 1.2];
-    const defaultRatio = 2/3;
     const rows = [];
     let currentRow: any[] = [];
     let currentWidth = 0;
     parsedData.forEach((item: any) => {
         const aspect = item.properties?.aspect ? item.properties.aspect : defaultRatio;
-        console.log(itemSizes[currentRow.length % itemSizes.length])
-        let itemHeight = itemHeightDefault * itemSizes[currentRow.length % itemSizes.length];
+        const selectedSize = itemSizes[currentRow.length % itemSizes.length];
+        let itemHeight = itemHeightDefault * selectedSize;
         let itemWidth = itemHeight * aspect;
-        console.log(itemWidth);
         const totalWidth = currentWidth + itemWidth;
         if (width < totalWidth) {
+            itemHeights.push(itemHeight);
             rows.push(currentRow);
             currentRow = [];
             currentWidth = 0;
-            itemHeight = itemHeightDefault * itemSizes[currentRow.length % itemSizes.length];
-            itemWidth = itemHeight * aspect;
         }
         currentRow.push(item);
         currentWidth += itemWidth;
@@ -56,7 +57,7 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
         rows.push(currentRow);
     }
     setRows(rows);
-  }, [data]);
+  }, [data, width]);
 
   useEffect(() => {
     if (!rows) return;
