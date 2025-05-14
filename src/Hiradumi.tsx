@@ -1,6 +1,7 @@
 import React from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
+import Row from './Row';
 const Hiradumi = () => {
     const parentRef = React.useRef(null)
 
@@ -9,6 +10,7 @@ const Hiradumi = () => {
         count: 10000,
         getScrollElement: () => parentRef.current,
         estimateSize: () => 35,
+        overscan: 5,
     })
     return (
     <>
@@ -41,7 +43,7 @@ const Hiradumi = () => {
                 transform: `translateY(${virtualItem.start}px)`,
               }}
             >
-              Row {virtualItem.index}
+              <Row key={virtualItem.index} index={virtualItem.index}></Row>
             </div>
           ))}
         </div>
