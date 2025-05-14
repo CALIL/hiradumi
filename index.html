@@ -24,12 +24,9 @@
     <div slot="footer">これはフッタースロットに入ります</div>
   </hiradumi-component>
   <script>
-    // DOMContentLoadedイベントを待つ
     document.addEventListener('DOMContentLoaded', () => {
-      // カスタム要素が定義されるのを待つ
       customElements.whenDefined('hiradumi-component').then(() => {
         const hiradumi = document.querySelector('hiradumi-component');
-        // requestAnimationFrameを使用して次のレンダリングサイクルで設定
         requestAnimationFrame(() => {
           hiradumi.width = window.innerWidth;
           hiradumi.height = window.innerHeight;
