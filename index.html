@@ -29,8 +29,6 @@
       // カスタム要素が定義されるのを待つ
       customElements.whenDefined('hiradumi-component').then(() => {
         const hiradumi = document.querySelector('hiradumi-component');
-        console.log(hiradumi);
-
         // requestAnimationFrameを使用して次のレンダリングサイクルで設定
         requestAnimationFrame(() => {
           hiradumi.width = window.innerWidth;
