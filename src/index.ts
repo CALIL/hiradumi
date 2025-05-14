@@ -8,7 +8,8 @@ const HiradumiWebComponent = r2wc(Hiradumi, React, ReactDOM, {
     title: "string",
     count: "number",
     highlight: "boolean"
-  }
+  },
+  shadow: "open"
 });
 
 customElements.define('hiradumi-component', HiradumiWebComponent);

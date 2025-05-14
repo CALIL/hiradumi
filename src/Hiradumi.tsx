@@ -7,17 +7,13 @@ type Props = {
   title: string;
   count: number;
   highlight: boolean;
-  header?: React.ReactNode;
-  footer?: React.ReactNode;
 };
 
 const Hiradumi: React.FC<React.PropsWithChildren<Props>> = ({
   title,
   count,
   highlight,
-  children,
-  header,
-  footer,
+  children
 }) => {
   const wrapperStyle = {
     border: highlight ? "2px solid red" : "1px solid gray",
@@ -26,13 +22,13 @@ const Hiradumi: React.FC<React.PropsWithChildren<Props>> = ({
 
   return (
     <div style={wrapperStyle}>
-      {header}
+      <slot name="header"></slot>
       <h2>{title}</h2>
       <p>Count is {count}</p>
       <div className="slot-content">
         {children}
       </div>
-      {footer}
+      <slot name="footer"></slot>
     </div>
   );
 };
