@@ -23,7 +23,7 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
   const rowVirtualizer = useVirtualizer({
     count: rowCount,
     getScrollElement: () => parentRef.current,
-    estimateSize: (index: number) => itemHeights[index] || itemHeightDefault,
+    estimateSize: (index: number) => itemHeights[index],
     overscan: 5,
   });
 
