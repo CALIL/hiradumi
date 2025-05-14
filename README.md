@@ -10,6 +10,27 @@
 - npmに公開する
 
 
+## 利用方法
+
+### browser
+
+```
+<script src="https://unpkg.com/@calil/hiradumi@2.0.0/dist/hiradumi.bundle.js"></script>
+<hiradumi></hiradumi>
+```
+
+### React
+
+```
+import Hiradumi from '@calil/hiradumi'
+
+const Component = () => {
+    return (<Hidarumi></Hidarumi>)
+}
+
+```
+
+
 ## development
 
 ```
