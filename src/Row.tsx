@@ -1,4 +1,4 @@
-const Row = ({ index }) => {
+const Row = ({ index }: { index: number }) => {
     return (
         <div
         key={index}

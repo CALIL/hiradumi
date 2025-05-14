@@ -2,7 +2,7 @@ import React from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 import Row from './Row';
-const Hiradumi = () => {
+const Hiradumi = ({height, width}: {height: number, width: number}) => {
     const parentRef = React.useRef(null)
 
     // The virtualizer
@@ -18,7 +18,8 @@ const Hiradumi = () => {
       <div
         ref={parentRef}
         style={{
-          height: `400px`,
+          width: `${width}px`,
+          height: `${height}px`,
           overflow: 'auto', // Make it scroll!
         }}
       >
