@@ -24,13 +24,11 @@
     <div slot="footer">これはフッタースロットに入ります</div>
   </hiradumi-component>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      customElements.whenDefined('hiradumi-component').then(() => {
-        const hiradumi = document.querySelector('hiradumi-component');
-        requestAnimationFrame(() => {
-          hiradumi.width = window.innerWidth;
-          hiradumi.height = window.innerHeight;
-        });
+    customElements.whenDefined('hiradumi-component').then(() => {
+      const hiradumi = document.querySelector('hiradumi-component');
+      requestAnimationFrame(() => {
+        hiradumi.width = window.innerWidth;
+        hiradumi.height = window.innerHeight;
       });
     });
   </script>
