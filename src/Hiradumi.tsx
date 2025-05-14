@@ -11,7 +11,7 @@ type Props = {
 }
 
 const itemHeightDefault = 100;
-const itemSizes = [0.7, 0.8, 1, 1.2, 1.5];
+const itemSizes = [0.6, 0.8, 1, 1.2, 1.5, 2];
 const defaultRatio = 2/3;
 
 const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
@@ -39,9 +39,12 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
     let currentWidth = 0;
     parsedData.forEach((item: any) => {
         const aspect = item.properties?.aspect ? item.properties.aspect : defaultRatio;
-        const selectedSize = itemSizes[currentRow.length % itemSizes.length];
-        let itemHeight = itemHeightDefault * selectedSize;
-        let itemWidth = itemHeight * aspect;
+        // 1行毎に違うサイズを選ぶ
+        const selectedSize = itemSizes[Math.floor(Math.random() * itemSizes.length)];
+        // const selectedSize = itemSizes[currentRow.length % itemSizes.length];
+        console.log('selectedSize', selectedSize);
+        const itemHeight = itemHeightDefault * selectedSize;
+        const itemWidth = itemHeight * aspect;
         const totalWidth = currentWidth + itemWidth;
         if (width < totalWidth) {
             itemHeights.push(itemHeight);

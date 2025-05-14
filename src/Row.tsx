@@ -9,6 +9,7 @@ const Row = ({ index, data }: Props) => {
             key={index}
             style={{
                 display: 'flex',
+                alignItems: 'center',
             }}
         >
             {data.map((item: any, i: number) => {
