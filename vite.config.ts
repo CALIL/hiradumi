@@ -6,13 +6,19 @@ export default defineConfig({
   plugins: [react()],
   base: '/',
   build: {
-    target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari12'],
+    lib: {
+      entry: 'src/index.ts',
+      formats: ['iife'], // ブラウザ向け (IIFE形式)
+      name: 'MyComponentBundle',
+      fileName: () => 'my-component.bundle.js',
+    },
     rollupOptions: {
+      external: [], // Reactなどもバンドルする（ここを空にする）
       output: {
         entryFileNames: `assets/[name].js`,
         chunkFileNames: `assets/[name].js`,
         assetFileNames: `assets/[name].[ext]`
       }
-    }
-  }
+    },
+  },
 })

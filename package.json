@@ -1,7 +1,14 @@
 {
-  "name": "hiradumi",
+  "name": "@calil/hiradumi",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
+  "description": "Web Components for Layouting Book Images",
+  "author": "Satoshi Deguchi <deguchi@calil.jp>",
+  "license": "MIT",
+  "main": "dist/hiradumi.bundle.js",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "scripts": {
     "start": "vite --open --host",
@@ -10,7 +17,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest --disable-console-intercept",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "publish:patch": "npm version patch && npm publish --access public"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -26,9 +34,22 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "jsdom": "^26.1.0",
+    "react-to-webcomponent": "^2.0.1",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.3",
     "vitest": "^3.1.3"
-  }
+  },
+  "keywords": [
+    "web-component",
+    "hiradumi",
+    "book image",
+    "npm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CALIL/hiradumi.git"
+  },
+  "homepage": "https://github.com/CALIL/hiradumi#readme"
 }
