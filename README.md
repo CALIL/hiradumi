@@ -23,8 +23,8 @@ npm start
 npm run test
 ```
 
-## deploy
+## publish to npm
 
 ```
-npm run deploy
+npm run publish
 ```
