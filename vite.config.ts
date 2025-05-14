@@ -9,8 +9,8 @@ export default defineConfig({
     lib: {
       entry: 'src/index.ts',
       formats: ['iife'], // ブラウザ向け (IIFE形式)
-      name: 'MyComponentBundle',
-      fileName: () => 'my-component.bundle.js',
+      name: 'Hiradumi',
+      fileName: () => 'hiradumi.bundle.js',
     },
     rollupOptions: {
       external: [], // Reactなどもバンドルする（ここを空にする）

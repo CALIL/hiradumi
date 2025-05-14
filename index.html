@@ -13,7 +13,23 @@
     </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module">
+      import './src/index.ts';
+    </script>
+    <!-- <calil-hiradumi height={window.innerHeight} width={window.innerWidth}>
+      <div slot="header">Header</div>
+      <div slot="footer">Footer</div>
+      <div>Row</div>
+    </calil-hiradumi> -->
+    <hiradumi-component 
+      title="Hiradumi"
+      count="42"
+      highlight="true"
+    >
+      <div slot="header">This is header slot</div>
+      <p>This is default slot content</p>
+      <div slot="footer">This is footer slot</div>
+    </hiradumi-component>
+
   </body>
 </html>
