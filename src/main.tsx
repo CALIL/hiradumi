@@ -4,6 +4,6 @@ import Hiradumi from './Hiradumi'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Hiradumi height={window.innerHeight-20} width={window.innerWidth-20} />
+    <Hiradumi height={window.innerHeight} width={window.innerWidth} />
   </StrictMode>,
 )

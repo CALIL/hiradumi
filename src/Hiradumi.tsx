@@ -2,10 +2,10 @@ import React from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 import Row from './Row';
+
 const Hiradumi = ({height, width}: {height: number, width: number}) => {
     const parentRef = React.useRef(null)
 
-    // The virtualizer
     const rowVirtualizer = useVirtualizer({
         count: 10000,
         getScrollElement: () => parentRef.current,
