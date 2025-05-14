@@ -11,7 +11,7 @@ type Props = {
 }
 
 const itemHeightDefault = 100;
-const itemSizes = [0.6, 0.8, 1, 1.2];
+const itemSizes = [0.7, 0.8, 1, 1.2, 1.5];
 const defaultRatio = 2/3;
 
 const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
