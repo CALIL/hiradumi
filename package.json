@@ -22,6 +22,7 @@
     "publish:patch": "npm version patch && npm publish --access public"
   },
   "dependencies": {
+    "@tanstack/react-virtual": "^3.13.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
