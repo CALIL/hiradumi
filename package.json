@@ -18,6 +18,7 @@
     "preview": "vite preview",
     "test": "vitest --disable-console-intercept",
     "coverage": "vitest run --coverage",
+    "publosh": "npm login && npm publish --access public",
     "publish:patch": "npm version patch && npm publish --access public"
   },
   "dependencies": {

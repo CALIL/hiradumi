@@ -10,3 +10,21 @@
 - npmに公開する
 
 
+## development
+
+```
+npm install
+npm start
+```
+
+## test
+
+```
+npm run test
+```
+
+## deploy
+
+```
+npm run deploy
+```
