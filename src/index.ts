@@ -7,6 +7,7 @@ const HiradumiWebComponent = r2wc(Hiradumi, React, ReactDOM, {
   props: {
     width: 'number',
     height: 'number',
+    data: 'string',
   },
   shadow: 'open'
 });

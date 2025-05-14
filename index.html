@@ -20,16 +20,17 @@
     import './src/index.ts';
   </script>
   <hiradumi-component>
-    <div slot="header">これはヘッダースロットに入ります</div>
-    <div slot="footer">これはフッタースロットに入ります</div>
+    <!-- <div slot="header">これはヘッダースロットに入ります</div>
+    <div slot="footer">これはフッタースロットに入ります</div> -->
   </hiradumi-component>
   <script>
-    customElements.whenDefined('hiradumi-component').then(() => {
+    customElements.whenDefined('hiradumi-component').then(async () => {
+      const r = await fetch('https://bookdata-fair.calil.dev/all.json')
+      const data = await r.json();
       const hiradumi = document.querySelector('hiradumi-component');
-      requestAnimationFrame(() => {
-        hiradumi.width = window.innerWidth;
-        hiradumi.height = window.innerHeight;
-      });
+      hiradumi.width = window.innerWidth;
+      hiradumi.height = window.innerHeight;
+      hiradumi.data = JSON.stringify(data);
     });
   </script>
 </body>

@@ -1,64 +1,104 @@
-import React from "react";
-import { useVirtualizer } from "@tanstack/react-virtual";
+import React, {use, useEffect, useRef, useState} from 'react'
+import { useVirtualizer } from '@tanstack/react-virtual'
 
-import Row from "./Row";
+import Row from './Row'
+import { J, V } from 'vitest/dist/chunks/reporters.d.DG9VKi4m.js'
 
 type Props = {
-  height: number;
-  width: number;
-};
+  height: number
+  width: number
+  data: string
+}
 
-const Hiradumi: React.FC<Props> = ({ height, width }) => {
-  console.log(width, height);
-
-
-  const parentRef = React.useRef<HTMLDivElement>(null);
+const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
+  const parentRef = useRef<HTMLDivElement>(null);
+  const [rowCount, setRowCount] = useState(0);
 
   const rowVirtualizer = useVirtualizer({
-    count: 10000,
+    count: rowCount,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 35,
+    estimateSize: () => 100,
     overscan: 5,
   });
 
-  if (!width || !height) return null
+  const [rows, setRows] = useState(null as any[] | null);
+
+  useEffect(() => {
+    if (!data) return;
+    const parsedData = JSON.parse(data);
+    console.log(parsedData);
+    // 横幅に対して、itemの幅を計算し、あふれたら次の行に移動する
+    const itemHeightDefault = 100;
+    const itemSizes = [0.6, 0.8, 1, 1.2];
+    const defaultRatio = 2/3;
+    const rows = [];
+    let currentRow: any[] = [];
+    let currentWidth = 0;
+    parsedData.forEach((item: any) => {
+        const aspect = item.properties?.aspect ? item.properties.aspect : defaultRatio;
+        console.log(itemSizes[currentRow.length % itemSizes.length])
+        let itemHeight = itemHeightDefault * itemSizes[currentRow.length % itemSizes.length];
+        let itemWidth = itemHeight * aspect;
+        console.log(itemWidth);
+        const totalWidth = currentWidth + itemWidth;
+        if (width < totalWidth) {
+            rows.push(currentRow);
+            currentRow = [];
+            currentWidth = 0;
+            itemHeight = itemHeightDefault * itemSizes[currentRow.length % itemSizes.length];
+            itemWidth = itemHeight * aspect;
+        }
+        currentRow.push(item);
+        currentWidth += itemWidth;
+        console.log('currentWidth', currentWidth);
+    });
+    if (currentRow.length > 0) {
+        rows.push(currentRow);
+    }
+    setRows(rows);
+  }, [data]);
+
+  useEffect(() => {
+    if (!rows) return;
+    setRowCount(rows.length);
+  }, [rows]);
+
+  if (!width || !height || !rows) return null;
 
   return (
     <>
-      {/* The scrollable element for your list */}
+      {/* <slot name="header"></slot> */}
       <div
         ref={parentRef}
         style={{
           width: width,
           height: height,
-          overflow: "auto", // Make it scroll!
+          overflow: 'auto',
         }}
       >
-        <slot name="header"></slot>
-        {/* The large inner element to hold all of the items */}
         <div
           style={{
             height: `${rowVirtualizer.getTotalSize()}px`,
-            width: "100%",
-            position: "relative",
+            width: '100%',
+            position: 'relative'
           }}
         >
-          {/* Only the visible items in the virtualizer, manually positioned to be in view */}
           {rowVirtualizer.getVirtualItems().map((virtualItem) => (
             <div
               key={virtualItem.key}
               style={{
-                position: "absolute",
                 top: 0,
                 left: 0,
-                width: "100%",
+                width: '100%',
                 height: `${virtualItem.size}px`,
                 transform: `translateY(${virtualItem.start}px)`,
               }}
-            ></div>
+            >
+                <Row index={virtualItem.index} data={rows[virtualItem.index]}></Row>
+            </div>
           ))}
-          <slot name="footer"></slot>
         </div>
+        {/* <slot name="footer"></slot> */}
       </div>
     </>
   );

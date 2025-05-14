@@ -1,16 +1,34 @@
-const Row = ({ index }: { index: number }) => {
+type Props = {
+     index: number,
+     data: any
+}
+
+const Row = ({ index, data }: Props) => {
     return (
         <div
-        key={index}
-        style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '35px',
-            borderBottom: '1px solid #ccc',
-        }}
+            key={index}
+            style={{
+                display: 'flex',
+            }}
         >
-        Row {index}
+            {data.map((item: any, i: number) => {
+                return (
+                    <div
+                        key={i}
+                        style={{
+                        }}
+                    >
+                        <img
+                        src={`https://calil.jp/cover/${item.isbn}`} alt={item.title}
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                            aspectRatio: item.properties?.aspect ? item.properties.aspect : 'auto',
+                        }}
+                        />
+                    </div>
+                )
+            })}
         </div>
     );
 }
