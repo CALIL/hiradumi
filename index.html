@@ -1,31 +1,44 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hiradumi</title>
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <script type="module">
-      import './src/index.ts';
-    </script>
-    <!-- <calil-hiradumi height={window.innerHeight} width={window.innerWidth}>
-      <div slot="header">Header</div>
-      <div slot="footer">Footer</div>
-      <div>Row</div>
-    </calil-hiradumi> -->
-    <hiradumi-component title="タイトル" count="5" highlight="true">
-      <p>これはデフォルトスロットに入ります</p>
-      <div slot="header">これはヘッダースロットに入ります</div>
-      <div slot="footer">これはフッタースロットに入ります</div>
-    </hiradumi-component>
 
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hiradumi</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module">
+    import './src/index.ts';
+  </script>
+  <hiradumi-component>
+    <div slot="header">これはヘッダースロットに入ります</div>
+    <div slot="footer">これはフッタースロットに入ります</div>
+  </hiradumi-component>
+  <script>
+    // DOMContentLoadedイベントを待つ
+    document.addEventListener('DOMContentLoaded', () => {
+      // カスタム要素が定義されるのを待つ
+      customElements.whenDefined('hiradumi-component').then(() => {
+        const hiradumi = document.querySelector('hiradumi-component');
+        console.log(hiradumi);
+
+        // requestAnimationFrameを使用して次のレンダリングサイクルで設定
+        requestAnimationFrame(() => {
+          hiradumi.width = window.innerWidth;
+          hiradumi.height = window.innerHeight;
+        });
+      });
+    });
+  </script>
+</body>
+
 </html>
