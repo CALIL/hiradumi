@@ -12,7 +12,7 @@ type Props = {
   data: string
 }
 
-const itemHeightDefault = 300;
+const itemHeightDefault = 100;
 const itemSizes = [0.6, 0.8, 1, 1.2, 1.5, 2];
 const defaultRatio = 2/3;
 
@@ -67,14 +67,16 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
         position: 'relative',
         width: width,
         height: height,
-        overflow: 'auto',
+        overflowY: 'auto',
+        overflowX: 'hidden',
       }}
     >
       {items && items.length > 0 && (
         <div
           style={{
-            // display: 'flex',
-            // justifyContent: 'space-between',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'flex-start',
             width: '100%',
             position: 'relative'
           }}
