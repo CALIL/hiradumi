@@ -53,6 +53,18 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
             rowItems.forEach((rowItem) => {
                 setItemSize(rowItem, itemHeight, width / rowWidth)
             })
+            console.log('width', width)
+            const w = rowItems.reduce((acc, item) => acc + item.width, 0)
+            console.log('rowWidth', w)
+
+            const addWidth = (width - w) / rowItems.length
+            rowItems.forEach((rowItem) => {
+                rowItem.width += addWidth
+            })
+            const ww = rowItems.reduce((acc, item) => acc + item.width, 0)
+            console.log('adjustRowWidth', ww)
+
+
             // 新しい行を開始して現在の項目を追加
             rowWidth = itemWidth
             rowItems = [item]

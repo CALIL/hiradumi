@@ -6,7 +6,7 @@ type Props = {
 }
 
 const Item = (props: Props) => {
-    console.log('Item', props.item.width, props.item.height)
+    // console.log('Item', props.item.width, props.item.height)
     const { width, height } = props.item
     return (
         <div
@@ -14,7 +14,11 @@ const Item = (props: Props) => {
                 display: 'inline-flex',
                 width: width,
                 height: height,
-                border: '1px solid #ccc',
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                margin: '0',
+                padding: '0',
+                boxSizing: 'border-box',
+                border: '1px solid rgba(0, 0, 0, 0.2)',
             }}
         >
         </div>
