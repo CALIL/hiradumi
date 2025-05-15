@@ -9,7 +9,7 @@
 type Item = {
     width: number
     height: number
-    aspect?: number
+    aspect: number
 }
 
 
@@ -44,9 +44,10 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
     let itemHeight = defaultHeight
 
     processedItems.forEach((item) => {
-        const aspect = item.aspect || defaultAspect
+        // 項目のアスペクト比がないケース対応
+        item.aspect = item.aspect || defaultAspect
         itemHeight = defaultHeight
-        const itemWidth = itemHeight * aspect
+        const itemWidth = itemHeight * item.aspect
         if (rowItems.length > 0 && width < rowWidth + itemWidth) {
             // 現在の行の項目のサイズを調整
             rowItems.forEach((rowItem) => {
