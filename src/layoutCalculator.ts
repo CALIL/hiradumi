@@ -7,12 +7,12 @@
 
 
 export type ItemType = {
+    type: 'text' | 'image'
     title: string
     isbn?: string
     width: number
     height: number
     aspect?: number
-    isText?: boolean
 }
 
 

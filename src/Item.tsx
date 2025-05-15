@@ -5,7 +5,7 @@ type Props = {
 }
 
 const Item = (props: Props) => {
-    const { title, isbn, width, height, isText } = props.item
+    const { type = 'image', title, isbn, width, height } = props.item
     return (
         <div
             style={{
@@ -19,7 +19,7 @@ const Item = (props: Props) => {
                 border: '1px solid rgba(0, 0, 0, 0.1)',
             }}
         >
-            {isText ? (
+            {type=='text' ? (
                 <div
                     className="textItem"
                     style={{

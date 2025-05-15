@@ -36,11 +36,12 @@
         if (item.properties && item.properties.aspect) {
           item.aspect = item.properties.aspect;
         }
+        item.type = 'image'
         mixedItems.push(item)
         if (index % 10 === 0) {
           mixedItems.push({
+            type: 'text',
             title: 'text' + count,
-            isText: true
           })
           count++
         }
