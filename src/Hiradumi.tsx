@@ -4,7 +4,7 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 // import Row from './Row'
 import Item from './Item'
 import { layoutCalculator } from './layoutCalculator'
-import { getScrollbarWidth } from './getScrollBarWidth'
+import { getScrollbarWidth } from './utils/getScrollBarWidth'
 
 type Props = {
   height: number
