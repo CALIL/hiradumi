@@ -8,10 +8,11 @@
 
 export type ItemType = {
     title: string
-    isbn: string
+    isbn?: string
     width: number
     height: number
-    aspect: number
+    aspect?: number
+    isText?: boolean
 }
 
 

@@ -28,17 +28,27 @@
   <script>
     customElements.whenDefined('hiradumi-component').then(async () => {
       const r = await fetch('https://bookdata-fair.calil.dev/all.json')
-      const data = await r.json();
-      // console.log(data);
-      data.forEach((item) => {
+      const items = await r.json();
+      // console.log(items);
+      const mixedItems = []
+      let count = 1
+      items.forEach((item, index) => {
         if (item.properties && item.properties.aspect) {
           item.aspect = item.properties.aspect;
+        }
+        mixedItems.push(item)
+        if (index % 10 === 0) {
+          mixedItems.push({
+            title: 'text' + count,
+            isText: true
+          })
+          count++
         }
       });
       const hiradumi = document.querySelector('hiradumi-component');
       hiradumi.width = window.innerWidth;
       hiradumi.height = window.innerHeight;
-      hiradumi.data = data;
+      hiradumi.data = mixedItems;
     });
   </script>
 </body>

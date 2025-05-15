@@ -6,8 +6,6 @@ import { layoutCalculator } from './layoutCalculator'
 import type { ItemType } from './layoutCalculator'
 import { getScrollbarWidth } from './utils/getScrollBarWidth'
 
-
-
 type Props = {
   height: number
   width: number
