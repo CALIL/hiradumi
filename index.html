@@ -27,6 +27,7 @@
     customElements.whenDefined('hiradumi-component').then(async () => {
       const r = await fetch('https://bookdata-fair.calil.dev/all.json')
       const data = await r.json();
+      console.log(data);
       const hiradumi = document.querySelector('hiradumi-component');
       hiradumi.width = window.innerWidth;
       hiradumi.height = window.innerHeight;

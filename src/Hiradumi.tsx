@@ -2,7 +2,6 @@ import React, {use, useEffect, useRef, useState} from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
 
 import Row from './Row'
-import { J, V } from 'vitest/dist/chunks/reporters.d.DG9VKi4m.js'
 
 type Props = {
   height: number
@@ -42,7 +41,7 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
         // 1行毎に違うサイズを選ぶ
         const selectedSize = itemSizes[Math.floor(Math.random() * itemSizes.length)];
         // const selectedSize = itemSizes[currentRow.length % itemSizes.length];
-        console.log('selectedSize', selectedSize);
+        // console.log('selectedSize', selectedSize);
         const itemHeight = itemHeightDefault * selectedSize;
         const itemWidth = itemHeight * aspect;
         const totalWidth = currentWidth + itemWidth;
@@ -54,7 +53,7 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
         }
         currentRow.push(item);
         currentWidth += itemWidth;
-        console.log('currentWidth', currentWidth);
+        // console.log('currentWidth', currentWidth);
     });
     if (currentRow.length > 0) {
         rows.push(currentRow);
