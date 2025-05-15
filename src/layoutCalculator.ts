@@ -57,7 +57,7 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
                 setItemSize(rowItem, itemHeight, width / rowWidth)
             })
             // 各項目のサイズと横幅をもとに再調整
-            adjustItemWidth(rowItems, width, itemHeight)
+            adjustItemWidth(rowItems, width)
 
             // 新しい行を開始して現在の項目を追加
             itemHeight = defaultHeight * itemScales[rowCount % itemScales.length]
@@ -76,7 +76,7 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
         rowItems.forEach((rowItem) => {
             setItemSize(rowItem, itemHeight, width / rowWidth)
         })
-        adjustItemWidth(rowItems, width, itemHeight)
+        adjustItemWidth(rowItems, width)
     }
 
     return processedItems
@@ -116,7 +116,7 @@ export const setItemSize = (item: Item, itemHeight: number, ratio: number): void
  * @param width 行全体の目標幅
  * @param itemHeight 基準となる高さ
  */
-const adjustItemWidth = (items: Item[], width: number, itemHeight: number): void => {
+const adjustItemWidth = (items: Item[], width: number): void => {
     const diffWidth = items.reduce((acc, item) => acc + item.width, 0)
     const adjustPixelForFirefox = 0.5 // Firefoxのクセによる調整
     const addWidth = roundToDecimals((width - diffWidth - adjustPixelForFirefox) / items.length)
