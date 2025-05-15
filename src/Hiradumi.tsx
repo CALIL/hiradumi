@@ -12,7 +12,7 @@ type Props = {
   data: string
 }
 
-const itemHeightDefault = 100;
+const itemHeightDefault = 300;
 const itemSizes = [0.6, 0.8, 1, 1.2, 1.5, 2];
 const defaultRatio = 2/3;
 
@@ -34,14 +34,15 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
 
  // コンポーネント初期化時にスクロールバー幅を取得
   useEffect(() => {
-    setScrollbarWidth(getScrollbarWidth());
+    setScrollbarWidth(getScrollbarWidth())
   }, []);
 
   useEffect(() => {
     if (!data) return
     const parsedData = JSON.parse(data)
     // スクロールバー幅を考慮した有効幅を計算
-    const effectiveWidth = width - scrollbarWidth;
+    console.log('width', width, scrollbarWidth)
+    const effectiveWidth = width - scrollbarWidth
     const items = layoutCalculator(parsedData, {
       width: effectiveWidth,
       defaultHeight: itemHeightDefault,
@@ -65,8 +66,8 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
       style={{
         position: 'relative',
         width: width,
-        // height: height,
-        overflow: 'hidden',
+        height: height,
+        overflow: 'auto',
       }}
     >
       {items && items.length > 0 && (

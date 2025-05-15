@@ -53,7 +53,7 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
             rowItems.forEach((rowItem) => {
                 setItemSize(rowItem, itemHeight, width / rowWidth)
             })
-            adjustItemSize(rowItems, width)
+            adjustItemWidth(rowItems, width)
 
             // 新しい行を開始して現在の項目を追加
             rowWidth = itemWidth
@@ -70,19 +70,41 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
         rowItems.forEach((rowItem) => {
             setItemSize(rowItem, itemHeight, width / rowWidth)
         })
-        adjustItemSize(rowItems, width)
+        adjustItemWidth(rowItems, width)
     }
 
     return processedItems
 }
 
-const adjustItemSize = (items: Item[], width: number): void => {
+/**
+ * 行内の項目の幅を調整して、指定された全体幅に正確に合わせる
+ * 
+ * setItemSizeで設定された幅の合計と指定された全体幅の差分を、
+ * 行内の全ての項目に均等に分配します。これにより、わずかな隙間や
+ * はみ出しを防ぎ、行全体がピッタリと指定幅に収まります。
+ * 
+ * @param items 調整対象の項目配列（同じ行に属する項目）
+ * @param width 行全体の目標幅
+ */
+const adjustItemWidth = (items: Item[], width: number): void => {
     const diffWidth = items.reduce((acc, item) => acc + item.width, 0)
-    const addWidth = (width - diffWidth) / items.length
+    const addWidth = roundToDecimals((width - diffWidth - 0.5) / items.length)
     items.forEach((item) => {
         item.width += addWidth
     })
 }
+
+/**
+ * 数値の小数点以下を指定した桁数に制限する
+ * 
+ * @param value 丸める対象の数値
+ * @param decimals 小数点以下の桁数（デフォルト: 2）
+ * @returns 指定した桁数に丸められた数値
+ */
+export const roundToDecimals = (value: number, decimals: number = 2): number => {
+  const factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+};
 
 /**
  * アイテムのサイズを設定する
@@ -92,5 +114,5 @@ const adjustItemSize = (items: Item[], width: number): void => {
  */
 export const setItemSize = (item: Item, itemHeight: number, widthRatio: number): void => {
     item.height = itemHeight * widthRatio
-    item.width = item.height * item.aspect
+    item.width = roundToDecimals(item.height * item.aspect)
 }
