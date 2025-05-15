@@ -35,7 +35,7 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
         width, 
         defaultHeight = 100,  // デフォルト値を設定 
         defaultAspect = 2/3   // デフォルト値を設定
-    } = options;
+    } = options
 
     const processedItems = structuredClone(items)
 
