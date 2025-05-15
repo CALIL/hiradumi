@@ -13,7 +13,7 @@ type Props = {
   data: ItemType[] | null
 }
 
-const itemHeightDefault = 200
+const itemHeightDefault = 250
 const itemScales = [1.5, 1.2, 1, 0.8, 0.6]
 const defaultRatio = 2/3
 

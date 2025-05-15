@@ -62,10 +62,10 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
             adjustItemWidth(rowItems, width)
 
             // 新しい行を開始して現在の項目を追加
+            rowCount += 1
             itemHeight = defaultHeight * itemScales[rowCount % itemScales.length]
             rowWidth = itemHeight * item.aspect
             rowItems = [item]
-            rowCount += 1
         } else {
             // 現在の行に項目を追加
             rowWidth += itemWidth
