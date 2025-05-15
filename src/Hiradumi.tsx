@@ -42,7 +42,6 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
     const parsedData = JSON.parse(data)
     // スクロールバー幅を考慮した有効幅を計算
     const effectiveWidth = width - scrollbarWidth;
-    console.log('effectiveWidth', effectiveWidth)
     const items = layoutCalculator(parsedData, {
       width: effectiveWidth,
       defaultHeight: itemHeightDefault,

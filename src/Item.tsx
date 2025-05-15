@@ -11,7 +11,7 @@ const Item = (props: Props) => {
     return (
         <div
             style={{
-                display: 'inline-flex',
+                display: 'inline-block',
                 width: width,
                 height: height,
                 backgroundColor: 'rgba(0, 0, 0, 0.1)',
