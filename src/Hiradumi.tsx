@@ -12,9 +12,9 @@ type Props = {
   data: string
 }
 
-const itemHeightDefault = 200;
-const itemSizes = [0.6, 0.8, 1, 1.2, 1.5];
-const defaultRatio = 2/3;
+const itemHeightDefault = 200
+const itemScales = [1.5, 1.2, 1, 0.8, 0.6]
+const defaultRatio = 2/3
 
 const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
   const parentRef = useRef<HTMLDivElement>(null)
@@ -43,7 +43,8 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
     const items = layoutCalculator(parsedData, {
       width: effectiveWidth,
       defaultHeight: itemHeightDefault,
-      defaultAspect: defaultRatio
+      defaultAspect: defaultRatio,
+      itemScales: itemScales,
     })
     setItems(items)
     // setRows(rows)

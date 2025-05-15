@@ -36,14 +36,15 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
         width, 
         defaultHeight = 100,  // デフォルト値を設定 
         defaultAspect = 2/3,   // デフォルト値を設定
-        itemScales = [0.6, 0.8, 1, 1.2, 1.5, 2] // デフォルト値を設定
+        itemScales = [1.5, 1.2, 1, 0.8, 0.6] // デフォルト値を設定
     } = options
 
     const processedItems = structuredClone(items)
 
     let rowWidth = 0
     let rowItems: Item[] = []
-    let itemHeight = defaultHeight *  itemScales[Math.floor(Math.random() * itemScales.length)]
+    let rowCount = 0
+    let itemHeight = defaultHeight *  itemScales[rowCount % itemScales.length]
 
     processedItems.forEach((item) => {
         // 項目のアスペクト比がないケース対応
@@ -59,9 +60,10 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
             adjustItemWidth(rowItems, width, itemHeight)
 
             // 新しい行を開始して現在の項目を追加
-            itemHeight = defaultHeight * itemScales[Math.floor(Math.random() * itemScales.length)]
+            itemHeight = defaultHeight * itemScales[rowCount % itemScales.length]
             rowWidth = itemHeight * item.aspect
             rowItems = [item]
+            rowCount += 1
         } else {
             // 現在の行に項目を追加
             rowWidth += itemWidth
