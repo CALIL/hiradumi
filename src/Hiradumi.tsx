@@ -1,15 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react'
 // import { useVirtualizer } from '@tanstack/react-virtual'
 
-// import Row from './Row'
 import Item from './Item'
-import { layoutCalculator } from './layoutCalculator'
+import { layoutCalculator, ItemType } from './layoutCalculator'
 import { getScrollbarWidth } from './utils/getScrollBarWidth'
+
+
 
 type Props = {
   height: number
   width: number
-  data: any[] | null
+  data: ItemType[] | null
 }
 
 const itemHeightDefault = 200
@@ -19,7 +20,7 @@ const defaultRatio = 2/3
 const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
   const parentRef = useRef<HTMLDivElement>(null)
 
-  const [items, setItems] = useState([] as any[] | null)
+  const [items, setItems] = useState([] as ItemType[] | null)
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
 
   // const rowVirtualizer = useVirtualizer({
@@ -37,7 +38,6 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
   useEffect(() => {
     if (!data) return
     // スクロールバー幅を考慮した有効幅を計算
-    console.log('width', width, scrollbarWidth)
     const effectiveWidth = width - scrollbarWidth
     const items = layoutCalculator(data, {
       width: effectiveWidth,
@@ -47,7 +47,7 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
     })
     setItems(items)
     // setRows(rows)
-  }, [data, width])
+  }, [data, width, scrollbarWidth])
 
 
   // if (!width || !height || !rows) return null;

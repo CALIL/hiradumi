@@ -6,7 +6,9 @@
 // これによって、一定の見た目のランダム性、平積み感を出す
 
 
-type Item = {
+export type ItemType = {
+    title: string
+    isbn: string
     width: number
     height: number
     aspect: number
@@ -31,7 +33,7 @@ type LayoutOptions = {
  * @param options レイアウトのオプション（幅、高さ、アスペクト比など）
  * @returns サイズ調整された項目の配列
  */
-export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] => {
+export const layoutCalculator = (items: ItemType[], options: LayoutOptions): ItemType[] => {
     const { 
         width, 
         defaultHeight = 100,  // デフォルト値を設定 
@@ -42,7 +44,7 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
     const processedItems = structuredClone(items)
 
     let rowWidth = 0
-    let rowItems: Item[] = []
+    let rowItems: ItemType[] = []
     let rowCount = 0
     let itemHeight = defaultHeight *  itemScales[rowCount % itemScales.length]
 
@@ -100,7 +102,7 @@ export const roundToDecimals = (value: number, decimals: number = 2): number => 
  * @param itemHeight 基準となる高さ
  * @param ratio 調整比率
  */
-export const setItemSize = (item: Item, itemHeight: number, ratio: number): void => {
+export const setItemSize = (item: ItemType, itemHeight: number, ratio: number): void => {
     item.height = itemHeight * ratio
     item.width = roundToDecimals(item.height * item.aspect)
 }
@@ -116,7 +118,7 @@ export const setItemSize = (item: Item, itemHeight: number, ratio: number): void
  * @param width 行全体の目標幅
  * @param itemHeight 基準となる高さ
  */
-const adjustItemWidth = (items: Item[], width: number): void => {
+const adjustItemWidth = (items: ItemType[], width: number): void => {
     const diffWidth = items.reduce((acc, item) => acc + item.width, 0)
     const adjustPixelForFirefox = 0.5 // Firefoxのクセによる調整
     const addWidth = roundToDecimals((width - diffWidth - adjustPixelForFirefox) / items.length)

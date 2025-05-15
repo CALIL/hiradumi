@@ -22,12 +22,14 @@
   <hiradumi-component>
     <!-- <div slot="header">これはヘッダースロットに入ります</div>
     <div slot="footer">これはフッタースロットに入ります</div> -->
+    <div>
+    </div>
   </hiradumi-component>
   <script>
     customElements.whenDefined('hiradumi-component').then(async () => {
       const r = await fetch('https://bookdata-fair.calil.dev/all.json')
       const data = await r.json();
-      console.log(data);
+      // console.log(data);
       data.forEach((item) => {
         if (item.properties && item.properties.aspect) {
           item.aspect = item.properties.aspect;

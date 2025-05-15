@@ -1,10 +1,7 @@
+import type { ItemType } from './layoutCalculator'
+
 type Props = {
-    item: {
-        title: string
-        isbn: string
-        width: number
-        height: number
-    }
+    item: ItemType
 }
 
 const Item = (props: Props) => {
