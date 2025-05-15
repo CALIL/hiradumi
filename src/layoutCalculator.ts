@@ -5,6 +5,8 @@
 // 各Itemのaspect比は違うので、行の高さのパターンは繰り返しでも違って見える
 // これによって、一定の見た目のランダム性、平積み感を出す
 
+import { it } from "vitest"
+
 
 export type ItemType = {
     type: 'text' | 'image'
@@ -48,6 +50,7 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
     let rowItems: ItemType[] = []
     let rowCount = 0
     let itemHeight = defaultHeight *  itemScales[rowCount % itemScales.length]
+    let prevRowItems = [] as ItemType[]
 
     processedItems.forEach((item) => {
         // 項目のアスペクト比がないケース対応
@@ -61,6 +64,7 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
             })
             // 各項目のサイズと横幅をもとに再調整
             adjustItemWidth(rowItems, width)
+            prevRowItems = rowItems
 
             // 新しい行を開始して現在の項目を追加
             rowCount += 1
@@ -76,10 +80,31 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
 
     // 最後の行の処理
     if (rowItems.length > 0) {
-        rowItems.forEach((rowItem) => {
-            setItemSize(rowItem, itemHeight, width / rowWidth)
-        })
-        adjustItemWidth(rowItems, width)
+        if (rowItems.length > 2) {
+            rowItems.forEach((rowItem) => {
+                setItemSize(rowItem, itemHeight, width / rowWidth)
+            })
+            adjustItemWidth(rowItems, width)
+        } else {
+            rowItems.forEach((rowItem) => {
+                rowItem.width = prevRowItems[0].width
+                rowItem.height = prevRowItems[0].height
+            })
+            const lastRowItems = prevRowItems.concat(rowItems)
+            const lastRowWidth = lastRowItems.reduce((acc, item) => acc + item.width, 0)
+            console.log('lastRowWidth', lastRowWidth)
+            console.log('width', width)
+            lastRowItems.forEach((rowItem) => {
+                setItemSize(rowItem, itemHeight, width / lastRowWidth)
+            })
+            const diffWidth = lastRowItems.reduce((acc, item) => acc + item.width, 0)
+            const adjustPixelForFirefox = 0.5 // Firefoxのクセによる調整
+            const addWidth = roundToDecimals((width - diffWidth - adjustPixelForFirefox) / lastRowItems.length)
+            lastRowItems.forEach((item) => {
+                item.width += addWidth
+                item.height = item.width / item.aspect
+            })
+        }
     }
 
     return processedItems
