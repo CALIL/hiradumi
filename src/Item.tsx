@@ -15,7 +15,7 @@ const Item = (props: Props) => {
                 display: 'inline-block',
                 width: width,
                 height: height,
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                // backgroundColor: 'rgba(0, 0, 0, 0.1)',
                 margin: '0',
                 padding: '0',
                 boxSizing: 'border-box',

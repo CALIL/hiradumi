@@ -17,6 +17,7 @@ type LayoutOptions = {
     width: number
     defaultHeight?: number  // オプショナル
     defaultAspect?: number  // オプショナル
+    itemScales?: number[] // オプショナル
 }
 
 /**
@@ -34,29 +35,32 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
     const { 
         width, 
         defaultHeight = 100,  // デフォルト値を設定 
-        defaultAspect = 2/3   // デフォルト値を設定
+        defaultAspect = 2/3,   // デフォルト値を設定
+        itemScales = [0.6, 0.8, 1, 1.2, 1.5, 2] // デフォルト値を設定
     } = options
 
     const processedItems = structuredClone(items)
 
     let rowWidth = 0
     let rowItems: Item[] = []
-    let itemHeight = defaultHeight
+    let itemHeight = defaultHeight *  itemScales[Math.floor(Math.random() * itemScales.length)]
 
     processedItems.forEach((item) => {
         // 項目のアスペクト比がないケース対応
         item.aspect = item.aspect || defaultAspect
-        itemHeight = defaultHeight
         const itemWidth = itemHeight * item.aspect
+        // 横幅よりも大きい場合
         if (rowItems.length > 0 && width < rowWidth + itemWidth) {
-            // 現在の行の項目のサイズを調整
+            // 現在の行の項目のwidth,を設定
             rowItems.forEach((rowItem) => {
                 setItemSize(rowItem, itemHeight, width / rowWidth)
             })
-            adjustItemWidth(rowItems, width)
+            // 各項目のサイズと横幅をもとに再調整
+            adjustItemWidth(rowItems, width, itemHeight)
 
             // 新しい行を開始して現在の項目を追加
-            rowWidth = itemWidth
+            itemHeight = defaultHeight * itemScales[Math.floor(Math.random() * itemScales.length)]
+            rowWidth = itemHeight * item.aspect
             rowItems = [item]
         } else {
             // 現在の行に項目を追加
@@ -70,29 +74,10 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
         rowItems.forEach((rowItem) => {
             setItemSize(rowItem, itemHeight, width / rowWidth)
         })
-        adjustItemWidth(rowItems, width)
+        adjustItemWidth(rowItems, width, itemHeight)
     }
 
     return processedItems
-}
-
-/**
- * 行内の項目の幅を調整して、指定された全体幅に正確に合わせる
- * 
- * setItemSizeで設定された幅の合計と指定された全体幅の差分を、
- * 行内の全ての項目に均等に分配します。これにより、わずかな隙間や
- * はみ出しを防ぎ、行全体がピッタリと指定幅に収まります。
- * 
- * @param items 調整対象の項目配列（同じ行に属する項目）
- * @param width 行全体の目標幅
- */
-const adjustItemWidth = (items: Item[], width: number): void => {
-    const diffWidth = items.reduce((acc, item) => acc + item.width, 0)
-    const adjustPixelforFirefox = 0.5 // Firefoxのクセによる調整
-    const addWidth = roundToDecimals((width - diffWidth - adjustPixelforFirefox) / items.length)
-    items.forEach((item) => {
-        item.width += addWidth
-    })
 }
 
 /**
@@ -111,9 +96,30 @@ export const roundToDecimals = (value: number, decimals: number = 2): number => 
  * アイテムのサイズを設定する
  * @param item 対象のアイテム
  * @param itemHeight 基準となる高さ
- * @param widthRatio 幅の調整比率
+ * @param ratio 調整比率
  */
-export const setItemSize = (item: Item, itemHeight: number, widthRatio: number): void => {
-    item.height = itemHeight * widthRatio
+export const setItemSize = (item: Item, itemHeight: number, ratio: number): void => {
+    item.height = itemHeight * ratio
     item.width = roundToDecimals(item.height * item.aspect)
 }
+
+/**
+ * 行内の項目の幅を調整して、指定された全体幅に正確に合わせる
+ * 
+ * setItemSizeで設定された幅の合計と指定された全体幅の差分を、
+ * 行内の全ての項目に均等に分配します。これにより、わずかな隙間や
+ * はみ出しを防ぎ、行全体がピッタリと指定幅に収まります。
+ * 
+ * @param items 調整対象の項目配列（同じ行に属する項目）
+ * @param width 行全体の目標幅
+ * @param itemHeight 基準となる高さ
+ */
+const adjustItemWidth = (items: Item[], width: number, itemHeight: number): void => {
+    const diffWidth = items.reduce((acc, item) => acc + item.width, 0)
+    const adjustPixelForFirefox = 0.5 // Firefoxのクセによる調整
+    const addWidth = roundToDecimals((width - diffWidth - adjustPixelForFirefox) / items.length)
+    items.forEach((item) => {
+        item.width += addWidth
+    })
+}
+

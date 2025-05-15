@@ -12,8 +12,8 @@ type Props = {
   data: string
 }
 
-const itemHeightDefault = 100;
-const itemSizes = [0.6, 0.8, 1, 1.2, 1.5, 2];
+const itemHeightDefault = 200;
+const itemSizes = [0.6, 0.8, 1, 1.2, 1.5];
 const defaultRatio = 2/3;
 
 const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
@@ -21,7 +21,6 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
 
   const [items, setItems] = useState([] as any[] | null)
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  // const [rowCount, setRowCount] = useState(0)
 
   // const rowVirtualizer = useVirtualizer({
   //   count: rowCount,
@@ -29,8 +28,6 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
   //   estimateSize: () => itemHeightDefault,
   //   overscan: 5,
   // });
-
-  // const [rows, setRows] = useState(null as any[] | null);
 
  // コンポーネント初期化時にスクロールバー幅を取得
   useEffect(() => {
@@ -52,10 +49,6 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
     // setRows(rows)
   }, [data, width])
 
-  // useEffect(() => {
-  //   if (!rows) return;
-  //   setRowCount(rows.length);
-  // }, [rows]);
 
   // if (!width || !height || !rows) return null;
 
