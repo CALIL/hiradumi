@@ -9,7 +9,7 @@
 type Item = {
     width: number
     height: number
-    aspect: number
+    aspect?: number
 }
 
 
