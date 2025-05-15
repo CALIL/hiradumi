@@ -28,6 +28,11 @@
       const r = await fetch('https://bookdata-fair.calil.dev/all.json')
       const data = await r.json();
       console.log(data);
+      data.forEach((item) => {
+        if (item.properties && item.properties.aspect) {
+          item.aspect = item.properties.aspect;
+        }
+      });
       const hiradumi = document.querySelector('hiradumi-component');
       hiradumi.width = window.innerWidth;
       hiradumi.height = window.innerHeight;

@@ -35,7 +35,7 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
     if (!data) return
     const parsedData = JSON.parse(data)
     const items = layoutCalculator(parsedData, {
-      width: width,
+      width: width - 10,
       defaultHeight: itemHeightDefault,
       defaultAspect: defaultRatio
     })
@@ -64,24 +64,14 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
       {items && items.length > 0 && (
         <div
           style={{
-            height: `${itemHeightDefault * items.length}px`,
+            // display: 'flex',
+            // justifyContent: 'space-between',
             width: '100%',
             position: 'relative'
           }}
         >
           {items.map((item, index) => (
-            <div
-              key={index}
-              style={{
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: `${itemHeightDefault}px`,
-                transform: `translateY(${itemHeightDefault * index}px)`,
-              }}
-            >
-              <Item item={item}></Item>
-            </div>
+            <Item key={index} item={item}></Item>
           ))}
         </div>
       )}
