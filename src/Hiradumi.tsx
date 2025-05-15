@@ -2,7 +2,8 @@ import React, {useEffect, useRef, useState} from 'react'
 // import { useVirtualizer } from '@tanstack/react-virtual'
 
 import Item from './Item'
-import { layoutCalculator, ItemType } from './layoutCalculator'
+import { layoutCalculator } from './layoutCalculator'
+import type { ItemType } from './layoutCalculator'
 import { getScrollbarWidth } from './utils/getScrollBarWidth'
 
 
