@@ -88,7 +88,8 @@ export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] 
  */
 const adjustItemWidth = (items: Item[], width: number): void => {
     const diffWidth = items.reduce((acc, item) => acc + item.width, 0)
-    const addWidth = roundToDecimals((width - diffWidth - 0.5) / items.length)
+    const adjustPixelforFirefox = 0.5 // Firefoxのクセによる調整
+    const addWidth = roundToDecimals((width - diffWidth - adjustPixelforFirefox) / items.length)
     items.forEach((item) => {
         item.width += addWidth
     })
