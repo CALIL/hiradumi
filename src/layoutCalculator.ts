@@ -12,11 +12,37 @@ type Item = {
     aspect: number
 }
 
-export const layoutCalculator = (items: Item[], width: number, defaultHeight: number = 100, defaultAspect: number = 2/3): Item[] => {
+
+type LayoutOptions = {
+    width: number
+    defaultHeight?: number  // オプショナル
+    defaultAspect?: number  // オプショナル
+}
+
+/**
+ * 項目群のレイアウトを計算し、各項目のサイズを調整する
+ * 
+ * 横幅に応じて項目を行に詰め込み、各行の高さと項目の幅を最適化します。
+ * アスペクト比を維持しながら、指定された幅に収まるように項目を配置します。
+ * 項目がはみ出す場合、新しい行に追加します。
+ * 
+ * @param items 配置する項目の配列
+ * @param options レイアウトのオプション（幅、高さ、アスペクト比など）
+ * @returns サイズ調整された項目の配列
+ */
+export const layoutCalculator = (items: Item[], options: LayoutOptions): Item[] => {
+    const { 
+        width, 
+        defaultHeight = 100,  // デフォルト値を設定 
+        defaultAspect = 2/3   // デフォルト値を設定
+    } = options;
+
     const processedItems = structuredClone(items)
+
     let rowWidth = 0
     let rowItems: Item[] = []
     let itemHeight = defaultHeight
+
     processedItems.forEach((item) => {
         const aspect = item.aspect || defaultAspect
         itemHeight = defaultHeight
