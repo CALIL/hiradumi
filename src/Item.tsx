@@ -45,7 +45,8 @@ const Item = (props: Props) => {
                         alignItems: 'center',
                         backgroundColor: 'rgba(0, 0, 0, 0.1)',
                     }}
-                >No Image</div>) : (
+                >No Image</div>
+                ) : (
                     <img
                         className="coverItem"
                         src={`https://calil.jp/cover/${isbn}`} alt={title}
