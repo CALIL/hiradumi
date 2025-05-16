@@ -19,6 +19,7 @@ type LayoutOptions = {
     defaultHeight?: number  // オプショナル
     defaultAspect?: number  // オプショナル
     itemScales?: number[] // オプショナル
+    groupByRows?: boolean // オプショナル
 }
 
 let isFirefox: boolean | null = null;
@@ -40,21 +41,22 @@ checkFirefox()
  * 項目がはみ出す場合、新しい行に追加します。
  * 
  * @param items 配置する項目の配列
- * @param options レイアウトのオプション（幅、高さ、アスペクト比など）
+ * @param options レイアウトのオプション（幅、高さ、アスペクト比、行ごとにまとめて返すか、など）
  * @returns サイズ調整された項目の配列
  */
-export const layoutCalculator = (items: ItemType[], options: LayoutOptions): ItemType[][] => {
-    const { 
+export const layoutCalculator = (items: ItemType[], options: LayoutOptions): ItemType[][] | ItemType[] => {
+    const {         
         width, 
         defaultHeight = 100,  // デフォルト値を設定 
         defaultAspect = 2/3,   // デフォルト値を設定
-        itemScales = [1.5, 1.2, 1, 0.8, 0.6] // デフォルト値を設定
+        itemScales = [1.5, 1.2, 1, 0.8, 0.6], // デフォルト値を設定
+        groupByRows = false, // デフォルト値を設定
     } = options
 
     const processedItems = structuredClone(items)
     const itemScalesLength = itemScales.length
 
-    let rows = []
+    const rows = []
     let rowWidth = 0
     let rowItems: ItemType[] = []
     let rowCount = 0
@@ -127,7 +129,7 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
         }
     }
 
-    return rows
+    return groupByRows ? rows : processedItems
 }
 
 /**
