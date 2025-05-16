@@ -21,6 +21,17 @@ type LayoutOptions = {
     itemScales?: number[] // オプショナル
 }
 
+let isFirefox: boolean | null = null;
+
+const checkFirefox = () => {
+    if (isFirefox === null) {
+        isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox')
+    }
+    return isFirefox
+}
+
+checkFirefox()
+
 /**
  * 項目群のレイアウトを計算し、各項目のサイズを調整する
  * 
@@ -61,8 +72,9 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
         if (rowItems.length > 0 && width < rowWidth + itemWidth) {
             // 現在の行の項目のwidth,を設定
             const rowItemsLength = rowItems.length
+            const ratio = width / rowWidth
             for (let i = 0; i < rowItemsLength; i++) {
-                setItemSize(rowItems[i], itemHeight, width / rowWidth)
+                setItemSize(rowItems[i], itemHeight, ratio)
             }
             // 各項目のサイズと横幅をもとに再調整
             adjustItemWidth(rowItems, width)
@@ -116,15 +128,13 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
 }
 
 /**
- * 数値の小数点以下を指定した桁数に制限する
+ * 数値の小数点以下を2位までに桁数に制限する
  * 
  * @param value 丸める対象の数値
- * @param decimals 小数点以下の桁数（デフォルト: 2）
- * @returns 指定した桁数に丸められた数値
+ * @returns 小数点2位以上に丸められた数値
  */
-export const roundToDecimals = (value: number, decimals: number = 2): number => {
-  const factor = Math.pow(10, decimals);
-  return Math.round(value * factor) / factor;
+export const roundToDecimals = (value: number): number => {
+    return Math.round(value * 100) / 100
 };
 
 /**
@@ -134,19 +144,11 @@ export const roundToDecimals = (value: number, decimals: number = 2): number => 
  * @param ratio 調整比率
  */
 export const setItemSize = (item: ItemType, itemHeight: number, ratio: number): void => {
-    item.height = itemHeight * ratio
+    item.height = roundToDecimals(itemHeight * ratio)
     item.width = roundToDecimals(item.height * item.aspect)
 }
 
 
-let isFirefox: boolean | null = null;
-
-const checkFirefox = () => {
-    if (isFirefox === null) {
-        isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox')
-    }
-    return isFirefox
-}
 
 /**
  * 行内の項目の幅を調整して、指定された全体幅に正確に合わせる
@@ -165,11 +167,11 @@ const adjustItemWidth = (items: ItemType[], width: number): void => {
         currentWidth += items[i].width
     }
     // 小数点以下の誤差を考慮して、FirefoxとWebkit系で補正をかける
-    const adjustPixel = checkFirefox() ? 0.05 * items.length : 0.01 * items.length 
-    const widthAdjustment = roundToDecimals((width - currentWidth - adjustPixel) / items.length)
+    const adjustPixel = isFirefox ? 0.05 * items.length : 0.01 * items.length 
+    const widthAdjustment = (width - currentWidth - adjustPixel) / items.length
     for (let i = 0; i < itemLength; i++) {
-        items[i].width += widthAdjustment;
-        items[i].height = items[i].width / items[i].aspect;
+        items[i].width += roundToDecimals(widthAdjustment)
+        items[i].height = roundToDecimals(items[i].width / items[i].aspect)
     }
 }
 
