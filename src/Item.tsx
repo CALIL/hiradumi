@@ -6,7 +6,7 @@ type Props = {
 }
 
 const Item = (props: Props) => {
-    const { type = 'image', title, isbn, width, height, aspect } = props.item
+    const { type = 'image', title, isbn, width, height } = props.item
     const [loadError, setLoadError] = useState(false)
     return (
         <div
@@ -14,55 +14,19 @@ const Item = (props: Props) => {
                 display: 'inline-block',
                 width: width,
                 height: height,
-                // backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                margin: '0',
-                padding: '0',
-                boxSizing: 'border-box',
                 border: '1px solid rgba(0, 0, 0, 0.1)',
             }}
         >
             {type=='text' ? (
-                <div
-                    className="textItem"
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
-                    {title}
-                </div>
+                <TextItem title={title} />
             ) : (loadError ? (
-                <div
-                    className="noImageItem"
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
-                    }}
-                >No Image</div>
+                    <NoImageItem />
                 ) : (
-                    <img
-                        className="coverItem"
-                        src={`https://calil.jp/cover/${isbn}`} alt={title}
-                        style={{
-                            width: '100%',
-                            height: 'auto',
-                        }}
-                        data-aspect={aspect}
-                        onLoad={(e) => {
-                            const img = e.target as HTMLImageElement;
-                            if (img.naturalWidth === 1 && img.naturalHeight === 1) {
-                                setLoadError(true);
-                            }
-                        }}
+                    <ImageItem
+                        src={`https://calil.jp/cover/${isbn}`}
+                        alt={title}
                         onError={() => {
-                            setLoadError(true);
+                            setLoadError(true)
                         }}
                     />
                 )
@@ -71,3 +35,52 @@ const Item = (props: Props) => {
     )
 }
 export default Item
+
+const TextItem = ({title} : {title: string}) => (
+    <div
+        className="textItem"
+        style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}
+    >
+        {title}
+    </div>
+)
+
+const ImageItem = ({src, alt, onError} : {src: string, alt: string, onError: () => void}) => (
+    <img
+        className="coverItem"
+        src={src} alt={alt}
+        style={{
+            width: '100%',
+            height: '100%',
+        }}
+        onLoad={(e) => {
+            const img = e.target as HTMLImageElement;
+            if (img.naturalWidth === 1 && img.naturalHeight === 1) {
+                onError()
+            }
+        }}
+        onError={() => {
+            onError()
+        }}
+    />
+)
+
+const NoImageItem = () => (
+    <div
+        className="noImageItem"
+        style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.05)',
+        }}
+    >No Image</div>
+)
