@@ -42,29 +42,35 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
 
     const processedItems = structuredClone(items)
 
+    const itemScalesLength = itemScales.length
+
     let rowWidth = 0
     let rowItems: ItemType[] = []
     let rowCount = 0
-    let itemHeight = defaultHeight *  itemScales[rowCount % itemScales.length]
+    let itemHeight = defaultHeight *  itemScales[rowCount % itemScalesLength]
     let prevRowItems = [] as ItemType[]
 
-    processedItems.forEach((item) => {
+
+    const processedItemsLength = processedItems.length
+    for (let i = 0; i < processedItemsLength; i++) {
+        const item = processedItems[i]
         // 項目のアスペクト比がないケース対応
         item.aspect = item.aspect || defaultAspect
         const itemWidth = itemHeight * item.aspect
         // 横幅よりも大きい場合
         if (rowItems.length > 0 && width < rowWidth + itemWidth) {
             // 現在の行の項目のwidth,を設定
-            rowItems.forEach((rowItem) => {
-                setItemSize(rowItem, itemHeight, width / rowWidth)
-            })
+            const rowItemsLength = rowItems.length
+            for (let i = 0; i < rowItemsLength; i++) {
+                setItemSize(rowItems[i], itemHeight, width / rowWidth)
+            }
             // 各項目のサイズと横幅をもとに再調整
             adjustItemWidth(rowItems, width)
             prevRowItems = rowItems
 
             // 新しい行を開始して現在の項目を追加
             rowCount += 1
-            itemHeight = defaultHeight * itemScales[rowCount % itemScales.length]
+            itemHeight = defaultHeight * itemScales[rowCount % itemScalesLength]
             rowWidth = itemHeight * item.aspect
             rowItems = [item]
         } else {
@@ -72,26 +78,36 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
             rowWidth += itemWidth
             rowItems.push(item)
         }
-    })
+    }
 
     // 最後の行の処理
     if (rowItems.length > 0) {
         // 最後の行の項目が3以下の場合、1つ前の行に入れて調整する
         if (rowItems.length <= 3) {
-            rowItems.forEach((rowItem) => {
-                rowItem.height = prevRowItems[0].height
-                rowItem.width = rowItem.height * rowItem.aspect
-            })
+            const prevRowHeight = prevRowItems[0].height
+            const rowItemsLength = rowItems.length
+            for (let i = 0; i < rowItemsLength; i++) {
+                const item = rowItems[i]
+                item.height = prevRowHeight
+                item.width = item.height * item.aspect
+            }
             const lastRowItems = prevRowItems.concat(rowItems)
-            const lastRowWidth = lastRowItems.reduce((acc, item) => acc + item.width, 0)
-            lastRowItems.forEach((rowItem) => {
-                setItemSize(rowItem, itemHeight, width / lastRowWidth)
-            })
+            let lastRowWidth = 0
+            const lastRowItemsLength = lastRowItems.length
+            for (let i = 0; i < lastRowItemsLength; i++) {
+                lastRowWidth += lastRowItems[i].width
+            }
+            const ratio = width / lastRowWidth
+            for (let i = 0; i < lastRowItemsLength; i++) {
+                setItemSize(lastRowItems[i], itemHeight, ratio);
+            }
             adjustItemWidth(lastRowItems, width)
         } else {
-            rowItems.forEach((rowItem) => {
-                setItemSize(rowItem, itemHeight, width / rowWidth)
-            })
+            const ratio = width / rowWidth
+            const rowItremsLength = rowItems.length
+            for (let i = 0; i < rowItremsLength; i++) {
+                setItemSize(rowItems[i], itemHeight, ratio);
+            }
             adjustItemWidth(rowItems, width)
         }
     }
@@ -122,6 +138,16 @@ export const setItemSize = (item: ItemType, itemHeight: number, ratio: number): 
     item.width = roundToDecimals(item.height * item.aspect)
 }
 
+
+let isFirefox: boolean | null = null;
+
+const checkFirefox = () => {
+    if (isFirefox === null) {
+        isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox')
+    }
+    return isFirefox
+}
+
 /**
  * 行内の項目の幅を調整して、指定された全体幅に正確に合わせる
  * 
@@ -131,17 +157,19 @@ export const setItemSize = (item: ItemType, itemHeight: number, ratio: number): 
  * 
  * @param items 調整対象の項目配列（同じ行に属する項目）
  * @param width 行全体の目標幅
- * @param itemHeight 基準となる高さ
  */
 const adjustItemWidth = (items: ItemType[], width: number): void => {
-    const diffWidth = items.reduce((acc, item) => acc + item.width, 0)
+    let currentWidth = 0
+    const itemLength = items.length
+    for (let i = 0; i < itemLength; i++) {
+        currentWidth += items[i].width
+    }
     // 小数点以下の誤差を考慮して、FirefoxとWebkit系で補正をかける
-    const isFirefox = navigator.userAgent.toLowerCase().includes('firefox')
-    const adjustPixelForFirefox = isFirefox ? 0.05 * items.length : 0.01 * items.length 
-    const addWidth = roundToDecimals((width - diffWidth - adjustPixelForFirefox) / items.length)
-    items.forEach((item) => {
-        item.width += addWidth
-        item.height = item.width / item.aspect
-    })
+    const adjustPixel = checkFirefox() ? 0.05 * items.length : 0.01 * items.length 
+    const widthAdjustment = roundToDecimals((width - currentWidth - adjustPixel) / items.length)
+    for (let i = 0; i < itemLength; i++) {
+        items[i].width += widthAdjustment;
+        items[i].height = items[i].width / items[i].aspect;
+    }
 }
 
