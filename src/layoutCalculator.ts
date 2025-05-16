@@ -135,7 +135,9 @@ export const setItemSize = (item: ItemType, itemHeight: number, ratio: number): 
  */
 const adjustItemWidth = (items: ItemType[], width: number): void => {
     const diffWidth = items.reduce((acc, item) => acc + item.width, 0)
-    const adjustPixelForFirefox = 0.05 * items.length // Firefoxのクセを考慮
+    // Firefoxの小数点2位以下の切り上げするクセを考慮
+    const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+    const adjustPixelForFirefox = isFirefox ? 0.05 * items.length : 0 
     const addWidth = roundToDecimals((width - diffWidth - adjustPixelForFirefox) / items.length)
     items.forEach((item) => {
         item.width += addWidth
