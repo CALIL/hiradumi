@@ -6,7 +6,7 @@ type Props = {
 }
 
 const Item = (props: Props) => {
-    const { type = 'image', title, isbn, width, height } = props.item
+    const { type = 'image', title, isbn, width, height, aspect } = props.item
     const [loadError, setLoadError] = useState(false)
     return (
         <div
@@ -43,7 +43,7 @@ const Item = (props: Props) => {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
                     }}
                 >No Image</div>
                 ) : (
@@ -54,6 +54,7 @@ const Item = (props: Props) => {
                             width: '100%',
                             height: 'auto',
                         }}
+                        data-aspect={aspect}
                         onLoad={(e) => {
                             const img = e.target as HTMLImageElement;
                             if (img.naturalWidth === 1 && img.naturalHeight === 1) {

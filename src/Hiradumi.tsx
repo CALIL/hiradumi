@@ -101,45 +101,6 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
         </div>
     </div>
   </>)
+}
 
-
-  return (
-    <>
-      {/* <slot name="header"></slot> */}
-      <div
-        ref={parentRef}
-        style={{
-          width: width,
-          height: height,
-          overflow: 'auto',
-        }}
-      >
-        <div
-          style={{
-            height: `${rowVirtualizer.getTotalSize()}px`,
-            width: '100%',
-            position: 'relative'
-          }}
-        >
-          {rowVirtualizer.getVirtualItems().map((virtualItem) => (
-            <div
-              key={virtualItem.key}
-              style={{
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: `${virtualItem.size}px`,
-                transform: `translateY(${virtualItem.start}px)`,
-              }}
-            >
-                <Row index={virtualItem.index} data={rows[virtualItem.index]}></Row>
-            </div>
-          ))}
-        </div>
-        {/* <slot name="footer"></slot> */}
-      </div>
-    </>
-  );
-};
-
-export default Hiradumi;
+export default Hiradumi
