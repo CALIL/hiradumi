@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { ItemType } from './layoutCalculator'
 
 type Props = {
@@ -6,6 +7,7 @@ type Props = {
 
 const Item = (props: Props) => {
     const { type = 'image', title, isbn, width, height } = props.item
+    const [loadError, setLoadError] = useState(false)
     return (
         <div
             style={{
@@ -32,21 +34,36 @@ const Item = (props: Props) => {
                 >
                     {title}
                 </div>
-            ) : (
-                <img
-                    className="coverItem"
-                    src={`https://calil.jp/cover/${isbn}`} alt={title}
+            ) : (loadError ? (
+                <div
+                    className="noImageItem"
                     style={{
                         width: '100%',
-                        height: 'auto',
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
                     }}
-                    onLoad={(e) => {
-                        const img = e.target as HTMLImageElement;
-                        if (img.naturalWidth === 1 && img.naturalHeight === 1) {
-                            img.src = 'https://calil.jp/public/img/no-image/noimage.png';
-                        }
-                    }}
-                />
+                >No Image</div>) : (
+                    <img
+                        className="coverItem"
+                        src={`https://calil.jp/cover/${isbn}`} alt={title}
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                        }}
+                        onLoad={(e) => {
+                            const img = e.target as HTMLImageElement;
+                            if (img.naturalWidth === 1 && img.naturalHeight === 1) {
+                                setLoadError(true);
+                            }
+                        }}
+                        onError={() => {
+                            setLoadError(true);
+                        }}
+                    />
+                )
             )}
         </div>
     )
