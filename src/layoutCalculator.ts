@@ -43,7 +43,7 @@ checkFirefox()
  * @param options レイアウトのオプション（幅、高さ、アスペクト比など）
  * @returns サイズ調整された項目の配列
  */
-export const layoutCalculator = (items: ItemType[], options: LayoutOptions): ItemType[] => {
+export const layoutCalculator = (items: ItemType[], options: LayoutOptions): ItemType[][] => {
     const { 
         width, 
         defaultHeight = 100,  // デフォルト値を設定 
@@ -52,9 +52,9 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
     } = options
 
     const processedItems = structuredClone(items)
-
     const itemScalesLength = itemScales.length
 
+    let rows = []
     let rowWidth = 0
     let rowItems: ItemType[] = []
     let rowCount = 0
@@ -78,6 +78,7 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
             }
             // 各項目のサイズと横幅をもとに再調整
             adjustItemWidth(rowItems, width)
+            rows.push(rowItems)
             prevRowItems = rowItems
 
             // 新しい行を開始して現在の項目を追加
@@ -114,6 +115,7 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
                 setItemSize(lastRowItems[i], itemHeight, ratio)
             }
             adjustItemWidth(lastRowItems, width)
+            rows[rows.length - 1] = lastRowItems
         } else {
             const ratio = width / rowWidth
             const rowItremsLength = rowItems.length
@@ -121,10 +123,11 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
                 setItemSize(rowItems[i], itemHeight, ratio)
             }
             adjustItemWidth(rowItems, width)
+            rows.push(rowItems)
         }
     }
 
-    return processedItems
+    return rows
 }
 
 /**
