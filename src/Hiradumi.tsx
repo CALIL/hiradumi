@@ -74,7 +74,10 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
           }}
         >
           {items.map((item, index) => (
-            <Item key={index} item={item}></Item>
+            <>
+              <slot></slot>
+              <Item key={index} item={item}></Item>
+            </>
           ))}
         </div>
       )}

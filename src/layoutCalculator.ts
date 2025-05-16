@@ -111,14 +111,14 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
             }
             const ratio = width / lastRowWidth
             for (let i = 0; i < lastRowItemsLength; i++) {
-                setItemSize(lastRowItems[i], itemHeight, ratio);
+                setItemSize(lastRowItems[i], itemHeight, ratio)
             }
             adjustItemWidth(lastRowItems, width)
         } else {
             const ratio = width / rowWidth
             const rowItremsLength = rowItems.length
             for (let i = 0; i < rowItremsLength; i++) {
-                setItemSize(rowItems[i], itemHeight, ratio);
+                setItemSize(rowItems[i], itemHeight, ratio)
             }
             adjustItemWidth(rowItems, width)
         }
@@ -144,7 +144,7 @@ export const roundToDecimals = (value: number): number => {
  * @param ratio 調整比率
  */
 export const setItemSize = (item: ItemType, itemHeight: number, ratio: number): void => {
-    item.height = roundToDecimals(itemHeight * ratio)
+    item.height = itemHeight * ratio
     item.width = roundToDecimals(item.height * item.aspect)
 }
 
@@ -171,7 +171,7 @@ const adjustItemWidth = (items: ItemType[], width: number): void => {
     const widthAdjustment = (width - currentWidth - adjustPixel) / items.length
     for (let i = 0; i < itemLength; i++) {
         items[i].width += roundToDecimals(widthAdjustment)
-        items[i].height = roundToDecimals(items[i].width / items[i].aspect)
+        items[i].height = items[i].width / items[i].aspect
     }
 }
 

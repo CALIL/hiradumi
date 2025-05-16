@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import r2wc from 'react-to-webcomponent';
 import Hiradumi from './Hiradumi';
 
-const HiradumiWebComponent = r2wc(Hiradumi, React, ReactDOM, {
+const HiradumiComponent = r2wc(Hiradumi, React, ReactDOM, {
   props: {
     width: 'number',
     height: 'number',
@@ -12,4 +12,4 @@ const HiradumiWebComponent = r2wc(Hiradumi, React, ReactDOM, {
   shadow: 'open'
 });
 
-customElements.define('hiradumi-component', HiradumiWebComponent);
+customElements.define('hiradumi-component', HiradumiComponent);
