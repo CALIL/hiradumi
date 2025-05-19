@@ -33,13 +33,12 @@ type LayoutOptions = {
  * @param options レイアウトのオプション（幅、高さ、アスペクト比、行ごとにまとめて返すか、など）
  * @returns サイズ調整された項目の配列
  */
-export const layoutCalculator = (items: ItemType[], options: LayoutOptions): ItemType[][] | ItemType[] => {
+export const layoutCalculator = (items: ItemType[], options: LayoutOptions): ItemType[][] => {
     const {         
         width, 
         defaultHeight = 100,  // デフォルト値を設定 
         defaultAspect = 2/3,   // デフォルト値を設定
         itemScales = [1.5, 1.2, 1, 0.8, 0.6], // デフォルト値を設定
-        groupByRows = false, // デフォルト値を設定
     } = options
 
     const processedItems = structuredClone(items)
@@ -87,7 +86,7 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
     // 最後の行の処理
     if (rowItems.length > 0) {
         // 最後の行の項目が3以下の場合、1つ前の行に入れて調整する
-        if (rowItems.length <= 3) {
+        if (rowItems.length <= 3 && prevRowItems.length > 0) {
             const prevRowHeight = prevRowItems[0].height
             const rowItemsLength = rowItems.length
             for (let i = 0; i < rowItemsLength; i++) {
@@ -118,7 +117,7 @@ export const layoutCalculator = (items: ItemType[], options: LayoutOptions): Ite
         }
     }
 
-    return groupByRows ? rows : processedItems
+    return rows
 }
 
 /**
