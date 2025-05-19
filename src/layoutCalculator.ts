@@ -172,7 +172,8 @@ const adjustItemWidth = (items: ItemType[], width: number): void => {
         currentWidth += items[i].width
     }
     // 小数点以下の誤差を考慮して、FirefoxとWebkit系で補正をかける
-    const adjustPixel = isFirefox ? 0.05 * items.length : 0.01 * items.length 
+    // const adjustPixel = isFirefox ? 0.01 * items.length : 0.01 * items.length 
+    const adjustPixel = 0
     const widthAdjustment = (width - currentWidth - adjustPixel) / items.length
     for (let i = 0; i < itemLength; i++) {
         items[i].width += roundToDecimals(widthAdjustment)

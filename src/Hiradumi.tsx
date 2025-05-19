@@ -56,7 +56,7 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
 
   if (!width || !height || !rows) return null;
 
-  return (<>
+  return (<div style={{width: '100%', height: '100%', overflow: 'hidden'}}>
     <div
       ref={parentRef}
       style={{
@@ -100,7 +100,7 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
           ))}
         </div>
     </div>
-  </>)
+  </div>)
 }
 
 export default Hiradumi
