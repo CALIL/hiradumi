@@ -22,17 +22,6 @@ type LayoutOptions = {
     groupByRows?: boolean // オプショナル
 }
 
-let isFirefox: boolean | null = null;
-
-const checkFirefox = () => {
-    if (isFirefox === null) {
-        isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox')
-    }
-    return isFirefox
-}
-
-checkFirefox()
-
 /**
  * 項目群のレイアウトを計算し、各項目のサイズを調整する
  * 
