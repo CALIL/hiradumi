@@ -6,7 +6,7 @@ type Props = {
 }
 
 const Item = (props: Props) => {
-    const { type = 'image', title, isbn, width, height } = props.item
+    const { type = 'image', title, cover, width, height } = props.item
     const [loadError, setLoadError] = useState(false)
     return (
         <div
@@ -19,11 +19,11 @@ const Item = (props: Props) => {
         >
             {type=='text' ? (
                 <TextItem title={title} />
-            ) : (loadError ? (
+            ) : (loadError || !cover ? (
                     <NoImageItem />
                 ) : (
                     <ImageItem
-                        src={`https://calil.jp/cover/${isbn}`}
+                        src={cover}
                         alt={title}
                         onError={() => {
                             setLoadError(true)

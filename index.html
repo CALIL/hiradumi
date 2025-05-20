@@ -35,8 +35,10 @@
         if (item.properties && item.properties.aspect) {
           item.aspect = item.properties.aspect
         }
+        item.cover = `https://calil.jp/cover/${item.isbn}`
         item.type = 'image'
         mixedItems.push(item)
+        // 10個ごとにテキストを挿入
         if (index % 10 === 0) {
           mixedItems.push({
             type: 'text',

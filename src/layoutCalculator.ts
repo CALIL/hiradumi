@@ -8,6 +8,7 @@ export type ItemType = {
     type: 'text' | 'image'
     title: string
     isbn?: string
+    cover?: string
     width: number
     height: number
     aspect: number
