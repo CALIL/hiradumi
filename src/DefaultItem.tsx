@@ -5,7 +5,7 @@ type Props = {
     item: ItemType
 }
 
-const Item = (props: Props) => {
+const DefaultItem = (props: Props) => {
     const { type = 'image', title, cover, link, width, height } = props.item
     const [loadError, setLoadError] = useState(false)
     return (
@@ -36,7 +36,7 @@ const Item = (props: Props) => {
         </div>
     )
 }
-export default Item
+export default DefaultItem
 
 const TextItem = ({title} : {title: string}) => (
     <div

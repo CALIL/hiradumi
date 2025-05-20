@@ -1,21 +1,23 @@
 import React, {useEffect, useRef, useState} from 'react'
+import type { ReactNode } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
 
-import Item from './Item'
+import DefaultItem from './DefaultItem'
 import { layoutCalculator } from './layoutCalculator'
 import type { ItemType } from './layoutCalculator'
 import { getScrollbarWidth } from './utils/getScrollBarWidth'
 
 type Props = {
   data: ItemType[] | null
+  renderItem?: (item: ItemType) => ReactNode
 }
 
 const itemHeightDefault = 250
 const itemScales = [1.5, 1.2, 1, 0.8, 0.6]
 const defaultRatio = 2/3
 
-const Hiradumi: React.FC<Props> = ({ data }) => {
-  const containerRef = useRef<HTMLDivElement>(null)
+const Hiradumi: React.FC<Props> = ({ data, renderItem }) => {
+  const rootRef = useRef<HTMLDivElement>(null)
   const scrollerRef = useRef<HTMLDivElement>(null)
 
   const [width, setWidth] = useState(0)
@@ -37,8 +39,8 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
   }, [])
 
   useEffect(() => {
-    if (!containerRef.current || !scrollerRef.current) return
-    const shadowRoot = containerRef.current.getRootNode() as ShadowRoot
+    if (!rootRef.current || !scrollerRef.current) return
+    const shadowRoot = rootRef.current.getRootNode() as ShadowRoot
     // ホスト要素を取得
     const host = shadowRoot.host    
     // ホスト要素の親を取得
@@ -77,10 +79,50 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
     setRows(rows)
   }, [isWidthMeasured, data, width, scrollbarWidth])
 
+// DOM要素をReactで扱える形に変換する関数
+  const adaptRenderer = (item: ItemType): ReactNode => {
+    if (!renderItem) return <DefaultItem item={item} />;
+
+    const renderedItem = renderItem(item);
+    
+    // すでにReact要素の場合はそのまま返す
+    if (React.isValidElement(renderedItem)) {
+      return renderedItem;
+    }
+    
+    // DOM要素の場合、それを参照して表示するラッパーを返す
+    if (renderedItem instanceof HTMLElement) {
+      // DOM要素を表示するためのラッパーコンポーネント
+      const DOMWrapper = ({ element }: { element: HTMLElement }) => {
+        const containerRef = useRef<HTMLDivElement>(null);
+        
+        useEffect(() => {
+          if (containerRef.current) {
+            containerRef.current.innerHTML = '';
+            containerRef.current.appendChild(element);
+          }
+          
+          return () => {
+            // クリーンアップ
+            if (containerRef.current && containerRef.current.contains(element)) {
+              containerRef.current.removeChild(element);
+            }
+          };
+        }, [element]);
+        
+        return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
+      };
+      
+      return <DOMWrapper element={renderedItem} />;
+    }
+    
+    // その他の値（文字列など）はそのまま返す
+    return renderedItem;
+  };
 
   if (!rows) return null
 
-  return (<div ref={containerRef} style={{width: '100%', height: '100%', overflow: 'hidden'}}>
+  return (<div ref={rootRef} style={{width: '100%', height: '100%', overflow: 'hidden'}}>
     <div
       ref={scrollerRef}
       style={{
@@ -116,9 +158,11 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
                 width: '100%',
                 height: '100%'
               }}>
-              {rows[virtualItem.index].map((item, itemIndex) => (
-                <Item key={virtualItem.index+'_'+itemIndex} item={item}></Item>
-              ))}
+                {rows[virtualItem.index].map((item, index) => (
+                  <React.Fragment key={virtualItem.index + '_' + index}>
+                    {adaptRenderer(item)}
+                  </React.Fragment>
+                ))}
               </div>
             </div>
           ))}

@@ -19,11 +19,125 @@
   <script type="module">
     import './src/index.ts';
   </script>
-  <hiradumi-component>
-    <!-- <div slot="header">これはヘッダースロットに入ります</div>
-    <div slot="footer">これはフッタースロットに入ります</div> -->
-    <custom-button></custom-button>
-  </hiradumi-component>
+
+  <template id="item-template">
+    <style>
+      .container-item,
+      .custom-item {
+        width: 100%;
+        height: 100%;
+      }
+
+      .custom-item .image {}
+
+      .custom-item .text {
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .custom-item .noimage {
+        display: none;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+      }
+    </style>
+    <div class="custom-item">
+      <img class="image" src="" alt="" onload="">
+      <div class="text"></div>
+      <div class="noimage">No Image</div>
+    </div>
+  </template>
+  <script type="module">
+    class TemplateRenderer extends HTMLElement {
+      constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+
+        // テンプレートを取得
+        const template = document.getElementById('item-template');
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+      }
+
+      renderItem(item) {
+        // テンプレートベースのレンダリング
+        const container = document.createElement('div');
+        container.classList.add('container-item');
+        const template = document.getElementById('item-template');
+        const clone = template.content.cloneNode(true);
+
+        // データをバインド
+        const text = clone.querySelector('.text');
+        const img = clone.querySelector('.image');
+        const noImage = clone.querySelector('.noimage');
+        if (item.type === 'text') {
+          if (text) {
+            text.textContent = item.title || '';
+            text.style.display = 'flex'; // テキストアイテムの場合、テキストを表示する
+            noImage.style.display = 'none'; // 画像を非表示にする
+          }
+        } else if (item.type === 'image') {
+          if (img) {
+            // 画像の事前チェック
+            const preloadImg = new Image();
+            let imageLoaded = false;
+
+            preloadImg.onload = function () {
+              // 1x1ピクセルの透明画像チェック
+              if (preloadImg.width === 1 && preloadImg.height === 1) {
+                // 画像が無効な場合
+                if (img) img.style.display = 'none';
+                if (noImage) noImage.style.display = 'flex';
+              } else {
+                // 有効な画像の場合
+                if (img) {
+                  img.src = item.cover || '';
+                  img.alt = item.title || '';
+                  img.style.display = 'block';
+                  img.style.width = '100%';
+                  img.style.height = '100%';
+
+                  // フェードイン表示（ちらつき防止）
+                  setTimeout(() => {
+                    img.style.opacity = '1';
+                  }, 50);
+                }
+                if (noImage) noImage.style.display = 'none';
+              }
+              imageLoaded = true;
+            };
+
+            preloadImg.onerror = function () {
+              // 読み込みエラーの場合
+              if (img) img.style.display = 'none';
+              if (noImage) noImage.style.display = 'flex';
+              imageLoaded = true;
+            };
+
+            // プリロード開始
+            preloadImg.src = item.cover || '';
+          }
+        }
+
+        container.appendChild(clone);
+        return container;
+      }
+    }
+
+    customElements.define('template-renderer', TemplateRenderer);
+  </script>
+
+  <hiradumi-component></hiradumi-component>
   <script>
     customElements.whenDefined('hiradumi-component').then(async () => {
       const r = await fetch('https://bookdata-fair.calil.dev/all.json')
@@ -49,6 +163,13 @@
         }
       })
       const hiradumi = document.querySelector('hiradumi-component')
+      const renderer = document.createElement('template-renderer');
+
+      // カスタムレンダラーを登録
+      hiradumi.renderItem = (item) => {
+        // TemplateRendererコンポーネントのrenderItemメソッドを呼び出す
+        return renderer.renderItem(item);
+      };
       hiradumi.data = mixedItems
     })
   </script>
