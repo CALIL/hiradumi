@@ -33,7 +33,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
  // コンポーネント初期化時にスクロールバー幅を取得
   useEffect(() => {
     setScrollbarWidth(getScrollbarWidth())
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (!containerRef.current || !scrollerRef.current) return
