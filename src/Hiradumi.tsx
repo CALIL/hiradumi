@@ -71,7 +71,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
       defaultAspect: defaultRatio,
       itemScales: itemScales
     })
-    setRowHeights(rows.map(row => row[0].height))
+    setRowHeights(rows.map(row => Math.max(...row.map(item => item.height || 0))))
     setRows(rows)
   }, [data, width, scrollbarWidth])
 
