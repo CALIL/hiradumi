@@ -88,6 +88,8 @@
           }
         } else if (item.type === 'image') {
           if (img) {
+            img.src = item.cover || '';
+            img.alt = item.title || '';
             // 画像の事前チェック
             const preloadImg = new Image();
             let imageLoaded = false;
@@ -101,18 +103,10 @@
               } else {
                 // 有効な画像の場合
                 if (img) {
-                  img.src = item.cover || '';
-                  img.alt = item.title || '';
                   img.style.display = 'block';
                   img.style.width = '100%';
                   img.style.height = '100%';
-
-                  // フェードイン表示（ちらつき防止）
-                  setTimeout(() => {
-                    img.style.opacity = '1';
-                  }, 50);
                 }
-                if (noImage) noImage.style.display = 'none';
               }
               imageLoaded = true;
             };
