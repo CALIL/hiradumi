@@ -16,7 +16,7 @@ const defaultRatio = 2/3
 
 const Hiradumi: React.FC<Props> = ({ data }) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const parentRef = useRef<HTMLDivElement>(null)
+  const scrollerRef = useRef<HTMLDivElement>(null)
 
   const [width, setWidth] = useState(100)
   const [rows, setRows] = useState([] as ItemType[][])
@@ -25,7 +25,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
   
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    getScrollElement: () => parentRef.current,
+    getScrollElement: () => scrollerRef.current,
     estimateSize: (index) => rowHeights[index],
     overscan: 5,
   });
@@ -36,7 +36,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    if (!containerRef.current || !parentRef.current) return
+    if (!containerRef.current || !scrollerRef.current) return
     const shadowRoot = containerRef.current.getRootNode() as ShadowRoot
     // Shadow DOMの場合：ホスト要素を取得
     const host = shadowRoot.host    
@@ -82,7 +82,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
 
   return (<div ref={containerRef} style={{width: '100%', height: '100%', overflow: 'hidden'}}>
     <div
-      ref={parentRef}
+      ref={scrollerRef}
       style={{
         position: 'relative',
         width: width,
