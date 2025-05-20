@@ -39,16 +39,12 @@ const Hiradumi: React.FC<Props> = ({ height, width, data }) => {
     if (!data) return
     // スクロールバー幅を考慮した有効幅を計算
     const effectiveWidth = width - scrollbarWidth
-    const calculatedRows = layoutCalculator(data, {
+    const rows = layoutCalculator(data, {
       width: effectiveWidth,
       defaultHeight: itemHeightDefault,
       defaultAspect: defaultRatio,
-      itemScales: itemScales,
-      groupByRows: true,
+      itemScales: itemScales
     });
-    const rows: ItemType[][] = Array.isArray(calculatedRows[0])
-      ? (calculatedRows as ItemType[][])
-      : [calculatedRows as ItemType[]];
     setRowHeights(rows.map(row => row[0].height))
     setRows(rows)
   }, [data, width, scrollbarWidth])
