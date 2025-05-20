@@ -38,10 +38,10 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
   useEffect(() => {
     if (!containerRef.current || !scrollerRef.current) return
     const shadowRoot = containerRef.current.getRootNode() as ShadowRoot
-    // Shadow DOMの場合：ホスト要素を取得
+    // ホスト要素を取得
     const host = shadowRoot.host    
     // ホスト要素の親を取得
-    const container = host.parentNode as HTMLElement;
+    const container = host.parentNode as HTMLElement
     setWidth(container.clientWidth)
 
     const resizeObserver = new ResizeObserver(entries => {
@@ -55,9 +55,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
         setWidth(boxSize.inlineSize)
       }
     })
-
     resizeObserver.observe(container)
-
     return () => {
       resizeObserver.disconnect()
     }
