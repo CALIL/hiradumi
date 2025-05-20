@@ -20,7 +20,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
 
   const [width, setWidth] = useState(100)
   const [rows, setRows] = useState([] as ItemType[][])
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  const [scrollbarWidth, setScrollbarWidth] = useState(0)
   const [rowHeights, setRowHeights] = useState([] as number[])
   
   const rowVirtualizer = useVirtualizer({
@@ -28,7 +28,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
     getScrollElement: () => scrollerRef.current,
     estimateSize: (index) => rowHeights[index],
     overscan: 5,
-  });
+  })
 
  // コンポーネント初期化時にスクロールバー幅を取得
   useEffect(() => {
@@ -70,13 +70,13 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
       defaultHeight: itemHeightDefault,
       defaultAspect: defaultRatio,
       itemScales: itemScales
-    });
+    })
     setRowHeights(rows.map(row => row[0].height))
     setRows(rows)
   }, [data, width, scrollbarWidth])
 
 
-  if (!width || !rows) return null;
+  if (!width || !rows) return null
 
   return (<div ref={containerRef} style={{width: '100%', height: '100%', overflow: 'hidden'}}>
     <div
