@@ -18,7 +18,8 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const scrollerRef = useRef<HTMLDivElement>(null)
 
-  const [width, setWidth] = useState(100)
+  const [width, setWidth] = useState(0)
+  const [isWidthMeasured, setIsWidthMeasured] = useState(false)
   const [rows, setRows] = useState([] as ItemType[][])
   const [scrollbarWidth, setScrollbarWidth] = useState(0)
   const [rowHeights, setRowHeights] = useState([] as number[])
@@ -53,6 +54,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
         }
         
         setWidth(boxSize.inlineSize)
+        setIsWidthMeasured(true)
       }
     })
     resizeObserver.observe(container)
@@ -62,7 +64,7 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
   }, [])
 
   useEffect(() => {
-    if (!data) return
+    if (!data || !isWidthMeasured) return
     // スクロールバー幅を考慮した有効幅を計算
     const effectiveWidth = width - scrollbarWidth
     const rows = layoutCalculator(data, {
@@ -73,10 +75,10 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
     })
     setRowHeights(rows.map(row => Math.max(...row.map(item => item.height || 0))))
     setRows(rows)
-  }, [data, width, scrollbarWidth])
+  }, [isWidthMeasured, data, width, scrollbarWidth])
 
 
-  if (!width || !rows) return null
+  if (!rows) return null
 
   return (<div ref={containerRef} style={{width: '100%', height: '100%', overflow: 'hidden'}}>
     <div
