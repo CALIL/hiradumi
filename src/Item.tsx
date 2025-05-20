@@ -6,7 +6,7 @@ type Props = {
 }
 
 const Item = (props: Props) => {
-    const { type = 'image', title, cover, width, height } = props.item
+    const { type = 'image', title, cover, link, width, height } = props.item
     const [loadError, setLoadError] = useState(false)
     return (
         <div
@@ -17,6 +17,7 @@ const Item = (props: Props) => {
                 border: '1px solid rgba(0, 0, 0, 0.1)',
             }}
         >
+            <a href={link} target="_blank" rel="noopener noreferrer">
             {type=='text' ? (
                 <TextItem title={title} />
             ) : (loadError || !cover ? (
@@ -31,6 +32,7 @@ const Item = (props: Props) => {
                     />
                 )
             )}
+            </a>
         </div>
     )
 }

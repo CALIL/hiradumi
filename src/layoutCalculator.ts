@@ -9,6 +9,7 @@ export type ItemType = {
     title: string
     isbn?: string
     cover?: string
+    link?: string
     width: number
     height: number
     aspect: number
