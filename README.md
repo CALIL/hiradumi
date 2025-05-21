@@ -31,7 +31,6 @@ function App() {
   const [data, setData] = useState([]);
   
   useEffect(() => {
-    // データを取得
     fetch('https://bookdata-fair.calil.dev/all.json')
       .then(r => r.json())
       .then(items => {
