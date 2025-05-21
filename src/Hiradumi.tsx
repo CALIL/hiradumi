@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import type { ReactNode } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
 import DefaultItem from "./DefaultItem";
@@ -9,13 +8,14 @@ import { getScrollbarWidth } from "./utils/getScrollBarWidth";
 
 type Props = {
   data: ItemType[] | null;
+  itemComponent?: React.ComponentType<{ item: ItemType }>;
 };
 
 const itemHeightDefault = 250;
 const itemScales = [1.5, 1.2, 1, 0.8, 0.6];
 const defaultRatio = 2 / 3;
 
-const Hiradumi: React.FC<Props> = ({ data }) => {
+const Hiradumi: React.FC<Props> = ({ data, itemComponent }) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -127,7 +127,9 @@ const Hiradumi: React.FC<Props> = ({ data }) => {
                 }}
               >
                 {rows[virtualItem.index].map((item, index) => (
-                  <DefaultItem key={virtualItem.index + "_" + index} item={item}></DefaultItem>
+                  itemComponent
+                    ? React.createElement(itemComponent, { key: virtualItem.index + "_" + index, item })
+                    : <DefaultItem key={virtualItem.index + "_" + index} item={item}></DefaultItem>                  
                 ))}
               </div>
             </div>

@@ -29,7 +29,6 @@ import type { ItemType } from "./layoutCalculator";
       count++;
     }
   });
-  console.log(mixedItems);
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <Hiradumi data={mixedItems}></Hiradumi>
