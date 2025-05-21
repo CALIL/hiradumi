@@ -89,13 +89,13 @@ export default App;
 
 ```
 interface ItemType {
-  type?: string;       // 'image' or 'text'
-  title?: string;      // Item title
+  type: string;       // 'image' or 'text'
+  title: string;      // Item title
+  aspect: number;     // Aspect ratio (width/height)
   cover?: string;      // Cover image URL
   link?: string;       // Link URL
   width?: number;      // Width (calculated by layout engine)
   height?: number;     // Height (calculated by layout engine)
-  aspect?: number;     // Aspect ratio (width/height)
 }
 ```
 
