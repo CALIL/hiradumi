@@ -7,48 +7,24 @@
   <title>Hiradumi</title>
   <style>
     html,
-    body {
+    body
+    {
       margin: 0;
       padding: 0;
+      height: 100%;
+    }
+    #root {
+      margin: 0 auto;
+      padding: 0;
+      max-width: 800px;
       height: 100%;
     }
   </style>
 </head>
 
 <body>
-  <script type="module">
-    import './src/index.ts';
-  </script>
-
-  <hiradumi-component></hiradumi-component>
-  <script>
-    customElements.whenDefined('hiradumi-component').then(async () => {
-      const r = await fetch('https://bookdata-fair.calil.dev/all.json')
-      const items = await r.json()
-      // console.log(items)
-      const mixedItems = []
-      let count = 1
-      items.forEach((item, index) => {
-        if (item.properties && item.properties.aspect) {
-          item.aspect = item.properties.aspect
-        }
-        item.cover = `https://calil.jp/cover/${item.isbn}`
-        item.link = `https://calil.jp/book/${item.isbn}`
-        item.type = 'image'
-        mixedItems.push(item)
-        // 10個ごとにテキストを挿入
-        if (index % 10 === 0) {
-          mixedItems.push({
-            type: 'text',
-            title: 'text' + count,
-          })
-          count++
-        }
-      })
-      const hiradumi = document.querySelector('hiradumi-component')
-      hiradumi.data = mixedItems
-    })
-  </script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 
 </html>
