@@ -2,6 +2,22 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import Hiradumi from "./Hiradumi";
 import type { ItemType } from "./layoutCalculator";
+import DefaultItem from "./DefaultItem";
+
+
+interface Props {
+    item: ItemType;
+}
+
+const customItem = (props: Props) => (
+    <div style={{
+        width: props.item.width,
+        height: props.item.height,
+        padding: '5px',
+        border: '1px solid #CCC',
+        boxSizing: 'border-box',
+    }}>{props.item.title}</div>
+);
 
 (async () => {
   const r = await fetch("https://bookdata-fair.calil.dev/all.json");
@@ -31,7 +47,7 @@ import type { ItemType } from "./layoutCalculator";
   });
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
-      <Hiradumi data={mixedItems}></Hiradumi>
+      <Hiradumi data={mixedItems} itemComponent={customItem}></Hiradumi>
     </StrictMode>
   );
 })();
