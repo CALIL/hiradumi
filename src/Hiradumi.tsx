@@ -44,6 +44,7 @@ const Hiradumi: React.FC<Props> = ({ data, itemComponent }) => {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         // contentBoxSizeが使えない場合はcontentRectを使用
+        // contentRectは将来的には廃止される予定
         const boxSize = entry.contentBoxSize?.[0] || {
           inlineSize: entry.contentRect.width,
           blockSize: entry.contentRect.height,
