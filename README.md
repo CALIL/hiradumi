@@ -80,9 +80,9 @@ export default App;
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
 | `data` | `ItemType[]` | Yes | 表示するアイテムの配列 |
-| `renderItem` | `(item: ItemType) => ReactNode` | No | グリッドアイテムのカスタムレンダラー |
+| `renderItem` | `(item: ItemType) => ReactNode` | No | アイテムのカスタムレンダーコンポネント |
 | `defaultRatio` | `number` | No | デフォルトのアスペクト比（width/height）。デフォルト値: `2/3` |
-| `itemHeightDefault` | `number` | No | デフォルトのアイテムの高さ（px）。デフォルト値: `250` |
+| `itemHeight` | `number` | No | デフォルトのアイテムの高さ（px）。デフォルト値: `250` |
 | `itemScales` | `number[]` | No | アイテムサイズのスケール配列。デフォルト値: `[1.5, 1.2, 1, 0.8, 0.6]` |
 
 
