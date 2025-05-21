@@ -6,7 +6,6 @@ import Hiradumi from './Hiradumi';
 const HiradumiComponent = r2wc(Hiradumi, React, ReactDOM, {
   props: {
     data: 'json',
-    renderItem: 'function',
   },
   shadow: 'open'
 });

@@ -9,7 +9,6 @@ import { getScrollbarWidth } from "./utils/getScrollBarWidth";
 
 type Props = {
   data: ItemType[] | null;
-  renderItem?: (item: ItemType) => ReactNode;
 };
 
 const itemHeightDefault = 250;
@@ -102,28 +101,6 @@ const Hiradumi: React.FC<Props> = ({ data, renderItem }) => {
     setRows(rows);
   }, [isWidthMeasured, data, width, scrollbarWidth]);
 
-  // DOM要素をReactで扱える形に変換する関数
-  const adaptRenderer = useCallback(
-    (item: ItemType): ReactNode => {
-      if (!renderItem) return <DefaultItem item={item} />;
-
-      const renderedItem = renderItem(item);
-
-      // すでにReact要素の場合はそのまま返す
-      if (React.isValidElement(renderedItem)) {
-        return renderedItem;
-      }
-
-      // DOM要素の場合、それを参照して表示するラッパーを返す
-      if (renderedItem instanceof HTMLElement) {
-        return <DOMWrapper element={renderedItem} />;
-      }
-
-      // その他の値（文字列など）はそのまま返す
-      return renderedItem;
-    },
-    [renderItem]
-  );
 
   if (!rows) return null;
 
@@ -170,9 +147,7 @@ const Hiradumi: React.FC<Props> = ({ data, renderItem }) => {
                 }}
               >
                 {rows[virtualItem.index].map((item, index) => (
-                  <React.Fragment key={virtualItem.index + "_" + index}>
-                    {adaptRenderer(item)}
-                  </React.Fragment>
+                  <DefaultItem key={virtualItem.index + "_" + index} item={item}></DefaultItem>
                 ))}
               </div>
             </div>
