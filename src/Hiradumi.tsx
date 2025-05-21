@@ -11,7 +11,7 @@ type Props = {
   itemComponent?: React.ComponentType<{ item: ItemType }>;
   itemHeight?: number;
   itemScales?: number[];
-  defaultRatio?: number;
+  defaultAspect?: number;
 };
 
 const Hiradumi: React.FC<Props> = ({
@@ -19,7 +19,7 @@ const Hiradumi: React.FC<Props> = ({
   itemComponent, 
   itemHeight = 250,
   itemScales = [1.5, 1.2, 1, 0.8, 0.6],
-  defaultRatio = 2 / 3
+  defaultAspect = 2 / 3
  }) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -72,7 +72,7 @@ const Hiradumi: React.FC<Props> = ({
     const rows = layoutCalculator(data, {
       width: effectiveWidth,
       defaultHeight: itemHeight,
-      defaultAspect: defaultRatio,
+      defaultAspect: defaultAspect,
       itemScales: itemScales,
     });
     setRowHeights(
