@@ -47,8 +47,8 @@ function App() {
 
   const renderItem = (item) => (
     <div style={{
-      width: '100%',
-      height: '100%',
+      width: item.width,
+      height: item.height,
       padding: '8px',
       boxSizing: 'border-box',
     }}>
@@ -56,7 +56,7 @@ function App() {
         <img 
           src={item.cover} 
           alt={item.title} 
-          style={{width: '100%', height: '100%', objectFit: 'cover'}} 
+          style={{width: '100%', height: '100%'}} 
         />
       ) : (
         <div>{item.title}</div>
