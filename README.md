@@ -4,6 +4,12 @@
 
 A React component for creating virtualized grid layouts, ideal for book image galleries with dynamic sizing.
 
+## コンセプト
+
+- 指定された横幅に収まるレイアウト
+- アスペクト比の違う書影を組み合わせて配置できる
+- 横幅の変化に追従する
+- npmに公開する
 
 ## Installation
 
@@ -12,14 +18,6 @@ npm install @calil/hiradumi
 # or
 yarn add @calil/hiradumi
 ```
-
-## コンセプト
-
-- 指定された横幅に収まるレイアウト
-- アスペクト比の違う書影を組み合わせて配置できる
-- 横幅の変化に追従する
-- npmに公開する
-
 
 ## Basic Usage
 
