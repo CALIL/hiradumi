@@ -1,13 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import r2wc from 'react-to-webcomponent';
-import Hiradumi from './Hiradumi';
-
-const HiradumiComponent = r2wc(Hiradumi, React, ReactDOM, {
-  props: {
-    data: 'json',
-  },
-  shadow: 'open'
-});
-
-customElements.define('hiradumi-component', HiradumiComponent);
+export { default as Hiradumi } from './Hiradumi';
+export { default as DefaultItem } from './DefaultItem';
+export type { ItemType } from './layoutCalculator';
+export { layoutCalculator } from './layoutCalculator';
