@@ -15,28 +15,7 @@ const itemHeightDefault = 250;
 const itemScales = [1.5, 1.2, 1, 0.8, 0.6];
 const defaultRatio = 2 / 3;
 
-// DOMWrapperコンポーネントを外部に移動してメモ化
-const DOMWrapper = React.memo(({ element }: { element: HTMLElement }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.innerHTML = "";
-      containerRef.current.appendChild(element);
-    }
-
-    return () => {
-      // クリーンアップ
-      if (containerRef.current && containerRef.current.contains(element)) {
-        containerRef.current.removeChild(element);
-      }
-    };
-  }, [element]);
-
-  return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />;
-});
-
-const Hiradumi: React.FC<Props> = ({ data, renderItem }) => {
+const Hiradumi: React.FC<Props> = ({ data }) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
