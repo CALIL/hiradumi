@@ -82,7 +82,7 @@ export default App;
 | `renderItem` | `(item: ItemType) => ReactNode` | No | アイテムのカスタムレンダーコンポネント |
 | `itemHeight` | `number` | No | デフォルトのアイテムの高さ（px）。デフォルト値: `250` |
 | `itemScales` | `number[]` | No | アイテムサイズのスケール配列。デフォルト値: `[1.5, 1.2, 1, 0.8, 0.6]` |
-| `defaultRatio` | `number` | No | デフォルトのアスペクト比（width/height）。デフォルト値: `2/3` |
+| `defaultRatio` | `number` | No | デフォルトのアスペクト比（width/height）。デフォルト値: `2/3`<br>アスペクト比のない書影に使用 |
 
 
 ## ItemType Interface
