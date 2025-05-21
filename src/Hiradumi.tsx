@@ -39,12 +39,6 @@ const Hiradumi: React.FC<Props> = ({ data, itemComponent }) => {
 
   useEffect(() => {
     if (!rootRef.current || !scrollerRef.current) return;
-    // const shadowRoot = rootRef.current.getRootNode() as ShadowRoot;
-    // // ホスト要素を取得
-    // const host = shadowRoot.host;
-    // // ホスト要素の親を取得
-    // const container = host.parentNode as HTMLElement;
-    // setWidth(container.clientWidth);
     setWidth(rootRef.current.clientWidth);
 
     const resizeObserver = new ResizeObserver((entries) => {
