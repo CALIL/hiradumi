@@ -9,13 +9,18 @@ import { getScrollbarWidth } from "./utils/getScrollBarWidth";
 type Props = {
   data: ItemType[] | null;
   itemComponent?: React.ComponentType<{ item: ItemType }>;
+  itemHeight?: number;
+  itemScales?: number[];
+  defaultRatio?: number;
 };
 
-const itemHeightDefault = 250;
-const itemScales = [1.5, 1.2, 1, 0.8, 0.6];
-const defaultRatio = 2 / 3;
-
-const Hiradumi: React.FC<Props> = ({ data, itemComponent }) => {
+const Hiradumi: React.FC<Props> = ({
+  data,
+  itemComponent, 
+  itemHeight = 250,
+  itemScales = [1.5, 1.2, 1, 0.8, 0.6],
+  defaultRatio = 2 / 3
+ }) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +71,7 @@ const Hiradumi: React.FC<Props> = ({ data, itemComponent }) => {
     const effectiveWidth = width - scrollbarWidth;
     const rows = layoutCalculator(data, {
       width: effectiveWidth,
-      defaultHeight: itemHeightDefault,
+      defaultHeight: itemHeight,
       defaultAspect: defaultRatio,
       itemScales: itemScales,
     });
