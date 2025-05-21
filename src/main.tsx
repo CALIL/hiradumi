@@ -47,7 +47,7 @@ const customItem = (props: Props) => (
   });
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
-      <Hiradumi data={mixedItems} itemComponent={customItem}></Hiradumi>
+      <Hiradumi data={mixedItems}></Hiradumi>
     </StrictMode>
   );
 })();

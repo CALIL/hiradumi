@@ -21,7 +21,6 @@ type LayoutOptions = {
     defaultHeight?: number  // オプショナル
     defaultAspect?: number  // オプショナル
     itemScales?: number[] // オプショナル
-    groupByRows?: boolean // オプショナル
 }
 
 /**
