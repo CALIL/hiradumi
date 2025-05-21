@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { layoutCalculator, roundToDecimals, setItemSize } from '../layoutCalculator';
 import type { ItemType } from '../layoutCalculator';
 

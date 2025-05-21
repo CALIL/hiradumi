@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import Hiradumi from "./Hiradumi";
 import type { ItemType } from "./layoutCalculator";
-import DefaultItem from "./DefaultItem";
+// import DefaultItem from "./DefaultItem";
 
 
 interface Props {
