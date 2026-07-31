@@ -1,7 +1,9 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
+  // developmentモードのeval系devtoolはlib/index.jsにeval()を埋め込むため無効化する
+  devtool: false,
   entry: './src/Hiradumi.tsx',
   output: {
     filename: 'index.js',

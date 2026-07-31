@@ -4,6 +4,10 @@
     "description": "アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント",
     "main": "lib/index.js",
     "types": "src/index.d.ts",
+    "files": [
+        "lib",
+        "src"
+    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/CALIL/hiradumi.git"
