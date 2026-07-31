@@ -8,19 +8,18 @@ jobs:
     # runs-on: [self-hosted, Linux]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16.3.0
-          always-auth: true
-          registry-url: https://registry.npmjs.org
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
       - name: Install and Build 🔧
         run: |
-          npm install
+          npm ci
           npm run build
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: dist
