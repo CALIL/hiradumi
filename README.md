@@ -88,17 +88,27 @@ npm start
 
 ## ビルド手順
 
+デモサイト(GitHub Pages)を`dist/`に出力する
+
 ```bash
-npm install @babel/cli @babel/core -g  
 npm run build
 ```
 
 ## npm compile
 
-lib/以下にブラウザで読めるJavascriptファイルをコンパイルして出力する
+配布用のライブラリを`lib/`に出力する  
+CommonJS(`index.js`)とES Modules(`index.mjs`)の両方を生成し、react / react-domはバンドルしない
 
-```
+```bash
 npm run compile
+```
+
+## 型チェック
+
+ビルド(vite)は型を検査しないため、型エラーはこちらで検出する
+
+```bash
+npm run typecheck
 ```
 
 ## ライセンスについて

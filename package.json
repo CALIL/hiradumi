@@ -3,6 +3,7 @@
     "version": "1.6.9",
     "description": "アスペクト比を維持して幅ぴったりにレイアウトするReactコンポーネント",
     "main": "lib/index.js",
+    "module": "lib/index.mjs",
     "types": "src/index.d.ts",
     "files": [
         "lib",
@@ -22,8 +23,9 @@
         "start": "vite --open",
         "build": "vite build --config ./vite.config.build.mts",
         "serve": "vite preview",
-        "compile": "webpack",
-        "prepublishOnly": "npm run compile"
+        "typecheck": "tsc --noEmit",
+        "compile": "vite build --config ./vite.config.lib.mts",
+        "prepublishOnly": "npm run typecheck && npm run compile"
     },
     "peerDependencies": {
         "react": "^18.0.0",
@@ -35,11 +37,8 @@
         "@vitejs/plugin-react": "^6.0.5",
         "react-window": "^1.8.11",
         "sass": "^1.102.0",
-        "ts-loader": "^9.6.2",
         "typescript": "^5.9.3",
         "vite": "^8.2.0",
-        "webpack": "^5.109.2",
-        "webpack-cli": "^7.2.2",
         "whatwg-fetch": "^3.6.20"
     }
 }
