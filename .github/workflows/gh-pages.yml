@@ -13,7 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v7 # zizmor: ignore[artipacked] 後続のDeployステップがこのcheckoutの資格情報でgh-pagesブランチへpushするため、persist-credentialsは無効化しない
+        uses: actions/checkout@v7
+        with:
+          # JamesIves の deploy action は自前で GITHUB_TOKEN を使うため、
+          # checkout 側に資格情報を残す必要がない（他リポジトリで動作確認済み）
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
