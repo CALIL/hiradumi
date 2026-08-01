@@ -22,8 +22,6 @@ jobs:
   build:
     permissions:
       contents: read
-      # configure-pages が Pages サイトの情報を取得するために必要
-      pages: read
     # runs-on: [self-hosted, Linux]
     runs-on: ubuntu-latest
     steps:
@@ -32,8 +30,6 @@ jobs:
         with:
           # 配信は artifact 経由で行うため、checkout の資格情報は使わない
           persist-credentials: false
-      - name: Setup Pages
-        uses: actions/configure-pages@v6
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
