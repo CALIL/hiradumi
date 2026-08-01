@@ -3,13 +3,17 @@ on:
   push:
     branches:
       - master
+
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     # runs-on: [self-hosted, Linux]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7 # zizmor: ignore[artipacked] 後続のDeployステップがこのcheckoutの資格情報でgh-pagesブランチへpushするため、persist-credentialsは無効化しない
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
