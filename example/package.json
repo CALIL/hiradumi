@@ -9,7 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "hiradumi": "github:CALIL/hiradumi#master",
+    "hiradumi": "file:..",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
